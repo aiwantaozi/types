@@ -89,6 +89,8 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&PreferenceList{},
 		&ProjectNetworkPolicy{},
 		&ProjectNetworkPolicyList{},
+		&GlobalLogging{},
+		&GlobalLoggingList{},
 		&ClusterLogging{},
 		&ClusterLoggingList{},
 		&ProjectLogging{},
