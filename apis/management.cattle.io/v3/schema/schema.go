@@ -354,11 +354,14 @@ func projectNetworkPolicyTypes(schema *types.Schemas) *types.Schemas {
 
 func logTypes(schema *types.Schemas) *types.Schemas {
 	return schema.
+		AddMapperForType(&Version, v3.GlobalLogging{},
+			m.DisplayName{}).
 		AddMapperForType(&Version, v3.ClusterLogging{},
 			&m.Embed{Field: "status"},
 			m.DisplayName{}).
 		AddMapperForType(&Version, v3.ProjectLogging{},
 			m.DisplayName{}).
+		MustImport(&Version, v3.GlobalLogging{}).
 		MustImport(&Version, v3.ClusterLogging{}).
 		MustImport(&Version, v3.ProjectLogging{})
 }

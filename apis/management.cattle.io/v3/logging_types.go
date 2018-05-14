@@ -7,6 +7,19 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+type GlobalLogging struct {
+	metav1.TypeMeta `json:",inline"`
+	// Standard object’s metadata. More info:
+	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#metadata
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// Specification of the desired behavior of the the cluster. More info:
+	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#spec-and-status
+	Spec GlobalLoggingSpec `json:"spec"`
+	// Most recent observed status of the cluster. More info:
+	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#spec-and-status
+	Status GlobalLoggingStatus `json:"status"`
+}
+
 type ClusterLogging struct {
 	types.Namespaced
 
@@ -37,6 +50,11 @@ type ProjectLogging struct {
 	Status ProjectLoggingStatus `json:"status"`
 }
 
+type GlobalLoggingSpec struct {
+	LoggingCommonSpec
+	MySQLConfig *MySQLConfig `json:"mySqlConfig,omitempty"`
+}
+
 type LoggingCommonSpec struct {
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -60,6 +78,10 @@ type ProjectLoggingSpec struct {
 	LoggingCommonSpec
 
 	ProjectName string `json:"projectName" norman:"type=reference[project]"`
+}
+
+type GlobalLoggingStatus struct {
+	Conditions []LoggingCondition `json:"conditions,omitempty"`
 }
 
 type ClusterLoggingStatus struct {
@@ -90,6 +112,14 @@ type LoggingCondition struct {
 	Reason string `json:"reason,omitempty"`
 	// Human-readable message indicating details about last transition
 	Message string `json:"message,omitempty"`
+}
+
+type MySQLConfig struct {
+	Endpoint string `json:"endpoint,omitempty" norman:"required"`
+	Database string `json:"database,omitempty" norman:"required"`
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty"`
+	Table    string `json:"table,omitempty" norman:"required"`
 }
 
 type ElasticsearchConfig struct {
