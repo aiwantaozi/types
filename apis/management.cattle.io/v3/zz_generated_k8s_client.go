@@ -44,6 +44,7 @@ type Interface interface {
 	PreferencesGetter
 	ProjectNetworkPoliciesGetter
 	GlobalLoggingsGetter
+	ClusterAuditLoggingsGetter
 	ClusterLoggingsGetter
 	ProjectLoggingsGetter
 	ListenConfigsGetter
@@ -94,6 +95,7 @@ type Client struct {
 	preferenceControllers                              map[string]PreferenceController
 	projectNetworkPolicyControllers                    map[string]ProjectNetworkPolicyController
 	globalLoggingControllers                           map[string]GlobalLoggingController
+	clusterAuditLoggingControllers                     map[string]ClusterAuditLoggingController
 	clusterLoggingControllers                          map[string]ClusterLoggingController
 	projectLoggingControllers                          map[string]ProjectLoggingController
 	listenConfigControllers                            map[string]ListenConfigController
@@ -153,6 +155,7 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		preferenceControllers:                              map[string]PreferenceController{},
 		projectNetworkPolicyControllers:                    map[string]ProjectNetworkPolicyController{},
 		globalLoggingControllers:                           map[string]GlobalLoggingController{},
+		clusterAuditLoggingControllers:                     map[string]ClusterAuditLoggingController{},
 		clusterLoggingControllers:                          map[string]ClusterLoggingController{},
 		projectLoggingControllers:                          map[string]ProjectLoggingController{},
 		listenConfigControllers:                            map[string]ListenConfigController{},
@@ -553,6 +556,19 @@ type GlobalLoggingsGetter interface {
 func (c *Client) GlobalLoggings(namespace string) GlobalLoggingInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &GlobalLoggingResource, GlobalLoggingGroupVersionKind, globalLoggingFactory{})
 	return &globalLoggingClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ClusterAuditLoggingsGetter interface {
+	ClusterAuditLoggings(namespace string) ClusterAuditLoggingInterface
+}
+
+func (c *Client) ClusterAuditLoggings(namespace string) ClusterAuditLoggingInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterAuditLoggingResource, ClusterAuditLoggingGroupVersionKind, clusterAuditLoggingFactory{})
+	return &clusterAuditLoggingClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,

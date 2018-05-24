@@ -36,6 +36,7 @@ type Client struct {
 	Preference                              PreferenceOperations
 	ProjectNetworkPolicy                    ProjectNetworkPolicyOperations
 	GlobalLogging                           GlobalLoggingOperations
+	ClusterAuditLogging                     ClusterAuditLoggingOperations
 	ClusterLogging                          ClusterLoggingOperations
 	ProjectLogging                          ProjectLoggingOperations
 	ListenConfig                            ListenConfigOperations
@@ -91,6 +92,7 @@ func NewClient(opts *clientbase.ClientOpts) (*Client, error) {
 	client.Preference = newPreferenceClient(client)
 	client.ProjectNetworkPolicy = newProjectNetworkPolicyClient(client)
 	client.GlobalLogging = newGlobalLoggingClient(client)
+	client.ClusterAuditLogging = newClusterAuditLoggingClient(client)
 	client.ClusterLogging = newClusterLoggingClient(client)
 	client.ProjectLogging = newProjectLoggingClient(client)
 	client.ListenConfig = newListenConfigClient(client)

@@ -20,6 +20,21 @@ type GlobalLogging struct {
 	Status GlobalLoggingStatus `json:"status"`
 }
 
+type ClusterAuditLogging struct {
+	types.Namespaced
+
+	metav1.TypeMeta `json:",inline"`
+	// Standard object’s metadata. More info:
+	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#metadata
+	metav1.ObjectMeta `json:"metadata,omitempty"`
+	// Specification of the desired behavior of the the cluster. More info:
+	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#spec-and-status
+	Spec ClusterAuditLoggingSpec `json:"spec"`
+	// Most recent observed status of the cluster. More info:
+	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#spec-and-status
+	Status ClusterAuditLoggingStatus `json:"status"`
+}
+
 type ClusterLogging struct {
 	types.Namespaced
 
@@ -67,11 +82,19 @@ type LoggingCommonSpec struct {
 	SyslogConfig        *SyslogConfig        `json:"syslogConfig,omitempty"`
 }
 
+type ClusterAuditLoggingSpec struct {
+	DisplayName string `json:"displayName,omitempty"`
+
+	ClusterName       string `json:"clusterName" norman:"type=reference[cluster]"`
+	GlobalLoggingName string `json:"globalLogging,omitempty" norman:"required,type=reference[globalLogging]"`
+}
+
 type ClusterLoggingSpec struct {
 	LoggingCommonSpec
 	ClusterName string `json:"clusterName" norman:"type=reference[cluster]"`
 
-	EmbeddedConfig *EmbeddedConfig `json:"embeddedConfig,omitempty"`
+	EmbeddedConfig    *EmbeddedConfig `json:"embeddedConfig,omitempty"`
+	GlobalLoggingName string          `json:"globalLogging,omitempty" norman:"type=reference[globalLogging]"`
 }
 
 type ProjectLoggingSpec struct {
@@ -81,8 +104,12 @@ type ProjectLoggingSpec struct {
 }
 
 type GlobalLoggingStatus struct {
-	Conditions []LoggingCondition `json:"conditions,omitempty"`
+	ClusterIDs  []string           `json:"clusterIds,omitempty" norman:"type=array[reference[cluster]]"`
+	Conditions  []LoggingCondition `json:"conditions,omitempty"`
+	AppliedSpec GlobalLoggingSpec  `json:"appliedSpec,omitempty"`
 }
+
+type ClusterAuditLoggingStatus struct{}
 
 type ClusterLoggingStatus struct {
 	Conditions  []LoggingCondition  `json:"conditions,omitempty"`

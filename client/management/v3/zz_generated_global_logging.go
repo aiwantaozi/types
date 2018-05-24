@@ -7,6 +7,9 @@ import (
 const (
 	GlobalLoggingType                      = "globalLogging"
 	GlobalLoggingFieldAnnotations          = "annotations"
+	GlobalLoggingFieldAppliedSpec          = "appliedSpec"
+	GlobalLoggingFieldClusterIDs           = "clusterIds"
+	GlobalLoggingFieldConditions           = "conditions"
 	GlobalLoggingFieldCreated              = "created"
 	GlobalLoggingFieldCreatorID            = "creatorId"
 	GlobalLoggingFieldElasticsearchConfig  = "elasticsearchConfig"
@@ -20,7 +23,6 @@ const (
 	GlobalLoggingFieldRemoved              = "removed"
 	GlobalLoggingFieldSplunkConfig         = "splunkConfig"
 	GlobalLoggingFieldState                = "state"
-	GlobalLoggingFieldStatus               = "status"
 	GlobalLoggingFieldSyslogConfig         = "syslogConfig"
 	GlobalLoggingFieldTransitioning        = "transitioning"
 	GlobalLoggingFieldTransitioningMessage = "transitioningMessage"
@@ -30,6 +32,9 @@ const (
 type GlobalLogging struct {
 	types.Resource
 	Annotations          map[string]string    `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	AppliedSpec          *GlobalLoggingSpec   `json:"appliedSpec,omitempty" yaml:"appliedSpec,omitempty"`
+	ClusterIDs           []string             `json:"clusterIds,omitempty" yaml:"clusterIds,omitempty"`
+	Conditions           []LoggingCondition   `json:"conditions,omitempty" yaml:"conditions,omitempty"`
 	Created              string               `json:"created,omitempty" yaml:"created,omitempty"`
 	CreatorID            string               `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
 	ElasticsearchConfig  *ElasticsearchConfig `json:"elasticsearchConfig,omitempty" yaml:"elasticsearchConfig,omitempty"`
@@ -43,7 +48,6 @@ type GlobalLogging struct {
 	Removed              string               `json:"removed,omitempty" yaml:"removed,omitempty"`
 	SplunkConfig         *SplunkConfig        `json:"splunkConfig,omitempty" yaml:"splunkConfig,omitempty"`
 	State                string               `json:"state,omitempty" yaml:"state,omitempty"`
-	Status               *GlobalLoggingStatus `json:"status,omitempty" yaml:"status,omitempty"`
 	SyslogConfig         *SyslogConfig        `json:"syslogConfig,omitempty" yaml:"syslogConfig,omitempty"`
 	Transitioning        string               `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
 	TransitioningMessage string               `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`

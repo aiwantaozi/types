@@ -15,6 +15,7 @@ const (
 	ClusterLoggingFieldElasticsearchConfig  = "elasticsearchConfig"
 	ClusterLoggingFieldEmbeddedConfig       = "embeddedConfig"
 	ClusterLoggingFieldFailedSpec           = "failedSpec"
+	ClusterLoggingFieldGlobalLoggingName    = "globalLogging"
 	ClusterLoggingFieldKafkaConfig          = "kafkaConfig"
 	ClusterLoggingFieldLabels               = "labels"
 	ClusterLoggingFieldName                 = "name"
@@ -42,6 +43,7 @@ type ClusterLogging struct {
 	ElasticsearchConfig  *ElasticsearchConfig `json:"elasticsearchConfig,omitempty" yaml:"elasticsearchConfig,omitempty"`
 	EmbeddedConfig       *EmbeddedConfig      `json:"embeddedConfig,omitempty" yaml:"embeddedConfig,omitempty"`
 	FailedSpec           *ClusterLoggingSpec  `json:"failedSpec,omitempty" yaml:"failedSpec,omitempty"`
+	GlobalLoggingName    string               `json:"globalLogging,omitempty" yaml:"globalLogging,omitempty"`
 	KafkaConfig          *KafkaConfig         `json:"kafkaConfig,omitempty" yaml:"kafkaConfig,omitempty"`
 	Labels               map[string]string    `json:"labels,omitempty" yaml:"labels,omitempty"`
 	Name                 string               `json:"name,omitempty" yaml:"name,omitempty"`

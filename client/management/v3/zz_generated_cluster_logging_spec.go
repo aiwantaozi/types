@@ -6,6 +6,7 @@ const (
 	ClusterLoggingSpecFieldDisplayName         = "displayName"
 	ClusterLoggingSpecFieldElasticsearchConfig = "elasticsearchConfig"
 	ClusterLoggingSpecFieldEmbeddedConfig      = "embeddedConfig"
+	ClusterLoggingSpecFieldGlobalLoggingName   = "globalLogging"
 	ClusterLoggingSpecFieldKafkaConfig         = "kafkaConfig"
 	ClusterLoggingSpecFieldOutputFlushInterval = "outputFlushInterval"
 	ClusterLoggingSpecFieldOutputTags          = "outputTags"
@@ -18,6 +19,7 @@ type ClusterLoggingSpec struct {
 	DisplayName         string               `json:"displayName,omitempty" yaml:"displayName,omitempty"`
 	ElasticsearchConfig *ElasticsearchConfig `json:"elasticsearchConfig,omitempty" yaml:"elasticsearchConfig,omitempty"`
 	EmbeddedConfig      *EmbeddedConfig      `json:"embeddedConfig,omitempty" yaml:"embeddedConfig,omitempty"`
+	GlobalLoggingName   string               `json:"globalLogging,omitempty" yaml:"globalLogging,omitempty"`
 	KafkaConfig         *KafkaConfig         `json:"kafkaConfig,omitempty" yaml:"kafkaConfig,omitempty"`
 	OutputFlushInterval int64                `json:"outputFlushInterval,omitempty" yaml:"outputFlushInterval,omitempty"`
 	OutputTags          map[string]string    `json:"outputTags,omitempty" yaml:"outputTags,omitempty"`
