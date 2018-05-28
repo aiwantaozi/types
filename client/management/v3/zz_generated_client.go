@@ -35,7 +35,7 @@ type Client struct {
 	DynamicSchema                           DynamicSchemaOperations
 	Preference                              PreferenceOperations
 	ProjectNetworkPolicy                    ProjectNetworkPolicyOperations
-	GlobalLogging                           GlobalLoggingOperations
+	LoggingTarget                           LoggingTargetOperations
 	ClusterAuditLogging                     ClusterAuditLoggingOperations
 	ClusterLogging                          ClusterLoggingOperations
 	ProjectLogging                          ProjectLoggingOperations
@@ -91,7 +91,7 @@ func NewClient(opts *clientbase.ClientOpts) (*Client, error) {
 	client.DynamicSchema = newDynamicSchemaClient(client)
 	client.Preference = newPreferenceClient(client)
 	client.ProjectNetworkPolicy = newProjectNetworkPolicyClient(client)
-	client.GlobalLogging = newGlobalLoggingClient(client)
+	client.LoggingTarget = newLoggingTargetClient(client)
 	client.ClusterAuditLogging = newClusterAuditLoggingClient(client)
 	client.ClusterLogging = newClusterLoggingClient(client)
 	client.ProjectLogging = newProjectLoggingClient(client)

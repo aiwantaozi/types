@@ -43,7 +43,7 @@ type Interface interface {
 	DynamicSchemasGetter
 	PreferencesGetter
 	ProjectNetworkPoliciesGetter
-	GlobalLoggingsGetter
+	LoggingTargetsGetter
 	ClusterAuditLoggingsGetter
 	ClusterLoggingsGetter
 	ProjectLoggingsGetter
@@ -94,7 +94,7 @@ type Client struct {
 	dynamicSchemaControllers                           map[string]DynamicSchemaController
 	preferenceControllers                              map[string]PreferenceController
 	projectNetworkPolicyControllers                    map[string]ProjectNetworkPolicyController
-	globalLoggingControllers                           map[string]GlobalLoggingController
+	loggingTargetControllers                           map[string]LoggingTargetController
 	clusterAuditLoggingControllers                     map[string]ClusterAuditLoggingController
 	clusterLoggingControllers                          map[string]ClusterLoggingController
 	projectLoggingControllers                          map[string]ProjectLoggingController
@@ -154,7 +154,7 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		dynamicSchemaControllers:                           map[string]DynamicSchemaController{},
 		preferenceControllers:                              map[string]PreferenceController{},
 		projectNetworkPolicyControllers:                    map[string]ProjectNetworkPolicyController{},
-		globalLoggingControllers:                           map[string]GlobalLoggingController{},
+		loggingTargetControllers:                           map[string]LoggingTargetController{},
 		clusterAuditLoggingControllers:                     map[string]ClusterAuditLoggingController{},
 		clusterLoggingControllers:                          map[string]ClusterLoggingController{},
 		projectLoggingControllers:                          map[string]ProjectLoggingController{},
@@ -549,13 +549,13 @@ func (c *Client) ProjectNetworkPolicies(namespace string) ProjectNetworkPolicyIn
 	}
 }
 
-type GlobalLoggingsGetter interface {
-	GlobalLoggings(namespace string) GlobalLoggingInterface
+type LoggingTargetsGetter interface {
+	LoggingTargets(namespace string) LoggingTargetInterface
 }
 
-func (c *Client) GlobalLoggings(namespace string) GlobalLoggingInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &GlobalLoggingResource, GlobalLoggingGroupVersionKind, globalLoggingFactory{})
-	return &globalLoggingClient{
+func (c *Client) LoggingTargets(namespace string) LoggingTargetInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &LoggingTargetResource, LoggingTargetGroupVersionKind, loggingTargetFactory{})
+	return &loggingTargetClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,

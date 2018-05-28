@@ -1,18 +1,18 @@
 package client
 
 const (
-	GlobalLoggingSpecType                     = "globalLoggingSpec"
-	GlobalLoggingSpecFieldDisplayName         = "displayName"
-	GlobalLoggingSpecFieldElasticsearchConfig = "elasticsearchConfig"
-	GlobalLoggingSpecFieldKafkaConfig         = "kafkaConfig"
-	GlobalLoggingSpecFieldMySQLConfig         = "mySqlConfig"
-	GlobalLoggingSpecFieldOutputFlushInterval = "outputFlushInterval"
-	GlobalLoggingSpecFieldOutputTags          = "outputTags"
-	GlobalLoggingSpecFieldSplunkConfig        = "splunkConfig"
-	GlobalLoggingSpecFieldSyslogConfig        = "syslogConfig"
+	LoggingTargetSpecType                     = "loggingTargetSpec"
+	LoggingTargetSpecFieldDisplayName         = "displayName"
+	LoggingTargetSpecFieldElasticsearchConfig = "elasticsearchConfig"
+	LoggingTargetSpecFieldKafkaConfig         = "kafkaConfig"
+	LoggingTargetSpecFieldMySQLConfig         = "mySqlConfig"
+	LoggingTargetSpecFieldOutputFlushInterval = "outputFlushInterval"
+	LoggingTargetSpecFieldOutputTags          = "outputTags"
+	LoggingTargetSpecFieldSplunkConfig        = "splunkConfig"
+	LoggingTargetSpecFieldSyslogConfig        = "syslogConfig"
 )
 
-type GlobalLoggingSpec struct {
+type LoggingTargetSpec struct {
 	DisplayName         string               `json:"displayName,omitempty" yaml:"displayName,omitempty"`
 	ElasticsearchConfig *ElasticsearchConfig `json:"elasticsearchConfig,omitempty" yaml:"elasticsearchConfig,omitempty"`
 	KafkaConfig         *KafkaConfig         `json:"kafkaConfig,omitempty" yaml:"kafkaConfig,omitempty"`

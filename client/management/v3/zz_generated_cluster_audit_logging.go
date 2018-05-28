@@ -10,8 +10,8 @@ const (
 	ClusterAuditLoggingFieldClusterId            = "clusterId"
 	ClusterAuditLoggingFieldCreated              = "created"
 	ClusterAuditLoggingFieldCreatorID            = "creatorId"
-	ClusterAuditLoggingFieldGlobalLoggingName    = "globalLogging"
 	ClusterAuditLoggingFieldLabels               = "labels"
+	ClusterAuditLoggingFieldLoggingTargetId      = "loggingTargetId"
 	ClusterAuditLoggingFieldName                 = "name"
 	ClusterAuditLoggingFieldNamespaceId          = "namespaceId"
 	ClusterAuditLoggingFieldOwnerReferences      = "ownerReferences"
@@ -29,8 +29,8 @@ type ClusterAuditLogging struct {
 	ClusterId            string                     `json:"clusterId,omitempty" yaml:"clusterId,omitempty"`
 	Created              string                     `json:"created,omitempty" yaml:"created,omitempty"`
 	CreatorID            string                     `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	GlobalLoggingName    string                     `json:"globalLogging,omitempty" yaml:"globalLogging,omitempty"`
 	Labels               map[string]string          `json:"labels,omitempty" yaml:"labels,omitempty"`
+	LoggingTargetId      string                     `json:"loggingTargetId,omitempty" yaml:"loggingTargetId,omitempty"`
 	Name                 string                     `json:"name,omitempty" yaml:"name,omitempty"`
 	NamespaceId          string                     `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences      []OwnerReference           `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`

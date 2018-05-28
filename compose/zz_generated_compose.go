@@ -35,7 +35,7 @@ type Config struct {
 	Tokens                                   map[string]managementClient.Token                                   `json:"tokens,omitempty" yaml:"tokens,omitempty"`
 	DynamicSchemas                           map[string]managementClient.DynamicSchema                           `json:"dynamicSchemas,omitempty" yaml:"dynamicSchemas,omitempty"`
 	Preferences                              map[string]managementClient.Preference                              `json:"preferences,omitempty" yaml:"preferences,omitempty"`
-	GlobalLoggings                           map[string]managementClient.GlobalLogging                           `json:"globalLoggings,omitempty" yaml:"globalLoggings,omitempty"`
+	LoggingTargets                           map[string]managementClient.LoggingTarget                           `json:"loggingTargets,omitempty" yaml:"loggingTargets,omitempty"`
 	ClusterAuditLoggings                     map[string]managementClient.ClusterAuditLogging                     `json:"clusterAuditLoggings,omitempty" yaml:"clusterAuditLoggings,omitempty"`
 	ClusterLoggings                          map[string]managementClient.ClusterLogging                          `json:"clusterLoggings,omitempty" yaml:"clusterLoggings,omitempty"`
 	ProjectLoggings                          map[string]managementClient.ProjectLogging                          `json:"projectLoggings,omitempty" yaml:"projectLoggings,omitempty"`

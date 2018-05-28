@@ -7,17 +7,17 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-type GlobalLogging struct {
+type LoggingTarget struct {
 	metav1.TypeMeta `json:",inline"`
 	// Standard object’s metadata. More info:
 	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#metadata
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 	// Specification of the desired behavior of the the cluster. More info:
 	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#spec-and-status
-	Spec GlobalLoggingSpec `json:"spec"`
+	Spec LoggingTargetSpec `json:"spec"`
 	// Most recent observed status of the cluster. More info:
 	// https://github.com/kubernetes/community/blob/master/contributors/devel/api-conventions.md#spec-and-status
-	Status GlobalLoggingStatus `json:"status"`
+	Status LoggingTargetStatus `json:"status"`
 }
 
 type ClusterAuditLogging struct {
@@ -65,7 +65,7 @@ type ProjectLogging struct {
 	Status ProjectLoggingStatus `json:"status"`
 }
 
-type GlobalLoggingSpec struct {
+type LoggingTargetSpec struct {
 	LoggingCommonSpec
 	MySQLConfig *MySQLConfig `json:"mySqlConfig,omitempty"`
 }
@@ -86,15 +86,14 @@ type ClusterAuditLoggingSpec struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	ClusterName       string `json:"clusterName" norman:"type=reference[cluster]"`
-	GlobalLoggingName string `json:"globalLogging,omitempty" norman:"required,type=reference[globalLogging]"`
+	LoggingTargetName string `json:"loggingTargetName,omitempty" norman:"required,type=reference[loggingTarget]"`
 }
 
 type ClusterLoggingSpec struct {
 	LoggingCommonSpec
 	ClusterName string `json:"clusterName" norman:"type=reference[cluster]"`
 
-	EmbeddedConfig    *EmbeddedConfig `json:"embeddedConfig,omitempty"`
-	GlobalLoggingName string          `json:"globalLogging,omitempty" norman:"type=reference[globalLogging]"`
+	EmbeddedConfig *EmbeddedConfig `json:"embeddedConfig,omitempty"`
 }
 
 type ProjectLoggingSpec struct {
@@ -103,10 +102,10 @@ type ProjectLoggingSpec struct {
 	ProjectName string `json:"projectName" norman:"type=reference[project]"`
 }
 
-type GlobalLoggingStatus struct {
+type LoggingTargetStatus struct {
 	ClusterIDs  []string           `json:"clusterIds,omitempty" norman:"type=array[reference[cluster]]"`
 	Conditions  []LoggingCondition `json:"conditions,omitempty"`
-	AppliedSpec GlobalLoggingSpec  `json:"appliedSpec,omitempty"`
+	AppliedSpec LoggingTargetSpec  `json:"appliedSpec,omitempty"`
 }
 
 type ClusterAuditLoggingStatus struct{}

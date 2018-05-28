@@ -360,7 +360,7 @@ func projectNetworkPolicyTypes(schema *types.Schemas) *types.Schemas {
 
 func logTypes(schema *types.Schemas) *types.Schemas {
 	return schema.
-		AddMapperForType(&Version, v3.GlobalLogging{},
+		AddMapperForType(&Version, v3.LoggingTarget{},
 			&m.Embed{Field: "status"},
 			m.DisplayName{}).
 		AddMapperForType(&Version, v3.ClusterAuditLogging{},
@@ -370,7 +370,7 @@ func logTypes(schema *types.Schemas) *types.Schemas {
 			m.DisplayName{}).
 		AddMapperForType(&Version, v3.ProjectLogging{},
 			m.DisplayName{}).
-		MustImport(&Version, v3.GlobalLogging{}).
+		MustImport(&Version, v3.LoggingTarget{}).
 		MustImport(&Version, v3.ClusterAuditLogging{}).
 		MustImport(&Version, v3.ClusterLogging{}).
 		MustImport(&Version, v3.ProjectLogging{})
