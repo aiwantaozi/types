@@ -7,6 +7,7 @@ import (
 	clusterSchema "github.com/rancher/types/apis/cluster.cattle.io/v3/schema"
 	managementSchema "github.com/rancher/types/apis/management.cattle.io/v3/schema"
 	publicSchema "github.com/rancher/types/apis/management.cattle.io/v3public/schema"
+	monitoringSchema "github.com/rancher/types/apis/monitoring.cattle.io/v1/schema"
 	projectSchema "github.com/rancher/types/apis/project.cattle.io/v3/schema"
 	"github.com/rancher/types/generator"
 	"k8s.io/api/apps/v1beta2"
@@ -27,6 +28,8 @@ func main() {
 	generator.Generate(publicSchema.PublicSchemas, nil)
 	generator.Generate(clusterSchema.Schemas, nil)
 	generator.Generate(projectSchema.Schemas, nil)
+	generator.Generate(monitoringSchema.Schemas, nil)
+
 	generator.GenerateNativeTypes(v1.SchemeGroupVersion, []interface{}{
 		v1.Endpoints{},
 		v1.PersistentVolumeClaim{},
