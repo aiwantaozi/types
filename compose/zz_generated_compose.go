@@ -43,6 +43,8 @@ type Config struct {
 	ClusterAlerts                            map[string]managementClient.ClusterAlert                            `json:"clusterAlerts,omitempty" yaml:"clusterAlerts,omitempty"`
 	ProjectAlerts                            map[string]managementClient.ProjectAlert                            `json:"projectAlerts,omitempty" yaml:"projectAlerts,omitempty"`
 	ComposeConfigs                           map[string]managementClient.ComposeConfig                           `json:"composeConfigs,omitempty" yaml:"composeConfigs,omitempty"`
+	ClusterAlertPolicys                      map[string]managementClient.ClusterAlertPolicy                      `json:"clusterAlertPolicies,omitempty" yaml:"clusterAlertPolicies,omitempty"`
+	ProjectAlertPolicys                      map[string]managementClient.ProjectAlertPolicy                      `json:"projectAlertPolicies,omitempty" yaml:"projectAlertPolicies,omitempty"`
 
 	// Cluster Client
 	Namespaces        map[string]clusterClient.Namespace        `json:"namespaces,omitempty" yaml:"namespaces,omitempty"`
