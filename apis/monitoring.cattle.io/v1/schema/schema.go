@@ -51,6 +51,27 @@ func Constructor(version *types.APIVersion, withoutController bool) func(schemas
 			AddMapperForType(version, monitoringv1.Alertmanager{},
 				&m.Drop{Field: "status"},
 			).
+			AddMapperForType(version, monitoringv1.Endpoint{},
+				&m.Drop{Field: "tlsConfig"},
+				&m.Drop{Field: "bearerTokenFile"},
+				&m.Drop{Field: "honorLabels"},
+				&m.Drop{Field: "basicAuth"},
+				&m.Drop{Field: "metricRelabelings"},
+				&m.Drop{Field: "proxyUrl"},
+			).
+			AddMapperForType(version, monitoringv1.ServiceMonitorSpec{},
+				&m.Move{From: "jobLabel", To: "jobLabelOverWrite"},
+				&m.Move{From: "targetLabels", To: "transparentServiceLabels"},
+				&m.Embed{Field: "namespaceSelector"},
+				&m.Drop{Field: "any"},
+				&m.Move{From: "matchNames", To: "namespaceSelector"},
+			).
+			AddMapperForType(version, monitoringv1.ServiceMonitor{},
+				&m.AnnotationField{Field: "displayName"},
+				&m.DisplayName{},
+				&m.AnnotationField{Field: "targetService"},
+				&m.AnnotationField{Field: "targetWorkload"},
+			).
 			MustImportAndCustomize(version, monitoringv1.Prometheus{}, func(schema *types.Schema) {
 				if withoutController {
 					schema.ControllerExcluded = true
@@ -78,6 +99,10 @@ func Constructor(version *types.APIVersion, withoutController bool) func(schemas
 				if withoutController {
 					schema.ControllerExcluded = true
 				}
-			}, projectOverride{})
+			}, projectOverride{}, struct {
+				DisplayName    string `json:"displayName,omitempty"`
+				TargetService  string `json:"targetService,omitempty"`
+				TargetWorkload string `json:"targetWorkload,omitempty"`
+			}{})
 	}
 }
