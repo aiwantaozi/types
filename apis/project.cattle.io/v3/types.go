@@ -111,3 +111,9 @@ type Workload struct {
 type DeploymentRollbackInput struct {
 	ReplicaSetID string `json:"replicaSetId" norman:"type=reference[replicaSet]"`
 }
+
+type WorkloadMetric struct {
+	Protocol string `json:"protocol,omitempty" norman:"type=enum,options=http|https"`
+	Port     int32  `json:"port,omitempty"`
+	Path     string `json:"path,omitempty"`
+}

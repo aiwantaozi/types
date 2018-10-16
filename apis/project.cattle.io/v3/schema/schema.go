@@ -132,6 +132,10 @@ func workloadTypes(schemas *types.Schemas) *types.Schemas {
 
 func statefulSetTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, v1beta2.StatefulSet{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, v1beta2.StatefulSetUpdateStrategy{},
 			&m.Embed{Field: "rollingUpdate"},
 			m.Enum{Field: "type", Options: []string{
@@ -184,11 +188,16 @@ func statefulSetTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
 func replicaSetTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, v1beta1.ReplicaSet{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, v1beta1.ReplicaSetSpec{},
 			&m.Move{
 				From: "replicas",
@@ -218,11 +227,16 @@ func replicaSetTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
 func replicationControllerTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, v1.ReplicationController{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, v1.ReplicationControllerSpec{},
 			&m.Move{
 				From: "replicas",
@@ -254,11 +268,16 @@ func replicationControllerTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
 func daemonSetTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, v1beta2.DaemonSet{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, v1beta2.DaemonSetUpdateStrategy{},
 			&m.Embed{Field: "rollingUpdate"},
 			m.Enum{Field: "type", Options: []string{
@@ -298,11 +317,16 @@ func daemonSetTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
 func jobTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, batchv1.Job{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, batchv1.JobSpec{},
 			&m.BatchMove{
 				From: []string{"parallelism",
@@ -333,11 +357,16 @@ func jobTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
 func cronJobTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, batchv1beta1.CronJob{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, batchv1beta1.JobTemplateSpec{},
 			&m.Move{
 				From: "metadata",
@@ -400,11 +429,16 @@ func cronJobTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
 func deploymentTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
+		MustImport(&Version, v3.WorkloadMetric{}).
+		AddMapperForType(&Version, v1beta2.Deployment{},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
+		).
 		AddMapperForType(&Version, v1beta2.DeploymentStrategy{},
 			&m.Embed{Field: "rollingUpdate", EmptyValueOk: true},
 			m.Enum{Field: "type", Options: []string{
@@ -462,6 +496,7 @@ func deploymentTypes(schemas *types.Schemas) *types.Schemas {
 			})
 		}, projectOverride{}, struct {
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric]"`
 		}{})
 }
 
@@ -516,9 +551,11 @@ func podTypes(schemas *types.Schemas) *types.Schemas {
 			&m.Embed{Field: "securityContext"},
 			&m.Drop{Field: "serviceAccount"},
 		).
+		MustImport(&Version, v3.WorkloadMetric{}).
 		AddMapperForType(&Version, v1.Pod{},
 			&m.AnnotationField{Field: "description"},
 			&m.AnnotationField{Field: "publicEndpoints", List: true},
+			&m.AnnotationField{Field: "workloadMetrics", List: true},
 			mapper.ContainerPorts{},
 			mapper.ContainerStatus{},
 		).
@@ -534,6 +571,7 @@ func podTypes(schemas *types.Schemas) *types.Schemas {
 			Add  []string `norman:"type=array[enum],options=AUDIT_CONTROL|AUDIT_WRITE|BLOCK_SUSPEND|CHOWN|DAC_OVERRIDE|DAC_READ_SEARCH|FOWNER|FSETID|IPC_LOCK|IPC_OWNER|KILL|LEASE|LINUX_IMMUTABLE|MAC_ADMIN|MAC_OVERRIDE|MKNOD|NET_ADMIN|NET_BIND_SERVICE|NET_BROADCAST|NET_RAW|SETFCAP|SETGID|SETPCAP|SETUID|SYSLOG|SYS_ADMIN|SYS_BOOT|SYS_CHROOT|SYS_MODULE|SYS_NICE|SYS_PACCT|SYS_PTRACE|SYS_RAWIO|SYS_RESOURCE|SYS_TIME|SYS_TTY_CONFIG|WAKE_ALARM|ALL"`
 			Drop []string `norman:"type=array[enum],options=AUDIT_CONTROL|AUDIT_WRITE|BLOCK_SUSPEND|CHOWN|DAC_OVERRIDE|DAC_READ_SEARCH|FOWNER|FSETID|IPC_LOCK|IPC_OWNER|KILL|LEASE|LINUX_IMMUTABLE|MAC_ADMIN|MAC_OVERRIDE|MKNOD|NET_ADMIN|NET_BIND_SERVICE|NET_BROADCAST|NET_RAW|SETFCAP|SETGID|SETPCAP|SETUID|SYSLOG|SYS_ADMIN|SYS_BOOT|SYS_CHROOT|SYS_MODULE|SYS_NICE|SYS_PACCT|SYS_PTRACE|SYS_RAWIO|SYS_RESOURCE|SYS_TIME|SYS_TTY_CONFIG|WAKE_ALARM|ALL"`
 		}{}).
+		MustImport(&Version, v3.WorkloadMetric{}).
 		MustImport(&Version, v3.PublicEndpoint{}).
 		MustImport(&Version, v1.Handler{}, handlerOverride{}).
 		MustImport(&Version, v1.Probe{}, handlerOverride{}).
@@ -555,6 +593,7 @@ func podTypes(schemas *types.Schemas) *types.Schemas {
 			Description     string `json:"description"`
 			WorkloadID      string `norman:"type=reference[workload]"`
 			PublicEndpoints string `json:"publicEndpoints" norman:"type=array[publicEndpoint],nocreate,noupdate"`
+			WorkloadMetrics string `json:"workloadMetrics" norman:"type=array[workloadMetric],nocreate,noupdate"`
 		}{})
 }
 
