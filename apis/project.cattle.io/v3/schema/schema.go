@@ -959,30 +959,6 @@ func MonitorTypes(schemas *types.Schemas) *types.Schemas {
 				},
 			},
 		).
-		AddMapperForType(&Version, v3.Alertmanager{},
-			&m.Drop{Field: "status"},
-		).
-		AddMapperForType(&Version, v3.Endpoint{},
-			&m.Drop{Field: "tlsConfig"},
-			&m.Drop{Field: "bearerTokenFile"},
-			&m.Drop{Field: "honorLabels"},
-			&m.Drop{Field: "basicAuth"},
-			&m.Drop{Field: "metricRelabelings"},
-			&m.Drop{Field: "proxyUrl"},
-		).
-		AddMapperForType(&Version, v3.ServiceMonitorSpec{},
-			&m.Move{From: "jobLabel", To: "jobLabelOverWrite"},
-			&m.Move{From: "targetLabels", To: "transparentServiceLabels"},
-			&m.Embed{Field: "namespaceSelector"},
-			&m.Drop{Field: "any"},
-			&m.Move{From: "matchNames", To: "namespaceSelector"},
-		).
-		AddMapperForType(&Version, v3.ServiceMonitor{},
-			&m.AnnotationField{Field: "displayName"},
-			&m.DisplayName{},
-			&m.AnnotationField{Field: "targetService"},
-			&m.AnnotationField{Field: "targetWorkload"},
-		).
 		MustImportAndCustomize(&Version, v3.Prometheus{}, func(schema *types.Schema) {
 			schema.MustCustomizeField("name", func(field types.Field) types.Field {
 				field.Type = "dnsLabelRestricted"
@@ -993,11 +969,48 @@ func MonitorTypes(schemas *types.Schemas) *types.Schemas {
 		}, projectOverride{}, struct {
 			Description string `json:"description"`
 		}{}).
-		MustImport(&Version, v3.PrometheusRule{}, projectOverride{}).
-		MustImport(&Version, v3.Alertmanager{}, projectOverride{}).
+		AddMapperForType(&Version, v3.RelabelConfig{},
+			&m.Enum{
+				Field: "action",
+				Options: []string{
+					"replace",
+					"keep",
+					"drop",
+					"hashmod",
+					"labelmap",
+					"labeldrop",
+					"labelkeep",
+				},
+			},
+		).
+		AddMapperForType(&Version, v3.Endpoint{},
+			&m.Drop{Field: "port"},
+			&m.Drop{Field: "tlsConfig"},
+			&m.Drop{Field: "bearerTokenFile"},
+			&m.Drop{Field: "honorLabels"},
+			&m.Drop{Field: "basicAuth"},
+			&m.Drop{Field: "metricRelabelings"},
+			&m.Drop{Field: "proxyUrl"},
+		).
+		AddMapperForType(&Version, v3.ServiceMonitorSpec{},
+			&m.Embed{Field: "namespaceSelector"},
+			&m.Drop{Field: "any"},
+			&m.Move{From: "matchNames", To: "namespaceSelector"},
+		).
+		AddMapperForType(&Version, v3.ServiceMonitor{},
+			&m.AnnotationField{Field: "displayName"},
+			&m.DisplayName{},
+			&m.AnnotationField{Field: "targetService"},
+			&m.AnnotationField{Field: "targetWorkload"},
+		).
 		MustImport(&Version, v3.ServiceMonitor{}, projectOverride{}, struct {
 			DisplayName    string `json:"displayName,omitempty"`
 			TargetService  string `json:"targetService,omitempty"`
 			TargetWorkload string `json:"targetWorkload,omitempty"`
-		}{})
+		}{}).
+		MustImport(&Version, v3.PrometheusRule{}, projectOverride{}).
+		AddMapperForType(&Version, v3.Alertmanager{},
+			&m.Drop{Field: "status"},
+		).
+		MustImport(&Version, v3.Alertmanager{}, projectOverride{})
 }
