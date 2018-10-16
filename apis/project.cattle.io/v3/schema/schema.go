@@ -5,7 +5,6 @@ import (
 
 	"github.com/rancher/norman/types"
 	m "github.com/rancher/norman/types/mapper"
-	monitoringv1schema "github.com/rancher/types/apis/monitoring.cattle.io/v1/schema"
 	"github.com/rancher/types/apis/project.cattle.io/v3"
 	"github.com/rancher/types/factory"
 	"github.com/rancher/types/mapper"
@@ -44,7 +43,7 @@ var (
 		Init(workloadTypes).
 		Init(appTypes).
 		Init(pipelineTypes).
-		Init(monitoringv1schema.Constructor(&Version, true))
+		Init(MonitorTypes)
 )
 
 func configMapTypes(schemas *types.Schemas) *types.Schemas {
@@ -929,4 +928,76 @@ func pipelineTypes(schema *types.Schemas) *types.Schemas {
 			schema.ResourceMethods = []string{http.MethodGet, http.MethodDelete}
 		})
 
+}
+
+func MonitorTypes(schemas *types.Schemas) *types.Schemas {
+	return schemas.
+		AddMapperForType(&Version, v3.StorageSpec{},
+			&m.Drop{Field: "class"},
+			&m.Drop{Field: "selector"},
+			&m.Drop{Field: "resources"},
+		).
+		AddMapperForType(&Version, v3.Prometheus{},
+			&m.Drop{Field: "status"},
+			&m.AnnotationField{Field: "description"},
+		).
+		AddMapperForType(&Version, v3.PrometheusSpec{},
+			&m.Drop{Field: "thanos"},
+			&m.Drop{Field: "apiserverConfig"},
+			&m.Drop{Field: "serviceMonitorNamespaceSelector"},
+			&m.Drop{Field: "ruleNamespaceSelector"},
+			&m.Drop{Field: "paused"},
+			&m.Enum{
+				Field: "logLevel",
+				Options: []string{
+					"all",
+					"debug",
+					"info",
+					"warn",
+					"error",
+					"none",
+				},
+			},
+		).
+		AddMapperForType(&Version, v3.Alertmanager{},
+			&m.Drop{Field: "status"},
+		).
+		AddMapperForType(&Version, v3.Endpoint{},
+			&m.Drop{Field: "tlsConfig"},
+			&m.Drop{Field: "bearerTokenFile"},
+			&m.Drop{Field: "honorLabels"},
+			&m.Drop{Field: "basicAuth"},
+			&m.Drop{Field: "metricRelabelings"},
+			&m.Drop{Field: "proxyUrl"},
+		).
+		AddMapperForType(&Version, v3.ServiceMonitorSpec{},
+			&m.Move{From: "jobLabel", To: "jobLabelOverWrite"},
+			&m.Move{From: "targetLabels", To: "transparentServiceLabels"},
+			&m.Embed{Field: "namespaceSelector"},
+			&m.Drop{Field: "any"},
+			&m.Move{From: "matchNames", To: "namespaceSelector"},
+		).
+		AddMapperForType(&Version, v3.ServiceMonitor{},
+			&m.AnnotationField{Field: "displayName"},
+			&m.DisplayName{},
+			&m.AnnotationField{Field: "targetService"},
+			&m.AnnotationField{Field: "targetWorkload"},
+		).
+		MustImportAndCustomize(&Version, v3.Prometheus{}, func(schema *types.Schema) {
+			schema.MustCustomizeField("name", func(field types.Field) types.Field {
+				field.Type = "dnsLabelRestricted"
+				field.Nullable = false
+				field.Required = true
+				return field
+			})
+		}, projectOverride{}, struct {
+			Description string `json:"description"`
+		}{}).
+		MustImport(&Version, v3.PrometheusRule{}, projectOverride{}).
+		MustImport(&Version, v3.Alertmanager{}, projectOverride{}).
+		MustImport(&Version, v3.ServiceMonitor{}, projectOverride{}, struct {
+			DisplayName    string `json:"displayName,omitempty"`
+			TargetService  string `json:"targetService,omitempty"`
+			TargetWorkload string `json:"targetWorkload,omitempty"`
+		}{})
 }

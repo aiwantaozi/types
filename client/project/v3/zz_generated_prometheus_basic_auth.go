@@ -1,12 +1,12 @@
 package client
 
 const (
-	BasicAuthType          = "basicAuth"
-	BasicAuthFieldPassword = "password"
-	BasicAuthFieldUsername = "username"
+	PrometheusBasicAuthType          = "prometheusBasicAuth"
+	PrometheusBasicAuthFieldPassword = "password"
+	PrometheusBasicAuthFieldUsername = "username"
 )
 
-type BasicAuth struct {
+type PrometheusBasicAuth struct {
 	Password *SecretKeySelector `json:"password,omitempty" yaml:"password,omitempty"`
 	Username *SecretKeySelector `json:"username,omitempty" yaml:"username,omitempty"`
 }

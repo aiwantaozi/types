@@ -1,4 +1,4 @@
-package v1
+package v3
 
 import (
 	"github.com/rancher/norman/types"
@@ -266,8 +266,8 @@ type RemoteWriteSpec struct {
 	RemoteTimeout string `json:"remoteTimeout,omitempty"`
 	//The list of remote write relabel configurations.
 	WriteRelabelConfigs []RelabelConfig `json:"writeRelabelConfigs,omitempty"`
-	//BasicAuth for the URL.
-	BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+	//PrometheusBasicAuth for the URL.
+	PrometheusBasicAuth *PrometheusBasicAuth `json:"basicAuth,omitempty"`
 	// File to read bearer token for remote write.
 	BearerToken string `json:"bearerToken,omitempty"`
 	// File to read bearer token for remote write.
@@ -313,8 +313,8 @@ type RemoteReadSpec struct {
 	//Whether reads should be made for queries for time ranges that
 	// the local storage should have complete data for.
 	ReadRecent bool `json:"readRecent,omitempty"`
-	//BasicAuth for the URL.
-	BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+	//PrometheusBasicAuth for the URL.
+	PrometheusBasicAuth *PrometheusBasicAuth `json:"basicAuth,omitempty"`
 	// bearer token for remote read.
 	BearerToken string `json:"bearerToken,omitempty"`
 	// File to read bearer token for remote read.
@@ -357,8 +357,8 @@ type APIServerConfig struct {
 	// Host of apiserver.
 	// A valid string consisting of a hostname or IP followed by an optional port number
 	Host string `json:"host"`
-	// BasicAuth allow an endpoint to authenticate over basic authentication
-	BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+	// PrometheusBasicAuth allow an endpoint to authenticate over basic authentication
+	PrometheusBasicAuth *PrometheusBasicAuth `json:"basicAuth,omitempty"`
 	// Bearer token for accessing apiserver.
 	BearerToken string `json:"bearerToken,omitempty"`
 	// File to read bearer token for accessing apiserver.
@@ -441,19 +441,19 @@ type Endpoint struct {
 	BearerTokenFile string `json:"bearerTokenFile,omitempty"`
 	// HonorLabels chooses the metric's labels on collisions with target labels.
 	HonorLabels bool `json:"honorLabels,omitempty"`
-	// BasicAuth allow an endpoint to authenticate over basic authentication
+	// PrometheusBasicAuth allow an endpoint to authenticate over basic authentication
 	// More info: https://prometheus.io/docs/operating/configuration/#endpoints
-	BasicAuth *BasicAuth `json:"basicAuth,omitempty"`
+	PrometheusBasicAuth *PrometheusBasicAuth `json:"basicAuth,omitempty"`
 	// MetricRelabelConfigs to apply to samples before ingestion.
 	MetricRelabelConfigs []RelabelConfig `json:"metricRelabelings,omitempty"`
 	// ProxyURL eg http://proxyserver:2195 Directs scrapes to proxy through this endpoint.
 	ProxyURL *string `json:"proxyUrl,omitempty"`
 }
 
-// BasicAuth allow an endpoint to authenticate over basic authentication
+// PrometheusBasicAuth allow an endpoint to authenticate over basic authentication
 // More info: https://prometheus.io/docs/operating/configuration/#endpoints
 // +k8s:openapi-gen=true
-type BasicAuth struct {
+type PrometheusBasicAuth struct {
 	// The secret that contains the username for authenticate
 	Username v1.SecretKeySelector `json:"username,omitempty"`
 	// The secret that contains the password for authenticate
