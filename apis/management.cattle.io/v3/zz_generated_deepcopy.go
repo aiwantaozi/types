@@ -5138,6 +5138,15 @@ func (in *ProjectSpec) DeepCopyInto(out *ProjectSpec) {
 			**out = **in
 		}
 	}
+	if in.EnableProjectMonitoring != nil {
+		in, out := &in.EnableProjectMonitoring, &out.EnableProjectMonitoring
+		if *in == nil {
+			*out = nil
+		} else {
+			*out = new(bool)
+			**out = **in
+		}
+	}
 	return
 }
 
@@ -5158,6 +5167,15 @@ func (in *ProjectStatus) DeepCopyInto(out *ProjectStatus) {
 		in, out := &in.Conditions, &out.Conditions
 		*out = make([]ProjectCondition, len(*in))
 		copy(*out, *in)
+	}
+	if in.MonitoringStatus != nil {
+		in, out := &in.MonitoringStatus, &out.MonitoringStatus
+		if *in == nil {
+			*out = nil
+		} else {
+			*out = new(MonitoringStatus)
+			(*in).DeepCopyInto(*out)
+		}
 	}
 	return
 }
