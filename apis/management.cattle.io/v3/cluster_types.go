@@ -32,15 +32,15 @@ const (
 	ClusterConditionDefaultNamespaceAssigned condition.Cond = "DefaultNamespaceAssigned"
 	// ClusterConditionSystemNamespacesAssigned true when cluster's system namespaces has been initially assigned to
 	// a system project
-	ClusterConditionSystemNamespacesAssigned condition.Cond = "SystemNamespacesAssigned"
-	ClusterConditionAddonDeploy              condition.Cond = "AddonDeploy"
-	ClusterConditionSystemAccountCreated     condition.Cond = "SystemAccountCreated"
-	ClusterConditionAgentDeployed            condition.Cond = "AgentDeployed"
-	ClusterConditionGlobalAdminsSynced       condition.Cond = "GlobalAdminsSynced"
-	ClusterConditionInitialRolesPopulated    condition.Cond = "InitialRolesPopulated"
-	ClusterConditionAdditionalCRDCreated     condition.Cond = "AdditionalCRDCreated"
+	ClusterConditionSystemNamespacesAssigned   condition.Cond = "SystemNamespacesAssigned"
+	ClusterConditionAddonDeploy                condition.Cond = "AddonDeploy"
+	ClusterConditionSystemAccountCreated       condition.Cond = "SystemAccountCreated"
+	ClusterConditionAgentDeployed              condition.Cond = "AgentDeployed"
+	ClusterConditionGlobalAdminsSynced         condition.Cond = "GlobalAdminsSynced"
+	ClusterConditionInitialRolesPopulated      condition.Cond = "InitialRolesPopulated"
+	ClusterConditionAdditionalCRDCreated       condition.Cond = "AdditionalCRDCreated"
 	ClusterConditionPrometheusOperatorDeployed condition.Cond = "PrometheusOperatorDeployed"
-	ClusterConditionMonitoringEnabled        condition.Cond = "MonitoringEnabled"
+	ClusterConditionMonitoringEnabled          condition.Cond = "MonitoringEnabled"
 
 	ClusterDriverImported = "imported"
 	ClusterDriverLocal    = "local"

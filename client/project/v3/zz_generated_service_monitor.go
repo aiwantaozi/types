@@ -5,45 +5,45 @@ import (
 )
 
 const (
-	ServiceMonitorType                          = "serviceMonitor"
-	ServiceMonitorFieldAnnotations              = "annotations"
-	ServiceMonitorFieldCreated                  = "created"
-	ServiceMonitorFieldCreatorID                = "creatorId"
-	ServiceMonitorFieldEndpoints                = "endpoints"
-	ServiceMonitorFieldJobLabelOverWrite        = "jobLabelOverWrite"
-	ServiceMonitorFieldLabels                   = "labels"
-	ServiceMonitorFieldName                     = "name"
-	ServiceMonitorFieldNamespaceId              = "namespaceId"
-	ServiceMonitorFieldNamespaceSelector        = "namespaceSelector"
-	ServiceMonitorFieldOwnerReferences          = "ownerReferences"
-	ServiceMonitorFieldProjectID                = "projectId"
-	ServiceMonitorFieldRemoved                  = "removed"
-	ServiceMonitorFieldSelector                 = "selector"
-	ServiceMonitorFieldTargetService            = "targetService"
-	ServiceMonitorFieldTargetWorkload           = "targetWorkload"
-	ServiceMonitorFieldTransparentServiceLabels = "transparentServiceLabels"
-	ServiceMonitorFieldUUID                     = "uuid"
+	ServiceMonitorType                   = "serviceMonitor"
+	ServiceMonitorFieldAnnotations       = "annotations"
+	ServiceMonitorFieldCreated           = "created"
+	ServiceMonitorFieldCreatorID         = "creatorId"
+	ServiceMonitorFieldEndpoints         = "endpoints"
+	ServiceMonitorFieldJobLabel          = "jobLabel"
+	ServiceMonitorFieldLabels            = "labels"
+	ServiceMonitorFieldName              = "name"
+	ServiceMonitorFieldNamespaceId       = "namespaceId"
+	ServiceMonitorFieldNamespaceSelector = "namespaceSelector"
+	ServiceMonitorFieldOwnerReferences   = "ownerReferences"
+	ServiceMonitorFieldProjectID         = "projectId"
+	ServiceMonitorFieldRemoved           = "removed"
+	ServiceMonitorFieldSelector          = "selector"
+	ServiceMonitorFieldTargetLabels      = "targetLabels"
+	ServiceMonitorFieldTargetService     = "targetService"
+	ServiceMonitorFieldTargetWorkload    = "targetWorkload"
+	ServiceMonitorFieldUUID              = "uuid"
 )
 
 type ServiceMonitor struct {
 	types.Resource
-	Annotations              map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
-	Created                  string            `json:"created,omitempty" yaml:"created,omitempty"`
-	CreatorID                string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	Endpoints                []Endpoint        `json:"endpoints,omitempty" yaml:"endpoints,omitempty"`
-	JobLabelOverWrite        string            `json:"jobLabelOverWrite,omitempty" yaml:"jobLabelOverWrite,omitempty"`
-	Labels                   map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
-	Name                     string            `json:"name,omitempty" yaml:"name,omitempty"`
-	NamespaceId              string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
-	NamespaceSelector        []string          `json:"namespaceSelector,omitempty" yaml:"namespaceSelector,omitempty"`
-	OwnerReferences          []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
-	ProjectID                string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
-	Removed                  string            `json:"removed,omitempty" yaml:"removed,omitempty"`
-	Selector                 *LabelSelector    `json:"selector,omitempty" yaml:"selector,omitempty"`
-	TargetService            string            `json:"targetService,omitempty" yaml:"targetService,omitempty"`
-	TargetWorkload           string            `json:"targetWorkload,omitempty" yaml:"targetWorkload,omitempty"`
-	TransparentServiceLabels []string          `json:"transparentServiceLabels,omitempty" yaml:"transparentServiceLabels,omitempty"`
-	UUID                     string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	Annotations       map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	Created           string            `json:"created,omitempty" yaml:"created,omitempty"`
+	CreatorID         string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
+	Endpoints         []Endpoint        `json:"endpoints,omitempty" yaml:"endpoints,omitempty"`
+	JobLabel          string            `json:"jobLabel,omitempty" yaml:"jobLabel,omitempty"`
+	Labels            map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
+	Name              string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId       string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
+	NamespaceSelector []string          `json:"namespaceSelector,omitempty" yaml:"namespaceSelector,omitempty"`
+	OwnerReferences   []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	ProjectID         string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
+	Removed           string            `json:"removed,omitempty" yaml:"removed,omitempty"`
+	Selector          *LabelSelector    `json:"selector,omitempty" yaml:"selector,omitempty"`
+	TargetLabels      []string          `json:"targetLabels,omitempty" yaml:"targetLabels,omitempty"`
+	TargetService     string            `json:"targetService,omitempty" yaml:"targetService,omitempty"`
+	TargetWorkload    string            `json:"targetWorkload,omitempty" yaml:"targetWorkload,omitempty"`
+	UUID              string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
 }
 
 type ServiceMonitorCollection struct {

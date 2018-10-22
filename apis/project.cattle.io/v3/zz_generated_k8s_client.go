@@ -36,9 +36,9 @@ type Interface interface {
 	PipelineSettingsGetter
 	SourceCodeRepositoriesGetter
 	PrometheusesGetter
+	ServiceMonitorsGetter
 	PrometheusRulesGetter
 	AlertmanagersGetter
-	ServiceMonitorsGetter
 }
 
 type Client struct {
@@ -67,9 +67,9 @@ type Client struct {
 	pipelineSettingControllers               map[string]PipelineSettingController
 	sourceCodeRepositoryControllers          map[string]SourceCodeRepositoryController
 	prometheusControllers                    map[string]PrometheusController
+	serviceMonitorControllers                map[string]ServiceMonitorController
 	prometheusRuleControllers                map[string]PrometheusRuleController
 	alertmanagerControllers                  map[string]AlertmanagerController
-	serviceMonitorControllers                map[string]ServiceMonitorController
 }
 
 func NewForConfig(config rest.Config) (Interface, error) {
@@ -106,9 +106,9 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		pipelineSettingControllers:               map[string]PipelineSettingController{},
 		sourceCodeRepositoryControllers:          map[string]SourceCodeRepositoryController{},
 		prometheusControllers:                    map[string]PrometheusController{},
+		serviceMonitorControllers:                map[string]ServiceMonitorController{},
 		prometheusRuleControllers:                map[string]PrometheusRuleController{},
 		alertmanagerControllers:                  map[string]AlertmanagerController{},
-		serviceMonitorControllers:                map[string]ServiceMonitorController{},
 	}, nil
 }
 
@@ -397,6 +397,19 @@ func (c *Client) Prometheuses(namespace string) PrometheusInterface {
 	}
 }
 
+type ServiceMonitorsGetter interface {
+	ServiceMonitors(namespace string) ServiceMonitorInterface
+}
+
+func (c *Client) ServiceMonitors(namespace string) ServiceMonitorInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ServiceMonitorResource, ServiceMonitorGroupVersionKind, serviceMonitorFactory{})
+	return &serviceMonitorClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
 type PrometheusRulesGetter interface {
 	PrometheusRules(namespace string) PrometheusRuleInterface
 }
@@ -417,19 +430,6 @@ type AlertmanagersGetter interface {
 func (c *Client) Alertmanagers(namespace string) AlertmanagerInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &AlertmanagerResource, AlertmanagerGroupVersionKind, alertmanagerFactory{})
 	return &alertmanagerClient{
-		ns:           namespace,
-		client:       c,
-		objectClient: objectClient,
-	}
-}
-
-type ServiceMonitorsGetter interface {
-	ServiceMonitors(namespace string) ServiceMonitorInterface
-}
-
-func (c *Client) ServiceMonitors(namespace string) ServiceMonitorInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ServiceMonitorResource, ServiceMonitorGroupVersionKind, serviceMonitorFactory{})
-	return &serviceMonitorClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,
