@@ -15,200 +15,201 @@ const (
 )
 
 const (
-	Certificate                            = "certificate"
-	Claims                                 = "claims"
-	Cronjob                                = "cronjob"
-	Daemonset                              = "daemonset"
-	Deployment                             = "deployment"
-	Endpoint                               = "endpoint"
-	Pvcprotection                          = "pvcprotection"
-	Pvprotection                           = "pvprotection"
-	Replicaset                             = "replicaset"
-	Replication                            = "replication"
-	Replicationmanager                     = "replicationmanager"
-	ResourceQuotaControllerResourceChanges = "resource_quota_controller_resource_changes"
-	ResourcequotaPrimary                   = "resourcequota_primary"
-	ResourcequotaPriority                  = "resourcequota_priority"
-	Service                                = "service"
-	ServiceAccount                         = "serviceaccount"
-	ServiceaccountTokensSecret             = "serviceaccount_tokens_secret"
-	ServiceaccountTokensService            = "serviceaccount_tokens_service"
-	Statefulset                            = "statefulset"
-	Ttlcontroller                          = "ttlcontroller"
-	Volumes                                = "volumes"
+	Cronjob            = "cronjob"
+	Daemonset          = "daemonset"
+	Deployment         = "deployment"
+	Endpoint           = "endpoint"
+	Pvcprotection      = "pvcprotection"
+	Pvprotection       = "pvprotection"
+	Replicaset         = "replicaset"
+	Replicationmanager = "replicationmanager"
+	Service            = "service"
+	ServiceAccount     = "serviceaccount"
+	Statefulset        = "statefulset"
+	Volumes            = "volumes"
 )
 
 const (
 	CPU         = "cpu"
-	Filesystem  = "fs"
-	Memory      = "memory"
+	ClientQuery = "client"
+	DB          = "db"
+	Disk        = "disk"
 	DiskIO      = "disk_io"
+	Filesystem  = "fs"
+	GRPC        = "grpc"
 	Load1       = "load1"
 	Load5       = "load5"
 	Load15      = "load15"
+	Memory      = "memory"
 	Network     = "network"
-	Disk        = "disk"
-	DB          = "db"
-	GRPC        = "grpc"
-	ClientQuery = "client"
 
-	Transmit = "transmit"
+	Controller = "controller"
+	Helper     = "helper"
+	System     = "system"
+	Server     = "server"
+	Usage      = "usage"
+	UserQuery  = "user"
+
 	Receive  = "receive"
+	Received = "received"
+	Read     = "read"
 	Reads    = "reads"
+	Sent     = "sent"
+	Transmit = "transmit"
 	Writes   = "writes"
 
-	Usage          = "usage"
-	UserQuery      = "user"
-	System         = "system"
-	CfsThrottled   = "cfs_throttled"
-	IOReads        = "io_reads"
-	IOWrites       = "io_writes"
-	PageOut        = "page_out"
-	PageIn         = "page_in"
-	PacketsDropped = "packets_dropped"
-	Errors         = "errors"
-	Packets        = "packets"
-	Controller     = "controller"
-	RequestCache   = "request_cache"
-	Helper         = "helper"
-	Request        = "request"
-	Cache          = "cache"
-	Leader         = "leader"
+	CfsThrottled = "cfs_throttled"
+	PageOut      = "page_out"
+	PageIn       = "page_in"
+	WorkingSet   = "working_set"
 
-	Entry = "entry"
-	Hit   = "hit"
-	Miss  = "miss"
+	IOReads  = "io_reads"
+	IOWrites = "io_writes"
+
+	Drop           = "drop"
+	Errors         = "errors"
+	Errs           = "errs"
+	Packets        = "packets"
+	PacketsDropped = "packets_dropped"
 
 	Adds           = "adds"
 	Depth          = "depth"
-	Retries        = "retries"
 	QueueRetries   = "queue_retries"
+	Retries        = "retries"
 	RateLimiterUse = "rate_limiter_use"
 
+	CommitDuration   = "commit_duration"
 	QueueDuration    = "queue_duration"
+	SnapshotDuration = "snapshot_duration"
 	WorkDuration     = "work_duration"
 	WalFsyncDuration = "wal_fsync_duration"
-	CommitDuration   = "commit_duration"
-	SnapshotDuration = " snapshot_duration"
 
+	AddLatencies               = "add_latencies"
+	BindingLatency             = "binding_latency"
+	GetLatencies               = "get_latencies"
 	QueueLatency               = "queue_latency"
 	SchedulingLatency          = "scheduling_latency"
-	AddLatencies               = "add_latencies"
-	GetLatencies               = "get_latencies"
-	BindingLatency             = "binding_latency"
 	SchedulingAlgorithmLatency = "scheduling_algorithm_latency"
 
+	Request        = "request"
 	RequestCount   = "request_count"
 	RequestError   = "request_error"
 	RequestLatency = "request_latency"
 	RequestSlow    = "request_slow"
+	RequestCache   = "request_cache"
 
-	InsufficientMembers = "insufficient_members"
+	Cache = "cache"
+	Entry = "entry"
+	Hit   = "hit"
+	Miss  = "miss"
+
+	Leader              = "leader"
 	LeaderChangesSeen   = "leader_changes_seen"
-	ProposalsCommitted  = "proposals_committed"
-	ProposalsApplied    = "proposals_applied"
-	ProposalsFailed     = "proposals_failed"
-	ProposalsPending    = "proposals_pending"
+	InsufficientMembers = "insufficient_members"
 
-	ClientCertificateExpiration        = "client_certificate_expiration"
+	ProposalsCommitted = "proposals_committed"
+	ProposalsApplied   = "proposals_applied"
+	ProposalsFailed    = "proposals_failed"
+	ProposalsPending   = "proposals_pending"
+
+	AuditEvent                         = "AuditEvent"
 	APIServiceRegistrationController   = "APIServiceRegistrationController"
 	APIServiceRegistration             = "APIServiceRegistration"
+	ClientCertificateExpiration        = "client_certificate_expiration"
 	E2e                                = "e2e"
-	AuditEvent                         = "AuditEvent"
-	Server                             = "server"
-	ResidentMemory                     = "residentMemory"
 	NamespaceContainerMemoryUsageBytes = "namespace_container_memory_usage_bytes"
 	NamespaceContainerSpecCPUShares    = "namespace_container_spec_cpu_shares"
 	NamespaceContainerCPUUsage         = "namespace_container_cpu_usage"
+	ResidentMemory                     = "residentMemory"
 )
 
 const (
-	Sum      = "sum"
 	Avg      = "avg"
-	Rate     = "rate"
+	Count    = "count"
+	Increase = "increase"
 	Percent  = "percent"
 	Quantile = "quantile"
-	Count    = "count"
+	Rate     = "rate"
+	Sum      = "sum"
 	Summary  = "summary"
-	Increase = "increase"
 	Total    = "total"
 )
 
 const (
+	Bytes        = "bytes"
 	Milliseconds = "milliseconds"
 	Seconds      = "seconds"
-	Bytes        = "bytes"
 )
 
 var (
 	MetricEnum = []string{
-		// ResourceCluster + CPULoad1,
-		// ResourceCluster + CPULoad5,
-		// ResourceCluster + CPULoad15,
-		// ResourceCluster + CPUUsageSecondsSumRate,
-		// ResourceCluster + CPUUserSecondsSumRate,
-		// ResourceCluster + CPUSystemSecondsSumRate,
-		// ResourceCluster + MemoryUsagePercent,
-		// ResourceCluster + MemoryPageInBytesSumRate,
-		// ResourceCluster + MemoryPageOutBytesSumRate,
-		// ResourceCluster + NetworkReceiveBytesSumRate,
-		// ResourceCluster + NetworkReceivePacketsDroppedSumRate,
-		// ResourceCluster + NetworkReceiveErrorsSumRate,
-		// ResourceCluster + NetworkReceivePacketsSumRate,
-		// ResourceCluster + NetworkTransmitPacketsSumRate,
-		// ResourceCluster + NetworkTransmitBytesSumRate,
-		// ResourceCluster + NetworkTransmitPacketsDroppedSumRate,
-		// ResourceCluster + NetworkTransmitErrorsSumRate,
-		// ResourceCluster + FilesystemUseagePercent,
-		// ResourceCluster + DiskIOReadsBytesSumRate,
-		// ResourceCluster + DiskIOWritesBytesSumRate,
+	// ResourceCluster + CPULoad1,
+	// ResourceCluster + CPULoad5,
+	// ResourceCluster + CPULoad15,
+	// ResourceCluster + CPUUsageSecondsSumRate,
+	// ResourceCluster + CPUUserSecondsSumRate,
+	// ResourceCluster + CPUSystemSecondsSumRate,
+	// ResourceCluster + MemoryUsagePercent,
+	// ResourceCluster + MemoryPageInBytesSumRate,
+	// ResourceCluster + MemoryPageOutBytesSumRate,
+	// ResourceCluster + NetworkReceiveBytesSumRate,
+	// ResourceCluster + NetworkReceivePacketsDroppedSumRate,
+	// ResourceCluster + NetworkReceiveErrorsSumRate,
+	// ResourceCluster + NetworkReceivePacketsSumRate,
+	// ResourceCluster + NetworkTransmitPacketsSumRate,
+	// ResourceCluster + NetworkTransmitBytesSumRate,
+	// ResourceCluster + NetworkTransmitPacketsDroppedSumRate,
+	// ResourceCluster + NetworkTransmitErrorsSumRate,
+	// ResourceCluster + FilesystemUseagePercent,
+	// ResourceCluster + DiskIOReadsBytesSumRate,
+	// ResourceCluster + DiskIOWritesBytesSumRate,
 
-		// ResourceNode + CPULoad1,
-		// ResourceNode + CPULoad5,
-		// ResourceNode + CPULoad15,
-		// ResourceNode + CPUUsageSecondsSumRate,
-		// ResourceNode + CPUUserSecondsSumRate,
-		// ResourceNode + CPUSystemSecondsSumRate,
-		// ResourceNode + MemoryUsagePercent,
-		// ResourceNode + MemoryPageInBytesSumRate,
-		// ResourceNode + MemoryPageOutBytesSumRate,
-		// ResourceNode + NetworkReceiveBytesSumRate,
-		// ResourceNode + NetworkReceivePacketsDroppedSumRate,
-		// ResourceNode + NetworkReceiveErrorsSumRate,
-		// ResourceNode + NetworkReceivePacketsSumRate,
-		// ResourceNode + NetworkTransmitPacketsSumRate,
-		// ResourceNode + NetworkTransmitBytesSumRate,
-		// ResourceNode + NetworkTransmitPacketsDroppedSumRate,
-		// ResourceNode + NetworkTransmitErrorsSumRate,
-		// ResourceNode + FilesystemUseagePercent,
-		// ResourceNode + DiskIOReadsBytesSumRate,
-		// ResourceNode + DiskIOWritesBytesSumRate,
+	// ResourceNode + CPULoad1,
+	// ResourceNode + CPULoad5,
+	// ResourceNode + CPULoad15,
+	// ResourceNode + CPUUsageSecondsSumRate,
+	// ResourceNode + CPUUserSecondsSumRate,
+	// ResourceNode + CPUSystemSecondsSumRate,
+	// ResourceNode + MemoryUsagePercent,
+	// ResourceNode + MemoryPageInBytesSumRate,
+	// ResourceNode + MemoryPageOutBytesSumRate,
+	// ResourceNode + NetworkReceiveBytesSumRate,
+	// ResourceNode + NetworkReceivePacketsDroppedSumRate,
+	// ResourceNode + NetworkReceiveErrorsSumRate,
+	// ResourceNode + NetworkReceivePacketsSumRate,
+	// ResourceNode + NetworkTransmitPacketsSumRate,
+	// ResourceNode + NetworkTransmitBytesSumRate,
+	// ResourceNode + NetworkTransmitPacketsDroppedSumRate,
+	// ResourceNode + NetworkTransmitErrorsSumRate,
+	// ResourceNode + FilesystemUseagePercent,
+	// ResourceNode + DiskIOReadsBytesSumRate,
+	// ResourceNode + DiskIOWritesBytesSumRate,
 
-		// ResourcePod + CPUUsageSecondsSumRate,
-		// ResourcePod + CPUUserSecondsSumRate,
-		// ResourcePod + CPUSystemSecondsSumRate,
-		// ResourcePod + CPUCfsThrottledSecondsSumRate,
-		// ResourcePod + MemoryUsageBytesSum,
-		// ResourcePod + MemoryUsagePercent,
-		// ResourcePod + DiskIOReadsBytesSumRate,
-		// ResourcePod + DiskIOWritesBytesSumRate,
-		// ResourcePod + FsByteSum,
-		// ResourcePod + NetworkReceiveBytesSumRate,
-		// ResourcePod + NetworkTransmitBytesSumRate,
-		// ResourcePod + NetworkReceiveErrorsSumRate,
-		// ResourcePod + NetworkTransmitErrorsSumRate,
-		// ResourcePod + NetworkReceivePacketsSumRate,
-		// ResourcePod + NetworkTransmitPacketsSumRate,
-		// ResourcePod + NetworkReceivePacketsDroppedSumRate,
-		// ResourcePod + NetworkTransmitPacketsDroppedSumRate,
-		// ResourceContainer + CPUUsageSecondsSumRate,
-		// ResourceContainer + CPUUserSecondsSumRate,
-		// ResourceContainer + CPUSystemSecondsSumRate,
-		// ResourceContainer + CPUCfsThrottledSecondsSumRate,
-		// ResourceContainer + MemoryUsageBytesSum,
-		// ResourceContainer + MemoryUsagePercent,
-		// ResourceContainer + DiskIOReadsBytesSumRate,
-		// ResourceContainer + DiskIOWritesBytesSumRate,
-		// ResourceContainer + FsByteSum,
+	// ResourcePod + CPUUsageSecondsSumRate,
+	// ResourcePod + CPUUserSecondsSumRate,
+	// ResourcePod + CPUSystemSecondsSumRate,
+	// ResourcePod + CPUCfsThrottledSecondsSumRate,
+	// ResourcePod + MemoryUsageBytesSum,
+	// ResourcePod + MemoryUsagePercent,
+	// ResourcePod + DiskIOReadsBytesSumRate,
+	// ResourcePod + DiskIOWritesBytesSumRate,
+	// ResourcePod + FsByteSum,
+	// ResourcePod + NetworkReceiveBytesSumRate,
+	// ResourcePod + NetworkTransmitBytesSumRate,
+	// ResourcePod + NetworkReceiveErrorsSumRate,
+	// ResourcePod + NetworkTransmitErrorsSumRate,
+	// ResourcePod + NetworkReceivePacketsSumRate,
+	// ResourcePod + NetworkTransmitPacketsSumRate,
+	// ResourcePod + NetworkReceivePacketsDroppedSumRate,
+	// ResourcePod + NetworkTransmitPacketsDroppedSumRate,
+	// ResourceContainer + CPUUsageSecondsSumRate,
+	// ResourceContainer + CPUUserSecondsSumRate,
+	// ResourceContainer + CPUSystemSecondsSumRate,
+	// ResourceContainer + CPUCfsThrottledSecondsSumRate,
+	// ResourceContainer + MemoryUsageBytesSum,
+	// ResourceContainer + MemoryUsagePercent,
+	// ResourceContainer + DiskIOReadsBytesSumRate,
+	// ResourceContainer + DiskIOWritesBytesSumRate,
+	// ResourceContainer + FsByteSum,
 	}
 )
