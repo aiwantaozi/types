@@ -39,6 +39,7 @@ const (
 	ClusterConditionGlobalAdminsSynced       condition.Cond = "GlobalAdminsSynced"
 	ClusterConditionInitialRolesPopulated    condition.Cond = "InitialRolesPopulated"
 	ClusterConditionAdditionalCRDCreated     condition.Cond = "AdditionalCRDCreated"
+	ClusterConditionPrometheusOperatorDeployed condition.Cond = "PrometheusOperatorDeployed"
 	ClusterConditionMonitoringEnabled        condition.Cond = "MonitoringEnabled"
 
 	ClusterDriverImported = "imported"
