@@ -26,7 +26,6 @@ type MonitoringCondition struct {
 }
 
 const (
-	MonitoringConditionOperatorDeployed          condition.Cond = "OperatorDeployed"
 	MonitoringConditionGrafanaDeployed           condition.Cond = "GrafanaDeployed"
 	MonitoringConditionPrometheusDeployed        condition.Cond = "PrometheusDeployed"
 	MonitoringConditionAlertmaanagerDeployed     condition.Cond = "AlertmanagerDeployed"
