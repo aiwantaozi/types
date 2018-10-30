@@ -73,14 +73,6 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&PipelineSettingList{},
 		&SourceCodeRepository{},
 		&SourceCodeRepositoryList{},
-		&Prometheus{},
-		&PrometheusList{},
-		&ServiceMonitor{},
-		&ServiceMonitorList{},
-		&PrometheusRule{},
-		&PrometheusRuleList{},
-		&Alertmanager{},
-		&AlertmanagerList{},
 	)
 	return nil
 }

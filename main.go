@@ -13,6 +13,7 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
 
+	monitoringv1schema "github.com/rancher/types/apis/monitoring.cattle.io/v1/schema"
 	"k8s.io/api/core/v1"
 	extv1beta1 "k8s.io/api/extensions/v1beta1"
 	knetworkingv1 "k8s.io/api/networking/v1"
@@ -27,6 +28,7 @@ func main() {
 	generator.Generate(publicSchema.PublicSchemas, nil)
 	generator.Generate(clusterSchema.Schemas, nil)
 	generator.Generate(projectSchema.Schemas, nil)
+	generator.Generate(monitoringv1schema.Schema, nil)
 
 	generator.GenerateNativeTypes(v1.SchemeGroupVersion, []interface{}{
 		v1.Endpoints{},
@@ -74,4 +76,12 @@ func main() {
 			extv1beta1.PodSecurityPolicy{},
 		},
 	)
+	// generator.GenerateNativeTypes(monitoringv1schema.SchemeGroupVersion,
+	// 	[]interface{}{
+	// 		monitoringv1.Prometheus{},
+	// 		monitoringv1.PrometheusRule{},
+	// 		monitoringv1.Alertmanager{},
+	// 		monitoringv1.ServiceMonitor{},
+	// 	},
+	// 	nil)
 }
