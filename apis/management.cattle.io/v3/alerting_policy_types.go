@@ -35,6 +35,7 @@ type ProjectAlertPolicy struct {
 
 type ClusterPolicySpec struct {
 	ClusterName          string                `json:"clusterName" norman:"type=reference[cluster]"`
+	TargetNodes          []TargetNode          `json:"targetNodes,omitempty"`
 	TargetEvents         []TargetEvent         `json:"targetEvents,omitempty"`
 	TargetSystemServices []TargetSystemService `json:"targetSystemServices,omitempty"`
 	CommonPolicy
@@ -52,6 +53,7 @@ type CommonPolicy struct {
 	Description string      `json:"description,omitempty"`
 	Metrics     []Metric    `json:"metrics,omitempty"`
 	Recipients  []Recipient `json:"recipients,omitempty" norman:"required"`
+	TimingField
 }
 
 type CommentField struct {
@@ -61,15 +63,16 @@ type CommentField struct {
 
 type Metric struct {
 	CommentField
-	Name               string             `json:"name,omitempty"`
-	MetricType         string             `json:"metricType,omitempty"`
-	LabelSelector      map[string]string  `json:"labelSelector,omitempty"`
-	NameSelector       string             `json:"nameSelector,omitempty"`
-	ConditionThreshold ConditionThreshold `json:"conditionThreshold,omitempty"`
-}
-
-type ConditionThreshold struct {
+	TimingField
+	Name           string  `json:"name,omitempty"`
+	Expression     string  `json:"expression,omitempty"`
 	Comparison     string  `json:"comparison,omitempty" norman:"required,type=enum,options=equal|not-equal|greater-than|less-than|greater-or-equal|less-or-equal"`
 	Duration       string  `json:"duration",omitempty`
 	ThresholdValue float64 `json:"thresholdValue,omitempty" norman:"required,type=float"`
+}
+
+type TimingField struct {
+	GroupWaitSeconds      int `json:"groupWaitSeconds,omitempty" norman:"required,default=30,min=0"`
+	GroupIntervalSeconds  int `json:"groupIntervalSeconds,omitempty" norman:"required,default=180,min=0"`
+	RepeatIntervalSeconds int `json:"repeatIntervalSeconds,omitempty"  norman:"required,default=3600,min=0"`
 }

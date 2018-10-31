@@ -546,11 +546,6 @@ func alertPolicyTypes(schema *types.Schemas) *types.Schemas {
 		AddMapperForType(&Version, v3.ClusterAlertPolicy{},
 			&m.Embed{Field: "status"},
 			m.DisplayName{}).
-		AddMapperForType(&Version, v3.Metric{},
-			m.Enum{
-				Field:   "metricType",
-				Options: v3.MetricEnum,
-			}).
 		MustImportAndCustomize(&Version, v3.ClusterAlertPolicy{}, func(schema *types.Schema) {
 			schema.ResourceActions = map[string]types.Action{
 				"activate":   {},
