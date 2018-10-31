@@ -5,49 +5,57 @@ import (
 )
 
 const (
-	ClusterAlertPolicyType                      = "clusterAlertPolicy"
-	ClusterAlertPolicyFieldAlertState           = "alertState"
-	ClusterAlertPolicyFieldAnnotations          = "annotations"
-	ClusterAlertPolicyFieldClusterID            = "clusterId"
-	ClusterAlertPolicyFieldCreated              = "created"
-	ClusterAlertPolicyFieldCreatorID            = "creatorId"
-	ClusterAlertPolicyFieldDescription          = "description"
-	ClusterAlertPolicyFieldLabels               = "labels"
-	ClusterAlertPolicyFieldMetrics              = "metrics"
-	ClusterAlertPolicyFieldName                 = "name"
-	ClusterAlertPolicyFieldNamespaceId          = "namespaceId"
-	ClusterAlertPolicyFieldOwnerReferences      = "ownerReferences"
-	ClusterAlertPolicyFieldRecipients           = "recipients"
-	ClusterAlertPolicyFieldRemoved              = "removed"
-	ClusterAlertPolicyFieldState                = "state"
-	ClusterAlertPolicyFieldTargetEvents         = "targetEvents"
-	ClusterAlertPolicyFieldTargetSystemServices = "targetSystemServices"
-	ClusterAlertPolicyFieldTransitioning        = "transitioning"
-	ClusterAlertPolicyFieldTransitioningMessage = "transitioningMessage"
-	ClusterAlertPolicyFieldUUID                 = "uuid"
+	ClusterAlertPolicyType                       = "clusterAlertPolicy"
+	ClusterAlertPolicyFieldAlertState            = "alertState"
+	ClusterAlertPolicyFieldAnnotations           = "annotations"
+	ClusterAlertPolicyFieldClusterID             = "clusterId"
+	ClusterAlertPolicyFieldCreated               = "created"
+	ClusterAlertPolicyFieldCreatorID             = "creatorId"
+	ClusterAlertPolicyFieldDescription           = "description"
+	ClusterAlertPolicyFieldGroupIntervalSeconds  = "groupIntervalSeconds"
+	ClusterAlertPolicyFieldGroupWaitSeconds      = "groupWaitSeconds"
+	ClusterAlertPolicyFieldLabels                = "labels"
+	ClusterAlertPolicyFieldMetrics               = "metrics"
+	ClusterAlertPolicyFieldName                  = "name"
+	ClusterAlertPolicyFieldNamespaceId           = "namespaceId"
+	ClusterAlertPolicyFieldOwnerReferences       = "ownerReferences"
+	ClusterAlertPolicyFieldRecipients            = "recipients"
+	ClusterAlertPolicyFieldRemoved               = "removed"
+	ClusterAlertPolicyFieldRepeatIntervalSeconds = "repeatIntervalSeconds"
+	ClusterAlertPolicyFieldState                 = "state"
+	ClusterAlertPolicyFieldTargetEvents          = "targetEvents"
+	ClusterAlertPolicyFieldTargetNodes           = "targetNodes"
+	ClusterAlertPolicyFieldTargetSystemServices  = "targetSystemServices"
+	ClusterAlertPolicyFieldTransitioning         = "transitioning"
+	ClusterAlertPolicyFieldTransitioningMessage  = "transitioningMessage"
+	ClusterAlertPolicyFieldUUID                  = "uuid"
 )
 
 type ClusterAlertPolicy struct {
 	types.Resource
-	AlertState           string                `json:"alertState,omitempty" yaml:"alertState,omitempty"`
-	Annotations          map[string]string     `json:"annotations,omitempty" yaml:"annotations,omitempty"`
-	ClusterID            string                `json:"clusterId,omitempty" yaml:"clusterId,omitempty"`
-	Created              string                `json:"created,omitempty" yaml:"created,omitempty"`
-	CreatorID            string                `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	Description          string                `json:"description,omitempty" yaml:"description,omitempty"`
-	Labels               map[string]string     `json:"labels,omitempty" yaml:"labels,omitempty"`
-	Metrics              []Metric              `json:"metrics,omitempty" yaml:"metrics,omitempty"`
-	Name                 string                `json:"name,omitempty" yaml:"name,omitempty"`
-	NamespaceId          string                `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
-	OwnerReferences      []OwnerReference      `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
-	Recipients           []Recipient           `json:"recipients,omitempty" yaml:"recipients,omitempty"`
-	Removed              string                `json:"removed,omitempty" yaml:"removed,omitempty"`
-	State                string                `json:"state,omitempty" yaml:"state,omitempty"`
-	TargetEvents         []TargetEvent         `json:"targetEvents,omitempty" yaml:"targetEvents,omitempty"`
-	TargetSystemServices []TargetSystemService `json:"targetSystemServices,omitempty" yaml:"targetSystemServices,omitempty"`
-	Transitioning        string                `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
-	TransitioningMessage string                `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
-	UUID                 string                `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	AlertState            string                `json:"alertState,omitempty" yaml:"alertState,omitempty"`
+	Annotations           map[string]string     `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	ClusterID             string                `json:"clusterId,omitempty" yaml:"clusterId,omitempty"`
+	Created               string                `json:"created,omitempty" yaml:"created,omitempty"`
+	CreatorID             string                `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
+	Description           string                `json:"description,omitempty" yaml:"description,omitempty"`
+	GroupIntervalSeconds  int64                 `json:"groupIntervalSeconds,omitempty" yaml:"groupIntervalSeconds,omitempty"`
+	GroupWaitSeconds      int64                 `json:"groupWaitSeconds,omitempty" yaml:"groupWaitSeconds,omitempty"`
+	Labels                map[string]string     `json:"labels,omitempty" yaml:"labels,omitempty"`
+	Metrics               []Metric              `json:"metrics,omitempty" yaml:"metrics,omitempty"`
+	Name                  string                `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId           string                `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
+	OwnerReferences       []OwnerReference      `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	Recipients            []Recipient           `json:"recipients,omitempty" yaml:"recipients,omitempty"`
+	Removed               string                `json:"removed,omitempty" yaml:"removed,omitempty"`
+	RepeatIntervalSeconds int64                 `json:"repeatIntervalSeconds,omitempty" yaml:"repeatIntervalSeconds,omitempty"`
+	State                 string                `json:"state,omitempty" yaml:"state,omitempty"`
+	TargetEvents          []TargetEvent         `json:"targetEvents,omitempty" yaml:"targetEvents,omitempty"`
+	TargetNodes           []TargetNode          `json:"targetNodes,omitempty" yaml:"targetNodes,omitempty"`
+	TargetSystemServices  []TargetSystemService `json:"targetSystemServices,omitempty" yaml:"targetSystemServices,omitempty"`
+	Transitioning         string                `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
+	TransitioningMessage  string                `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
+	UUID                  string                `json:"uuid,omitempty" yaml:"uuid,omitempty"`
 }
 
 type ClusterAlertPolicyCollection struct {

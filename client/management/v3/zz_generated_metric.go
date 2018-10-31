@@ -1,22 +1,28 @@
 package client
 
 const (
-	MetricType                    = "metric"
-	MetricFieldConditionThreshold = "conditionThreshold"
-	MetricFieldLabelSelector      = "labelSelector"
-	MetricFieldMetricType         = "metricType"
-	MetricFieldName               = "name"
-	MetricFieldNameSelector       = "nameSelector"
-	MetricFieldRuleID             = "ruleID"
-	MetricFieldSeverity           = "severity"
+	MetricType                       = "metric"
+	MetricFieldComparison            = "comparison"
+	MetricFieldDuration              = "duration"
+	MetricFieldExpression            = "expression"
+	MetricFieldGroupIntervalSeconds  = "groupIntervalSeconds"
+	MetricFieldGroupWaitSeconds      = "groupWaitSeconds"
+	MetricFieldName                  = "name"
+	MetricFieldRepeatIntervalSeconds = "repeatIntervalSeconds"
+	MetricFieldRuleID                = "ruleID"
+	MetricFieldSeverity              = "severity"
+	MetricFieldThresholdValue        = "thresholdValue"
 )
 
 type Metric struct {
-	ConditionThreshold *ConditionThreshold `json:"conditionThreshold,omitempty" yaml:"conditionThreshold,omitempty"`
-	LabelSelector      map[string]string   `json:"labelSelector,omitempty" yaml:"labelSelector,omitempty"`
-	MetricType         string              `json:"metricType,omitempty" yaml:"metricType,omitempty"`
-	Name               string              `json:"name,omitempty" yaml:"name,omitempty"`
-	NameSelector       string              `json:"nameSelector,omitempty" yaml:"nameSelector,omitempty"`
-	RuleID             string              `json:"ruleID,omitempty" yaml:"ruleID,omitempty"`
-	Severity           string              `json:"severity,omitempty" yaml:"severity,omitempty"`
+	Comparison            string   `json:"comparison,omitempty" yaml:"comparison,omitempty"`
+	Duration              string   `json:"duration,omitempty" yaml:"duration,omitempty"`
+	Expression            string   `json:"expression,omitempty" yaml:"expression,omitempty"`
+	GroupIntervalSeconds  int64    `json:"groupIntervalSeconds,omitempty" yaml:"groupIntervalSeconds,omitempty"`
+	GroupWaitSeconds      int64    `json:"groupWaitSeconds,omitempty" yaml:"groupWaitSeconds,omitempty"`
+	Name                  string   `json:"name,omitempty" yaml:"name,omitempty"`
+	RepeatIntervalSeconds int64    `json:"repeatIntervalSeconds,omitempty" yaml:"repeatIntervalSeconds,omitempty"`
+	RuleID                string   `json:"ruleID,omitempty" yaml:"ruleID,omitempty"`
+	Severity              string   `json:"severity,omitempty" yaml:"severity,omitempty"`
+	ThresholdValue        *float64 `json:"thresholdValue,omitempty" yaml:"thresholdValue,omitempty"`
 }

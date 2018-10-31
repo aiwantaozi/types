@@ -5,51 +5,57 @@ import (
 )
 
 const (
-	ProjectAlertPolicyType                      = "projectAlertPolicy"
-	ProjectAlertPolicyFieldAnnotations          = "annotations"
-	ProjectAlertPolicyFieldCreated              = "created"
-	ProjectAlertPolicyFieldCreatorID            = "creatorId"
-	ProjectAlertPolicyFieldDescription          = "description"
-	ProjectAlertPolicyFieldDisplayName          = "displayName"
-	ProjectAlertPolicyFieldLabels               = "labels"
-	ProjectAlertPolicyFieldMetrics              = "metrics"
-	ProjectAlertPolicyFieldName                 = "name"
-	ProjectAlertPolicyFieldNamespaceId          = "namespaceId"
-	ProjectAlertPolicyFieldOwnerReferences      = "ownerReferences"
-	ProjectAlertPolicyFieldProjectID            = "projectId"
-	ProjectAlertPolicyFieldRecipients           = "recipients"
-	ProjectAlertPolicyFieldRemoved              = "removed"
-	ProjectAlertPolicyFieldState                = "state"
-	ProjectAlertPolicyFieldStatus               = "status"
-	ProjectAlertPolicyFieldTargetPods           = "targetPods"
-	ProjectAlertPolicyFieldTargetWorkloads      = "targetWorkloads"
-	ProjectAlertPolicyFieldTransitioning        = "transitioning"
-	ProjectAlertPolicyFieldTransitioningMessage = "transitioningMessage"
-	ProjectAlertPolicyFieldUUID                 = "uuid"
+	ProjectAlertPolicyType                       = "projectAlertPolicy"
+	ProjectAlertPolicyFieldAnnotations           = "annotations"
+	ProjectAlertPolicyFieldCreated               = "created"
+	ProjectAlertPolicyFieldCreatorID             = "creatorId"
+	ProjectAlertPolicyFieldDescription           = "description"
+	ProjectAlertPolicyFieldDisplayName           = "displayName"
+	ProjectAlertPolicyFieldGroupIntervalSeconds  = "groupIntervalSeconds"
+	ProjectAlertPolicyFieldGroupWaitSeconds      = "groupWaitSeconds"
+	ProjectAlertPolicyFieldLabels                = "labels"
+	ProjectAlertPolicyFieldMetrics               = "metrics"
+	ProjectAlertPolicyFieldName                  = "name"
+	ProjectAlertPolicyFieldNamespaceId           = "namespaceId"
+	ProjectAlertPolicyFieldOwnerReferences       = "ownerReferences"
+	ProjectAlertPolicyFieldProjectID             = "projectId"
+	ProjectAlertPolicyFieldRecipients            = "recipients"
+	ProjectAlertPolicyFieldRemoved               = "removed"
+	ProjectAlertPolicyFieldRepeatIntervalSeconds = "repeatIntervalSeconds"
+	ProjectAlertPolicyFieldState                 = "state"
+	ProjectAlertPolicyFieldStatus                = "status"
+	ProjectAlertPolicyFieldTargetPods            = "targetPods"
+	ProjectAlertPolicyFieldTargetWorkloads       = "targetWorkloads"
+	ProjectAlertPolicyFieldTransitioning         = "transitioning"
+	ProjectAlertPolicyFieldTransitioningMessage  = "transitioningMessage"
+	ProjectAlertPolicyFieldUUID                  = "uuid"
 )
 
 type ProjectAlertPolicy struct {
 	types.Resource
-	Annotations          map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
-	Created              string            `json:"created,omitempty" yaml:"created,omitempty"`
-	CreatorID            string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	Description          string            `json:"description,omitempty" yaml:"description,omitempty"`
-	DisplayName          string            `json:"displayName,omitempty" yaml:"displayName,omitempty"`
-	Labels               map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
-	Metrics              []Metric          `json:"metrics,omitempty" yaml:"metrics,omitempty"`
-	Name                 string            `json:"name,omitempty" yaml:"name,omitempty"`
-	NamespaceId          string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
-	OwnerReferences      []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
-	ProjectID            string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
-	Recipients           []Recipient       `json:"recipients,omitempty" yaml:"recipients,omitempty"`
-	Removed              string            `json:"removed,omitempty" yaml:"removed,omitempty"`
-	State                string            `json:"state,omitempty" yaml:"state,omitempty"`
-	Status               *AlertStatus      `json:"status,omitempty" yaml:"status,omitempty"`
-	TargetPods           []TargetPod       `json:"targetPods,omitempty" yaml:"targetPods,omitempty"`
-	TargetWorkloads      []TargetWorkload  `json:"targetWorkloads,omitempty" yaml:"targetWorkloads,omitempty"`
-	Transitioning        string            `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
-	TransitioningMessage string            `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
-	UUID                 string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	Annotations           map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	Created               string            `json:"created,omitempty" yaml:"created,omitempty"`
+	CreatorID             string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
+	Description           string            `json:"description,omitempty" yaml:"description,omitempty"`
+	DisplayName           string            `json:"displayName,omitempty" yaml:"displayName,omitempty"`
+	GroupIntervalSeconds  int64             `json:"groupIntervalSeconds,omitempty" yaml:"groupIntervalSeconds,omitempty"`
+	GroupWaitSeconds      int64             `json:"groupWaitSeconds,omitempty" yaml:"groupWaitSeconds,omitempty"`
+	Labels                map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
+	Metrics               []Metric          `json:"metrics,omitempty" yaml:"metrics,omitempty"`
+	Name                  string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId           string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
+	OwnerReferences       []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	ProjectID             string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
+	Recipients            []Recipient       `json:"recipients,omitempty" yaml:"recipients,omitempty"`
+	Removed               string            `json:"removed,omitempty" yaml:"removed,omitempty"`
+	RepeatIntervalSeconds int64             `json:"repeatIntervalSeconds,omitempty" yaml:"repeatIntervalSeconds,omitempty"`
+	State                 string            `json:"state,omitempty" yaml:"state,omitempty"`
+	Status                *AlertStatus      `json:"status,omitempty" yaml:"status,omitempty"`
+	TargetPods            []TargetPod       `json:"targetPods,omitempty" yaml:"targetPods,omitempty"`
+	TargetWorkloads       []TargetWorkload  `json:"targetWorkloads,omitempty" yaml:"targetWorkloads,omitempty"`
+	Transitioning         string            `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
+	TransitioningMessage  string            `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
+	UUID                  string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
 }
 
 type ProjectAlertPolicyCollection struct {
