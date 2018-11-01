@@ -8,6 +8,6 @@ var (
 	Version = types.APIVersion{
 		Version: "v1",
 		Group:   "monitoring.native.cattle.io",
-		Path:    "/v3/monitoring",
+		Path:    "/v3/project",
 	}
 )
