@@ -18,8 +18,7 @@ import (
 	extv1beta1 "github.com/rancher/types/apis/extensions/v1beta1"
 	managementv3 "github.com/rancher/types/apis/management.cattle.io/v3"
 	managementSchema "github.com/rancher/types/apis/management.cattle.io/v3/schema"
-	monitoringv1 "github.com/rancher/types/apis/monitoring.cattle.io/v1"
-	monitoringSchema "github.com/rancher/types/apis/monitoring.cattle.io/v1/schema"
+	monitoringv1 "github.com/rancher/types/apis/monitoring.native.cattle.io/v1"
 	knetworkingv1 "github.com/rancher/types/apis/networking.k8s.io/v1"
 	projectv3 "github.com/rancher/types/apis/project.cattle.io/v3"
 	projectSchema "github.com/rancher/types/apis/project.cattle.io/v3/schema"
@@ -134,8 +133,7 @@ func NewScaledContext(config rest.Config) (*ScaledContext, error) {
 	context.Schemas = types.NewSchemas().
 		AddSchemas(managementSchema.Schemas).
 		AddSchemas(clusterSchema.Schemas).
-		AddSchemas(projectSchema.Schemas).
-		AddSchemas(monitoringSchema.Schema)
+		AddSchemas(projectSchema.Schemas)
 	return context, err
 }
 

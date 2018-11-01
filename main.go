@@ -12,8 +12,10 @@ import (
 	"k8s.io/api/apps/v1beta2"
 	batchv1 "k8s.io/api/batch/v1"
 	batchv1beta1 "k8s.io/api/batch/v1beta1"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 
-	monitoringv1schema "github.com/rancher/types/apis/monitoring.cattle.io/v1/schema"
+	monitoringv1 "github.com/rancher/types/apis/monitoring.native.cattle.io/v1"
+	monitoringv1schema "github.com/rancher/types/apis/monitoring.native.cattle.io/v1/schema"
 	"k8s.io/api/core/v1"
 	extv1beta1 "k8s.io/api/extensions/v1beta1"
 	knetworkingv1 "k8s.io/api/networking/v1"
@@ -28,7 +30,7 @@ func main() {
 	generator.Generate(publicSchema.PublicSchemas, nil)
 	generator.Generate(clusterSchema.Schemas, nil)
 	generator.Generate(projectSchema.Schemas, nil)
-	generator.Generate(monitoringv1schema.Schema, nil)
+	// generator.Generate(monitoringv1schema.Schema, nil)
 
 	generator.GenerateNativeTypes(v1.SchemeGroupVersion, []interface{}{
 		v1.Endpoints{},
@@ -76,12 +78,16 @@ func main() {
 			extv1beta1.PodSecurityPolicy{},
 		},
 	)
-	// generator.GenerateNativeTypes(monitoringv1schema.SchemeGroupVersion,
-	// 	[]interface{}{
-	// 		monitoringv1.Prometheus{},
-	// 		monitoringv1.PrometheusRule{},
-	// 		monitoringv1.Alertmanager{},
-	// 		monitoringv1.ServiceMonitor{},
-	// 	},
-	// 	nil)
+	generator.GenerateNativeTypes(
+		schema.GroupVersion{
+			monitoringv1schema.Version.Group,
+			monitoringv1schema.Version.Version,
+		},
+		[]interface{}{
+			monitoringv1.Prometheus{},
+			monitoringv1.PrometheusRule{},
+			monitoringv1.Alertmanager{},
+			monitoringv1.ServiceMonitor{},
+		},
+		nil)
 }

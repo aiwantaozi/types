@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	GroupName = "monitoring.cattle.io"
+	GroupName = "monitoring.native.cattle.io"
 	Version   = "v1"
 )
 
@@ -33,14 +33,10 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 	// TODO this gets cleaned up when the types are fixed
 	scheme.AddKnownTypes(SchemeGroupVersion,
 
-		&Prometheus{},
 		&PrometheusList{},
-		&ServiceMonitor{},
-		&ServiceMonitorList{},
-		&PrometheusRule{},
 		&PrometheusRuleList{},
-		&Alertmanager{},
 		&AlertmanagerList{},
+		&ServiceMonitorList{},
 	)
 	return nil
 }
