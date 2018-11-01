@@ -11,4 +11,4 @@ require (
 	k8s.io/gengo v0.0.0-20180223161844-01a732e01d00
 )
 
-replace github.com/rancher/norman => github.com/aiwantaozi/norman v0.0.0-20181013005750-7b754c968b24
+replace github.com/rancher/norman => github.com/aiwantaozi/norman v0.0.0-20181013005750-bddc476a84c8478
