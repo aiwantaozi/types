@@ -38,6 +38,8 @@ type ClusterPolicySpec struct {
 	TargetNodes          []TargetNode          `json:"targetNodes,omitempty"`
 	TargetEvents         []TargetEvent         `json:"targetEvents,omitempty"`
 	TargetSystemServices []TargetSystemService `json:"targetSystemServices,omitempty"`
+	Metrics              []Metric              `json:"metrics,omitempty"`
+	Recipients           []Recipient           `json:"recipients,omitempty" norman:"required"`
 	CommonPolicy
 }
 
@@ -45,25 +47,25 @@ type ProjectPolicySpec struct {
 	ProjectName     string           `json:"projectName" norman:"type=reference[project]"`
 	TargetPods      []TargetPod      `json:"targetPods,omitempty"`
 	TargetWorkloads []TargetWorkload `json:"targetWorkloads,omitempty"`
+	Metrics         []Metric         `json:"metrics,omitempty"`
+	Recipients      []Recipient      `json:"recipients,omitempty" norman:"required"`
 	CommonPolicy
 }
 
 type CommonPolicy struct {
-	DisplayName string      `json:"displayName,omitempty" norman:"required"`
-	Description string      `json:"description,omitempty"`
-	Metrics     []Metric    `json:"metrics,omitempty"`
-	Recipients  []Recipient `json:"recipients,omitempty" norman:"required"`
+	DisplayName string `json:"displayName,omitempty" norman:"required"`
+	Description string `json:"description,omitempty"`
 	TimingField
 }
 
-type CommentField struct {
+type CommonRuleField struct {
 	RuleID   string `json:"ruleID,omitempty"`
 	Severity string `json:"severity,omitempty" norman:"required,options=info|critical|warning,default=critical"`
+	TimingField
 }
 
 type Metric struct {
-	CommentField
-	TimingField
+	CommonRuleField
 	Name           string  `json:"name,omitempty"`
 	Expression     string  `json:"expression,omitempty"`
 	Comparison     string  `json:"comparison,omitempty" norman:"required,type=enum,options=equal|not-equal|greater-than|less-than|greater-or-equal|less-or-equal"`
