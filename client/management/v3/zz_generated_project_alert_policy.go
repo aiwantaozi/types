@@ -14,7 +14,6 @@ const (
 	ProjectAlertPolicyFieldGroupIntervalSeconds  = "groupIntervalSeconds"
 	ProjectAlertPolicyFieldGroupWaitSeconds      = "groupWaitSeconds"
 	ProjectAlertPolicyFieldLabels                = "labels"
-	ProjectAlertPolicyFieldMetrics               = "metrics"
 	ProjectAlertPolicyFieldName                  = "name"
 	ProjectAlertPolicyFieldNamespaceId           = "namespaceId"
 	ProjectAlertPolicyFieldOwnerReferences       = "ownerReferences"
@@ -24,6 +23,7 @@ const (
 	ProjectAlertPolicyFieldRepeatIntervalSeconds = "repeatIntervalSeconds"
 	ProjectAlertPolicyFieldState                 = "state"
 	ProjectAlertPolicyFieldStatus                = "status"
+	ProjectAlertPolicyFieldTargetMetrics         = "targetMetrics"
 	ProjectAlertPolicyFieldTargetPods            = "targetPods"
 	ProjectAlertPolicyFieldTargetWorkloads       = "targetWorkloads"
 	ProjectAlertPolicyFieldTransitioning         = "transitioning"
@@ -41,7 +41,6 @@ type ProjectAlertPolicy struct {
 	GroupIntervalSeconds  int64             `json:"groupIntervalSeconds,omitempty" yaml:"groupIntervalSeconds,omitempty"`
 	GroupWaitSeconds      int64             `json:"groupWaitSeconds,omitempty" yaml:"groupWaitSeconds,omitempty"`
 	Labels                map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
-	Metrics               []Metric          `json:"metrics,omitempty" yaml:"metrics,omitempty"`
 	Name                  string            `json:"name,omitempty" yaml:"name,omitempty"`
 	NamespaceId           string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences       []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
@@ -51,6 +50,7 @@ type ProjectAlertPolicy struct {
 	RepeatIntervalSeconds int64             `json:"repeatIntervalSeconds,omitempty" yaml:"repeatIntervalSeconds,omitempty"`
 	State                 string            `json:"state,omitempty" yaml:"state,omitempty"`
 	Status                *AlertStatus      `json:"status,omitempty" yaml:"status,omitempty"`
+	TargetMetrics         []TargetMetric    `json:"targetMetrics,omitempty" yaml:"targetMetrics,omitempty"`
 	TargetPods            []TargetPod       `json:"targetPods,omitempty" yaml:"targetPods,omitempty"`
 	TargetWorkloads       []TargetWorkload  `json:"targetWorkloads,omitempty" yaml:"targetWorkloads,omitempty"`
 	Transitioning         string            `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`

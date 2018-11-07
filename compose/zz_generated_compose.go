@@ -50,6 +50,10 @@ type Config struct {
 	Namespaces        map[string]clusterClient.Namespace        `json:"namespaces,omitempty" yaml:"namespaces,omitempty"`
 	PersistentVolumes map[string]clusterClient.PersistentVolume `json:"persistentVolumes,omitempty" yaml:"persistentVolumes,omitempty"`
 	StorageClasss     map[string]clusterClient.StorageClass     `json:"storageClasses,omitempty" yaml:"storageClasses,omitempty"`
+	MonitorMetrics    map[string]clusterClient.MonitorMetric    `json:"monitorMetrics,omitempty" yaml:"monitorMetrics,omitempty"`
+	MonitorGraphs     map[string]clusterClient.MonitorGraph     `json:"monitorGraphs,omitempty" yaml:"monitorGraphs,omitempty"`
+	ClusterGraphs     map[string]clusterClient.ClusterGraph     `json:"clusterGraphs,omitempty" yaml:"clusterGraphs,omitempty"`
+	ProjectGraphs     map[string]clusterClient.ProjectGraph     `json:"projectGraphs,omitempty" yaml:"projectGraphs,omitempty"`
 
 	// Project Client
 	PersistentVolumeClaims         map[string]projectClient.PersistentVolumeClaim         `json:"persistentVolumeClaims,omitempty" yaml:"persistentVolumeClaims,omitempty"`

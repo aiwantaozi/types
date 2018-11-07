@@ -15,7 +15,6 @@ const (
 	ClusterAlertPolicyFieldGroupIntervalSeconds  = "groupIntervalSeconds"
 	ClusterAlertPolicyFieldGroupWaitSeconds      = "groupWaitSeconds"
 	ClusterAlertPolicyFieldLabels                = "labels"
-	ClusterAlertPolicyFieldMetrics               = "metrics"
 	ClusterAlertPolicyFieldName                  = "name"
 	ClusterAlertPolicyFieldNamespaceId           = "namespaceId"
 	ClusterAlertPolicyFieldOwnerReferences       = "ownerReferences"
@@ -24,6 +23,7 @@ const (
 	ClusterAlertPolicyFieldRepeatIntervalSeconds = "repeatIntervalSeconds"
 	ClusterAlertPolicyFieldState                 = "state"
 	ClusterAlertPolicyFieldTargetEvents          = "targetEvents"
+	ClusterAlertPolicyFieldTargetMetrics         = "targetMetrics"
 	ClusterAlertPolicyFieldTargetNodes           = "targetNodes"
 	ClusterAlertPolicyFieldTargetSystemServices  = "targetSystemServices"
 	ClusterAlertPolicyFieldTransitioning         = "transitioning"
@@ -42,7 +42,6 @@ type ClusterAlertPolicy struct {
 	GroupIntervalSeconds  int64                 `json:"groupIntervalSeconds,omitempty" yaml:"groupIntervalSeconds,omitempty"`
 	GroupWaitSeconds      int64                 `json:"groupWaitSeconds,omitempty" yaml:"groupWaitSeconds,omitempty"`
 	Labels                map[string]string     `json:"labels,omitempty" yaml:"labels,omitempty"`
-	Metrics               []Metric              `json:"metrics,omitempty" yaml:"metrics,omitempty"`
 	Name                  string                `json:"name,omitempty" yaml:"name,omitempty"`
 	NamespaceId           string                `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences       []OwnerReference      `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
@@ -51,6 +50,7 @@ type ClusterAlertPolicy struct {
 	RepeatIntervalSeconds int64                 `json:"repeatIntervalSeconds,omitempty" yaml:"repeatIntervalSeconds,omitempty"`
 	State                 string                `json:"state,omitempty" yaml:"state,omitempty"`
 	TargetEvents          []TargetEvent         `json:"targetEvents,omitempty" yaml:"targetEvents,omitempty"`
+	TargetMetrics         []TargetMetric        `json:"targetMetrics,omitempty" yaml:"targetMetrics,omitempty"`
 	TargetNodes           []TargetNode          `json:"targetNodes,omitempty" yaml:"targetNodes,omitempty"`
 	TargetSystemServices  []TargetSystemService `json:"targetSystemServices,omitempty" yaml:"targetSystemServices,omitempty"`
 	Transitioning         string                `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`

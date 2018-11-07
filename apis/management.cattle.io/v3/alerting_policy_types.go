@@ -38,7 +38,7 @@ type ClusterPolicySpec struct {
 	TargetNodes          []TargetNode          `json:"targetNodes,omitempty"`
 	TargetEvents         []TargetEvent         `json:"targetEvents,omitempty"`
 	TargetSystemServices []TargetSystemService `json:"targetSystemServices,omitempty"`
-	Metrics              []Metric              `json:"metrics,omitempty"`
+	TargetMetrics        []TargetMetric        `json:"targetMetrics,omitempty"`
 	Recipients           []Recipient           `json:"recipients,omitempty" norman:"required"`
 	CommonPolicy
 }
@@ -47,7 +47,7 @@ type ProjectPolicySpec struct {
 	ProjectName     string           `json:"projectName" norman:"type=reference[project]"`
 	TargetPods      []TargetPod      `json:"targetPods,omitempty"`
 	TargetWorkloads []TargetWorkload `json:"targetWorkloads,omitempty"`
-	Metrics         []Metric         `json:"metrics,omitempty"`
+	TargetMetrics   []TargetMetric   `json:"targetMetrics,omitempty"`
 	Recipients      []Recipient      `json:"recipients,omitempty" norman:"required"`
 	CommonPolicy
 }
@@ -64,12 +64,15 @@ type CommonRuleField struct {
 	TimingField
 }
 
-type Metric struct {
+type TargetMetric struct {
 	CommonRuleField
 	Name           string  `json:"name,omitempty"`
-	Expression     string  `json:"expression,omitempty"`
-	Comparison     string  `json:"comparison,omitempty" norman:"required,type=enum,options=equal|not-equal|greater-than|less-than|greater-or-equal|less-or-equal"`
+	Expression     string  `json:"expression,omitempty" norman:"required"`
+	LegendFormat   string  `json:"legendFormat,omitempty"`
+	Step           int64   `json:"step,omitempty"`
+	Description    string  `json:"description,omitempty"`
 	Duration       string  `json:"duration",omitempty`
+	Comparison     string  `json:"comparison,omitempty" norman:"required,type=enum,options=equal|not-equal|greater-than|less-than|greater-or-equal|less-or-equal"`
 	ThresholdValue float64 `json:"thresholdValue,omitempty" norman:"required,type=float"`
 }
 
