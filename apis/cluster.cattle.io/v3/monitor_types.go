@@ -9,20 +9,22 @@ type ClusterGraph struct {
 	types.Namespaced
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              CommonGraphSpec `json:"spec"`
-	Status            StatsStatus     `json:"status"`
+	Spec              ClusterGraphSpec `json:"spec"`
 }
 
 type ProjectGraph struct {
 	types.Namespaced
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              CommonGraphSpec `json:"spec"`
-	Status            StatsStatus     `json:"status"`
+	Spec              ProjectGraphSpec `json:"spec"`
 }
 
-type CommonGraphSpec struct {
-	MonitorGraphSelector map[string]string `json:"monitorGraphSelector,omitempty"`
+type ClusterGraphSpec struct {
+	ProjectName string `json:"projectName" yaml:"projectName" norman:"required,type=reference[project]"`
+}
+
+type ProjectGraphSpec struct {
+	ProjectName string `json:"projectName" yaml:"projectName" norman:"required,type=reference[project]"`
 }
 
 type StatsStatus struct {

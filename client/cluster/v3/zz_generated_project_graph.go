@@ -5,39 +5,31 @@ import (
 )
 
 const (
-	ProjectGraphType                      = "projectGraph"
-	ProjectGraphFieldAnnotations          = "annotations"
-	ProjectGraphFieldCreated              = "created"
-	ProjectGraphFieldCreatorID            = "creatorId"
-	ProjectGraphFieldLabels               = "labels"
-	ProjectGraphFieldMonitorGraphSelector = "monitorGraphSelector"
-	ProjectGraphFieldName                 = "name"
-	ProjectGraphFieldNamespaceId          = "namespaceId"
-	ProjectGraphFieldOwnerReferences      = "ownerReferences"
-	ProjectGraphFieldRemoved              = "removed"
-	ProjectGraphFieldState                = "state"
-	ProjectGraphFieldStatus               = "status"
-	ProjectGraphFieldTransitioning        = "transitioning"
-	ProjectGraphFieldTransitioningMessage = "transitioningMessage"
-	ProjectGraphFieldUUID                 = "uuid"
+	ProjectGraphType                 = "projectGraph"
+	ProjectGraphFieldAnnotations     = "annotations"
+	ProjectGraphFieldCreated         = "created"
+	ProjectGraphFieldCreatorID       = "creatorId"
+	ProjectGraphFieldLabels          = "labels"
+	ProjectGraphFieldName            = "name"
+	ProjectGraphFieldNamespaceId     = "namespaceId"
+	ProjectGraphFieldOwnerReferences = "ownerReferences"
+	ProjectGraphFieldProjectID       = "projectId"
+	ProjectGraphFieldRemoved         = "removed"
+	ProjectGraphFieldUUID            = "uuid"
 )
 
 type ProjectGraph struct {
 	types.Resource
-	Annotations          map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
-	Created              string            `json:"created,omitempty" yaml:"created,omitempty"`
-	CreatorID            string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	Labels               map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
-	MonitorGraphSelector map[string]string `json:"monitorGraphSelector,omitempty" yaml:"monitorGraphSelector,omitempty"`
-	Name                 string            `json:"name,omitempty" yaml:"name,omitempty"`
-	NamespaceId          string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
-	OwnerReferences      []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
-	Removed              string            `json:"removed,omitempty" yaml:"removed,omitempty"`
-	State                string            `json:"state,omitempty" yaml:"state,omitempty"`
-	Status               *StatsStatus      `json:"status,omitempty" yaml:"status,omitempty"`
-	Transitioning        string            `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
-	TransitioningMessage string            `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
-	UUID                 string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	Annotations     map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	Created         string            `json:"created,omitempty" yaml:"created,omitempty"`
+	CreatorID       string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
+	Labels          map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
+	Name            string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId     string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
+	OwnerReferences []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	ProjectID       string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
+	Removed         string            `json:"removed,omitempty" yaml:"removed,omitempty"`
+	UUID            string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
 }
 
 type ProjectGraphCollection struct {
