@@ -20,7 +20,7 @@ type ProjectGraph struct {
 }
 
 type ClusterGraphSpec struct {
-	ProjectName string `json:"projectName" yaml:"projectName" norman:"required,type=reference[project]"`
+	ClusterName string `json:"clusterName" norman:"type=reference[cluster]"`
 }
 
 type ProjectGraphSpec struct {

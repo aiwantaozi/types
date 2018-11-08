@@ -2,9 +2,9 @@ package client
 
 const (
 	ClusterGraphSpecType           = "clusterGraphSpec"
-	ClusterGraphSpecFieldProjectID = "projectId"
+	ClusterGraphSpecFieldClusterID = "clusterId"
 )
 
 type ClusterGraphSpec struct {
-	ProjectID string `json:"projectId,omitempty" yaml:"projectId,omitempty"`
+	ClusterID string `json:"clusterId,omitempty" yaml:"clusterId,omitempty"`
 }
