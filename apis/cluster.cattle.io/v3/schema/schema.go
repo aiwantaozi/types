@@ -92,7 +92,5 @@ func storageClassTypes(schemas *types.Schemas) *types.Schemas {
 func monitorTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
 		MustImport(&Version, clusterv3.MonitorMetric{}).
-		MustImport(&Version, clusterv3.MonitorGraph{}).
-		MustImport(&Version, clusterv3.ClusterGraph{}).
-		MustImport(&Version, clusterv3.ProjectGraph{})
+		MustImport(&Version, clusterv3.MonitorGraph{})
 }

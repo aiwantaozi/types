@@ -5,51 +5,53 @@ import (
 )
 
 const (
-	MonitorGraphType                      = "monitorGraph"
-	MonitorGraphFieldAnnotations          = "annotations"
-	MonitorGraphFieldCreated              = "created"
-	MonitorGraphFieldCreatorID            = "creatorId"
-	MonitorGraphFieldDescription          = "description"
-	MonitorGraphFieldEnable               = "enable"
-	MonitorGraphFieldLabels               = "labels"
-	MonitorGraphFieldMetricsSelector      = "metricsSelector"
-	MonitorGraphFieldName                 = "name"
-	MonitorGraphFieldNamespaceId          = "namespaceId"
-	MonitorGraphFieldOwnerReferences      = "ownerReferences"
-	MonitorGraphFieldRemoved              = "removed"
-	MonitorGraphFieldState                = "state"
-	MonitorGraphFieldStatus               = "status"
-	MonitorGraphFieldThresholds           = "thresholds"
-	MonitorGraphFieldTitle                = "title"
-	MonitorGraphFieldTransitioning        = "transitioning"
-	MonitorGraphFieldTransitioningMessage = "transitioningMessage"
-	MonitorGraphFieldUUID                 = "uuid"
-	MonitorGraphFieldXAxis                = "xAxis"
-	MonitorGraphFieldYAxis                = "yAxis"
+	MonitorGraphType                        = "monitorGraph"
+	MonitorGraphFieldAnnotations            = "annotations"
+	MonitorGraphFieldCreated                = "created"
+	MonitorGraphFieldCreatorID              = "creatorId"
+	MonitorGraphFieldDescription            = "description"
+	MonitorGraphFieldDetailsMetricsSelector = "detailsMetricsSelector"
+	MonitorGraphFieldEnable                 = "enable"
+	MonitorGraphFieldLabels                 = "labels"
+	MonitorGraphFieldMetricsSelector        = "metricsSelector"
+	MonitorGraphFieldName                   = "name"
+	MonitorGraphFieldNamespaceId            = "namespaceId"
+	MonitorGraphFieldOwnerReferences        = "ownerReferences"
+	MonitorGraphFieldRemoved                = "removed"
+	MonitorGraphFieldState                  = "state"
+	MonitorGraphFieldStatus                 = "status"
+	MonitorGraphFieldThresholds             = "thresholds"
+	MonitorGraphFieldTitle                  = "title"
+	MonitorGraphFieldTransitioning          = "transitioning"
+	MonitorGraphFieldTransitioningMessage   = "transitioningMessage"
+	MonitorGraphFieldUUID                   = "uuid"
+	MonitorGraphFieldXAxis                  = "xAxis"
+	MonitorGraphFieldYAxis                  = "yAxis"
 )
 
 type MonitorGraph struct {
 	types.Resource
-	Annotations          map[string]string   `json:"annotations,omitempty" yaml:"annotations,omitempty"`
-	Created              string              `json:"created,omitempty" yaml:"created,omitempty"`
-	CreatorID            string              `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	Description          string              `json:"description,omitempty" yaml:"description,omitempty"`
-	Enable               bool                `json:"enable,omitempty" yaml:"enable,omitempty"`
-	Labels               map[string]string   `json:"labels,omitempty" yaml:"labels,omitempty"`
-	MetricsSelector      map[string]string   `json:"metricsSelector,omitempty" yaml:"metricsSelector,omitempty"`
-	Name                 string              `json:"name,omitempty" yaml:"name,omitempty"`
-	NamespaceId          string              `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
-	OwnerReferences      []OwnerReference    `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
-	Removed              string              `json:"removed,omitempty" yaml:"removed,omitempty"`
-	State                string              `json:"state,omitempty" yaml:"state,omitempty"`
-	Status               *MonitorGraphStatus `json:"status,omitempty" yaml:"status,omitempty"`
-	Thresholds           *float64            `json:"thresholds,omitempty" yaml:"thresholds,omitempty"`
-	Title                string              `json:"title,omitempty" yaml:"title,omitempty"`
-	Transitioning        string              `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
-	TransitioningMessage string              `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
-	UUID                 string              `json:"uuid,omitempty" yaml:"uuid,omitempty"`
-	XAxis                *XAxis              `json:"xAxis,omitempty" yaml:"xAxis,omitempty"`
-	YAxis                *YAxis              `json:"yAxis,omitempty" yaml:"yAxis,omitempty"`
+	Annotations            map[string]string   `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	Created                string              `json:"created,omitempty" yaml:"created,omitempty"`
+	CreatorID              string              `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
+	Description            string              `json:"description,omitempty" yaml:"description,omitempty"`
+	DetailsMetricsSelector map[string]string   `json:"detailsMetricsSelector,omitempty" yaml:"detailsMetricsSelector,omitempty"`
+	Enable                 bool                `json:"enable,omitempty" yaml:"enable,omitempty"`
+	Labels                 map[string]string   `json:"labels,omitempty" yaml:"labels,omitempty"`
+	MetricsSelector        map[string]string   `json:"metricsSelector,omitempty" yaml:"metricsSelector,omitempty"`
+	Name                   string              `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId            string              `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
+	OwnerReferences        []OwnerReference    `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	Removed                string              `json:"removed,omitempty" yaml:"removed,omitempty"`
+	State                  string              `json:"state,omitempty" yaml:"state,omitempty"`
+	Status                 *MonitorGraphStatus `json:"status,omitempty" yaml:"status,omitempty"`
+	Thresholds             *float64            `json:"thresholds,omitempty" yaml:"thresholds,omitempty"`
+	Title                  string              `json:"title,omitempty" yaml:"title,omitempty"`
+	Transitioning          string              `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
+	TransitioningMessage   string              `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
+	UUID                   string              `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	XAxis                  *XAxis              `json:"xAxis,omitempty" yaml:"xAxis,omitempty"`
+	YAxis                  *YAxis              `json:"yAxis,omitempty" yaml:"yAxis,omitempty"`
 }
 
 type MonitorGraphCollection struct {

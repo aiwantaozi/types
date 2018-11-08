@@ -37,10 +37,6 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&MonitorMetricList{},
 		&MonitorGraph{},
 		&MonitorGraphList{},
-		&ClusterGraph{},
-		&ClusterGraphList{},
-		&ProjectGraph{},
-		&ProjectGraphList{},
 	)
 	return nil
 }

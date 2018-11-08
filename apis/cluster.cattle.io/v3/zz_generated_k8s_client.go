@@ -17,8 +17,6 @@ type Interface interface {
 
 	MonitorMetricsGetter
 	MonitorGraphsGetter
-	ClusterGraphsGetter
-	ProjectGraphsGetter
 }
 
 type Client struct {
@@ -28,8 +26,6 @@ type Client struct {
 
 	monitorMetricControllers map[string]MonitorMetricController
 	monitorGraphControllers  map[string]MonitorGraphController
-	clusterGraphControllers  map[string]ClusterGraphController
-	projectGraphControllers  map[string]ProjectGraphController
 }
 
 func NewForConfig(config rest.Config) (Interface, error) {
@@ -47,8 +43,6 @@ func NewForConfig(config rest.Config) (Interface, error) {
 
 		monitorMetricControllers: map[string]MonitorMetricController{},
 		monitorGraphControllers:  map[string]MonitorGraphController{},
-		clusterGraphControllers:  map[string]ClusterGraphController{},
-		projectGraphControllers:  map[string]ProjectGraphController{},
 	}, nil
 }
 
@@ -84,32 +78,6 @@ type MonitorGraphsGetter interface {
 func (c *Client) MonitorGraphs(namespace string) MonitorGraphInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &MonitorGraphResource, MonitorGraphGroupVersionKind, monitorGraphFactory{})
 	return &monitorGraphClient{
-		ns:           namespace,
-		client:       c,
-		objectClient: objectClient,
-	}
-}
-
-type ClusterGraphsGetter interface {
-	ClusterGraphs(namespace string) ClusterGraphInterface
-}
-
-func (c *Client) ClusterGraphs(namespace string) ClusterGraphInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterGraphResource, ClusterGraphGroupVersionKind, clusterGraphFactory{})
-	return &clusterGraphClient{
-		ns:           namespace,
-		client:       c,
-		objectClient: objectClient,
-	}
-}
-
-type ProjectGraphsGetter interface {
-	ProjectGraphs(namespace string) ProjectGraphInterface
-}
-
-func (c *Client) ProjectGraphs(namespace string) ProjectGraphInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ProjectGraphResource, ProjectGraphGroupVersionKind, projectGraphFactory{})
-	return &projectGraphClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,
