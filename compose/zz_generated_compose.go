@@ -44,6 +44,8 @@ type Config struct {
 	ComposeConfigs                           map[string]managementClient.ComposeConfig                           `json:"composeConfigs,omitempty" yaml:"composeConfigs,omitempty"`
 	ProjectCatalogs                          map[string]managementClient.ProjectCatalog                          `json:"projectCatalogs,omitempty" yaml:"projectCatalogs,omitempty"`
 	ClusterCatalogs                          map[string]managementClient.ClusterCatalog                          `json:"clusterCatalogs,omitempty" yaml:"clusterCatalogs,omitempty"`
+	ClusterAlertPolicys                      map[string]managementClient.ClusterAlertPolicy                      `json:"clusterAlertPolicies,omitempty" yaml:"clusterAlertPolicies,omitempty"`
+	ProjectAlertPolicys                      map[string]managementClient.ProjectAlertPolicy                      `json:"projectAlertPolicies,omitempty" yaml:"projectAlertPolicies,omitempty"`
 
 	// Cluster Client
 	Namespaces        map[string]clusterClient.Namespace        `json:"namespaces,omitempty" yaml:"namespaces,omitempty"`

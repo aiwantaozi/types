@@ -66,6 +66,7 @@ type Recipient struct {
 }
 
 type TargetNode struct {
+	CommonRuleField
 	NodeName     string            `json:"nodeName,omitempty" norman:"type=reference[node]"`
 	Selector     map[string]string `json:"selector,omitempty"`
 	Condition    string            `json:"condition,omitempty" norman:"required,options=notready|mem|cpu,default=notready"`
@@ -74,6 +75,7 @@ type TargetNode struct {
 }
 
 type TargetPod struct {
+	CommonRuleField
 	PodName                string `json:"podName,omitempty" norman:"required,type=reference[/v3/projects/schemas/pod]"`
 	Condition              string `json:"condition,omitempty" norman:"required,options=notrunning|notscheduled|restarts,default=notrunning"`
 	RestartTimes           int    `json:"restartTimes,omitempty" norman:"min=1,default=3"`
@@ -81,17 +83,20 @@ type TargetPod struct {
 }
 
 type TargetEvent struct {
+	CommonRuleField
 	EventType    string `json:"eventType,omitempty" norman:"required,options=Normal|Warning,default=Warning"`
 	ResourceKind string `json:"resourceKind,omitempty" norman:"required,options=Pod|Node|Deployment|StatefulSet|DaemonSet"`
 }
 
 type TargetWorkload struct {
+	CommonRuleField
 	WorkloadID          string            `json:"workloadId,omitempty"`
 	Selector            map[string]string `json:"selector,omitempty"`
 	AvailablePercentage int               `json:"availablePercentage,omitempty" norman:"required,min=1,max=100,default=70"`
 }
 
 type TargetSystemService struct {
+	CommonRuleField
 	Condition string `json:"condition,omitempty" norman:"required,options=etcd|controller-manager|scheduler,default=scheduler"`
 }
 

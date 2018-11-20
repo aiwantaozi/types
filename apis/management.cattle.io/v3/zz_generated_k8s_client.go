@@ -59,6 +59,8 @@ type Interface interface {
 	ComposeConfigsGetter
 	ProjectCatalogsGetter
 	ClusterCatalogsGetter
+	ClusterAlertPoliciesGetter
+	ProjectAlertPoliciesGetter
 }
 
 type Clients struct {
@@ -147,6 +149,8 @@ type Client struct {
 	composeConfigControllers                           map[string]ComposeConfigController
 	projectCatalogControllers                          map[string]ProjectCatalogController
 	clusterCatalogControllers                          map[string]ClusterCatalogController
+	clusterAlertPolicyControllers                      map[string]ClusterAlertPolicyController
+	projectAlertPolicyControllers                      map[string]ProjectAlertPolicyController
 }
 
 func Factory(ctx context.Context, config rest.Config) (context.Context, controller.Starter, error) {
@@ -353,6 +357,8 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		composeConfigControllers:                           map[string]ComposeConfigController{},
 		projectCatalogControllers:                          map[string]ProjectCatalogController{},
 		clusterCatalogControllers:                          map[string]ClusterCatalogController{},
+		clusterAlertPolicyControllers:                      map[string]ClusterAlertPolicyController{},
+		projectAlertPolicyControllers:                      map[string]ProjectAlertPolicyController{},
 	}, nil
 }
 
@@ -869,6 +875,32 @@ type ClusterCatalogsGetter interface {
 func (c *Client) ClusterCatalogs(namespace string) ClusterCatalogInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterCatalogResource, ClusterCatalogGroupVersionKind, clusterCatalogFactory{})
 	return &clusterCatalogClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ClusterAlertPoliciesGetter interface {
+	ClusterAlertPolicies(namespace string) ClusterAlertPolicyInterface
+}
+
+func (c *Client) ClusterAlertPolicies(namespace string) ClusterAlertPolicyInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterAlertPolicyResource, ClusterAlertPolicyGroupVersionKind, clusterAlertPolicyFactory{})
+	return &clusterAlertPolicyClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ProjectAlertPoliciesGetter interface {
+	ProjectAlertPolicies(namespace string) ProjectAlertPolicyInterface
+}
+
+func (c *Client) ProjectAlertPolicies(namespace string) ProjectAlertPolicyInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ProjectAlertPolicyResource, ProjectAlertPolicyGroupVersionKind, projectAlertPolicyFactory{})
+	return &projectAlertPolicyClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,
