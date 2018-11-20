@@ -3,13 +3,12 @@ package schema
 import (
 	"net/http"
 
-	"k8s.io/api/core/v1"
-
 	"github.com/rancher/norman/types"
 	m "github.com/rancher/norman/types/mapper"
 	"github.com/rancher/types/apis/management.cattle.io/v3"
 	"github.com/rancher/types/factory"
 	"github.com/rancher/types/mapper"
+	"k8s.io/api/core/v1"
 )
 
 var (
@@ -36,7 +35,8 @@ var (
 		Init(alertTypes).
 		Init(composeType).
 		Init(projectCatalogTypes).
-		Init(clusterCatalogTypes)
+		Init(clusterCatalogTypes).
+		Init(alertPolicyTypes)
 
 	TokenSchemas = factory.Schemas(&Version).
 			Init(tokens)
@@ -539,6 +539,30 @@ func alertTypes(schema *types.Schemas) *types.Schemas {
 			}
 		})
 
+}
+
+func alertPolicyTypes(schema *types.Schemas) *types.Schemas {
+	return schema.
+		AddMapperForType(&Version, v3.ClusterAlertPolicy{},
+			&m.Embed{Field: "status"},
+			m.DisplayName{}).
+		MustImportAndCustomize(&Version, v3.ClusterAlertPolicy{}, func(schema *types.Schema) {
+			schema.ResourceActions = map[string]types.Action{
+				"activate":   {},
+				"deactivate": {},
+				"mute":       {},
+				"unmute":     {},
+			}
+		}).
+		MustImportAndCustomize(&Version, v3.ProjectAlertPolicy{}, func(schema *types.Schema) {
+			schema.ResourceActions = map[string]types.Action{
+				"activate":   {},
+				"deactivate": {},
+				"mute":       {},
+				"unmute":     {},
+			}
+		}).
+		MustImport(&Version, v3.CommonPolicy{})
 }
 
 func composeType(schemas *types.Schemas) *types.Schemas {
