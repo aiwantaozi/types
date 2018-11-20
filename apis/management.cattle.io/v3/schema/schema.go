@@ -35,8 +35,7 @@ var (
 		Init(alertTypes).
 		Init(composeType).
 		Init(projectCatalogTypes).
-		Init(clusterCatalogTypes).
-		Init(alertPolicyTypes)
+		Init(clusterCatalogTypes)
 
 	TokenSchemas = factory.Schemas(&Version).
 			Init(tokens)
@@ -499,13 +498,8 @@ func globalTypes(schema *types.Schemas) *types.Schemas {
 
 func alertTypes(schema *types.Schemas) *types.Schemas {
 	return schema.
+		MustImport(&Version, v3.Notification{}).
 		AddMapperForType(&Version, v3.Notifier{},
-			m.DisplayName{}).
-		AddMapperForType(&Version, v3.ClusterAlert{},
-			&m.Embed{Field: "status"},
-			m.DisplayName{}).
-		AddMapperForType(&Version, v3.ProjectAlert{},
-			&m.Embed{Field: "status"},
 			m.DisplayName{}).
 		MustImport(&Version, v3.Notification{}).
 		MustImportAndCustomize(&Version, v3.Notifier{}, func(schema *types.Schema) {
@@ -520,7 +514,21 @@ func alertTypes(schema *types.Schemas) *types.Schemas {
 				},
 			}
 		}).
-		MustImportAndCustomize(&Version, v3.ClusterAlert{}, func(schema *types.Schema) {
+		AddMapperForType(&Version, v3.ClusterAlertGroup{},
+			&m.Embed{Field: "status"},
+			m.DisplayName{}).
+		AddMapperForType(&Version, v3.ProjectAlertGroup{},
+			&m.Embed{Field: "status"},
+			m.DisplayName{}).
+		MustImportAndCustomize(&Version, v3.ClusterAlertGroup{}, func(schema *types.Schema) {
+			schema.ResourceActions = map[string]types.Action{
+				"activate":   {},
+				"deactivate": {},
+				"mute":       {},
+				"unmute":     {},
+			}
+		}).
+		MustImportAndCustomize(&Version, v3.ProjectAlertGroup{}, func(schema *types.Schema) {
 
 			schema.ResourceActions = map[string]types.Action{
 				"activate":   {},
@@ -529,8 +537,15 @@ func alertTypes(schema *types.Schemas) *types.Schemas {
 				"unmute":     {},
 			}
 		}).
-		MustImportAndCustomize(&Version, v3.ProjectAlert{}, func(schema *types.Schema) {
-
+		MustImportAndCustomize(&Version, v3.ClusterAlertRule{}, func(schema *types.Schema) {
+			schema.ResourceActions = map[string]types.Action{
+				"activate":   {},
+				"deactivate": {},
+				"mute":       {},
+				"unmute":     {},
+			}
+		}).
+		MustImportAndCustomize(&Version, v3.ProjectAlertRule{}, func(schema *types.Schema) {
 			schema.ResourceActions = map[string]types.Action{
 				"activate":   {},
 				"deactivate": {},
@@ -538,31 +553,6 @@ func alertTypes(schema *types.Schemas) *types.Schemas {
 				"unmute":     {},
 			}
 		})
-
-}
-
-func alertPolicyTypes(schema *types.Schemas) *types.Schemas {
-	return schema.
-		AddMapperForType(&Version, v3.ClusterAlertPolicy{},
-			&m.Embed{Field: "status"},
-			m.DisplayName{}).
-		MustImportAndCustomize(&Version, v3.ClusterAlertPolicy{}, func(schema *types.Schema) {
-			schema.ResourceActions = map[string]types.Action{
-				"activate":   {},
-				"deactivate": {},
-				"mute":       {},
-				"unmute":     {},
-			}
-		}).
-		MustImportAndCustomize(&Version, v3.ProjectAlertPolicy{}, func(schema *types.Schema) {
-			schema.ResourceActions = map[string]types.Action{
-				"activate":   {},
-				"deactivate": {},
-				"mute":       {},
-				"unmute":     {},
-			}
-		}).
-		MustImport(&Version, v3.CommonPolicy{})
 }
 
 func composeType(schemas *types.Schemas) *types.Schemas {
