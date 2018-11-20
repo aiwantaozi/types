@@ -30,6 +30,7 @@ type MonitorGraphSpec struct {
 	DetailsMetricsSelector map[string]string `json:"detailsMetricsSelector,omitempty"`
 	XAxis                  XAxis             `json:"xAxis,omitempty"`
 	YAxis                  YAxis             `json:"yAxis,omitemoty"`
+	Priority               int               `json:"priority,omitemoty"`
 }
 
 type MonitorGraphStatus struct {
@@ -57,10 +58,12 @@ type MonitorMetric struct {
 }
 
 type MonitorMetricSpec struct {
-	Expression     string            `json:"expression,omitempty" norman:"required"`
-	LegendFormat   string            `json:"legendFormat,omitempty"`
-	Step           int64             `json:"step,omitempty"`
-	Description    string            `json:"description,omitempty"`
-	ExtraAddedTags map[string]string `json:"extraAddedTags,omitempty"`
-	DetailsGroupBy string            `json:"detailsGroupBy,omitempty"`
+	Expression          string            `json:"expression,omitempty" norman:"required"`
+	LegendFormat        string            `json:"legendFormat,omitempty"`
+	DetailsLegendFormat string            `json:"detailsLegendFormat,omitempty"`
+	Step                int64             `json:"step,omitempty"`
+	Description         string            `json:"description,omitempty"`
+	ExtraAddedTags      map[string]string `json:"extraAddedTags,omitempty"`
+	GroupBy             string            `json:"groupBy,omitempty"`
+	DetailsGroupBy      string            `json:"detailsGroupBy,omitempty"`
 }

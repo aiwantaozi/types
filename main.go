@@ -4,6 +4,7 @@
 package main
 
 import (
+	clusterv3 "github.com/rancher/types/apis/cluster.cattle.io/v3"
 	clusterSchema "github.com/rancher/types/apis/cluster.cattle.io/v3/schema"
 	managementSchema "github.com/rancher/types/apis/management.cattle.io/v3/schema"
 	publicSchema "github.com/rancher/types/apis/management.cattle.io/v3public/schema"
@@ -88,6 +89,16 @@ func main() {
 			monitoringv1.PrometheusRule{},
 			monitoringv1.Alertmanager{},
 			monitoringv1.ServiceMonitor{},
+		},
+		nil)
+	generator.GenerateNativeTypes(
+		schema.GroupVersion{
+			clusterSchema.Version.Group,
+			clusterSchema.Version.Version,
+		},
+		[]interface{}{
+			clusterv3.MonitorMetric{},
+			clusterv3.MonitorGraph{},
 		},
 		nil)
 }
