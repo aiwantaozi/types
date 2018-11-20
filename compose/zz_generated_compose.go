@@ -40,11 +40,11 @@ type Config struct {
 	ListenConfigs                            map[string]managementClient.ListenConfig                            `json:"listenConfigs,omitempty" yaml:"listenConfigs,omitempty"`
 	Settings                                 map[string]managementClient.Setting                                 `json:"settings,omitempty" yaml:"settings,omitempty"`
 	Notifiers                                map[string]managementClient.Notifier                                `json:"notifiers,omitempty" yaml:"notifiers,omitempty"`
-	ClusterAlerts                            map[string]managementClient.ClusterAlert                            `json:"clusterAlerts,omitempty" yaml:"clusterAlerts,omitempty"`
-	ProjectAlerts                            map[string]managementClient.ProjectAlert                            `json:"projectAlerts,omitempty" yaml:"projectAlerts,omitempty"`
+	ClusterAlertRules                        map[string]managementClient.ClusterAlertRule                        `json:"clusterAlertRules,omitempty" yaml:"clusterAlertRules,omitempty"`
+	ClusterAlertGroups                       map[string]managementClient.ClusterAlertGroup                       `json:"clusterAlertGroups,omitempty" yaml:"clusterAlertGroups,omitempty"`
+	ProjectAlertRules                        map[string]managementClient.ProjectAlertRule                        `json:"projectAlertRules,omitempty" yaml:"projectAlertRules,omitempty"`
+	ProjectAlertGroups                       map[string]managementClient.ProjectAlertGroup                       `json:"projectAlertGroups,omitempty" yaml:"projectAlertGroups,omitempty"`
 	ComposeConfigs                           map[string]managementClient.ComposeConfig                           `json:"composeConfigs,omitempty" yaml:"composeConfigs,omitempty"`
-	ClusterAlertPolicys                      map[string]managementClient.ClusterAlertPolicy                      `json:"clusterAlertPolicies,omitempty" yaml:"clusterAlertPolicies,omitempty"`
-	ProjectAlertPolicys                      map[string]managementClient.ProjectAlertPolicy                      `json:"projectAlertPolicies,omitempty" yaml:"projectAlertPolicies,omitempty"`
 
 	// Cluster Client
 	Namespaces        map[string]clusterClient.Namespace        `json:"namespaces,omitempty" yaml:"namespaces,omitempty"`

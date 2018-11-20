@@ -17,6 +17,7 @@ const (
 	MonitorGraphFieldName                   = "name"
 	MonitorGraphFieldNamespaceId            = "namespaceId"
 	MonitorGraphFieldOwnerReferences        = "ownerReferences"
+	MonitorGraphFieldPriority               = "priority"
 	MonitorGraphFieldRemoved                = "removed"
 	MonitorGraphFieldState                  = "state"
 	MonitorGraphFieldStatus                 = "status"
@@ -42,6 +43,7 @@ type MonitorGraph struct {
 	Name                   string              `json:"name,omitempty" yaml:"name,omitempty"`
 	NamespaceId            string              `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences        []OwnerReference    `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	Priority               int64               `json:"priority,omitempty" yaml:"priority,omitempty"`
 	Removed                string              `json:"removed,omitempty" yaml:"removed,omitempty"`
 	State                  string              `json:"state,omitempty" yaml:"state,omitempty"`
 	Status                 *MonitorGraphStatus `json:"status,omitempty" yaml:"status,omitempty"`

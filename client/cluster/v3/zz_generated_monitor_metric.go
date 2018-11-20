@@ -5,41 +5,45 @@ import (
 )
 
 const (
-	MonitorMetricType                 = "monitorMetric"
-	MonitorMetricFieldAnnotations     = "annotations"
-	MonitorMetricFieldCreated         = "created"
-	MonitorMetricFieldCreatorID       = "creatorId"
-	MonitorMetricFieldDescription     = "description"
-	MonitorMetricFieldDetailsGroupBy  = "detailsGroupBy"
-	MonitorMetricFieldExpression      = "expression"
-	MonitorMetricFieldExtraAddedTags  = "extraAddedTags"
-	MonitorMetricFieldLabels          = "labels"
-	MonitorMetricFieldLegendFormat    = "legendFormat"
-	MonitorMetricFieldName            = "name"
-	MonitorMetricFieldNamespaceId     = "namespaceId"
-	MonitorMetricFieldOwnerReferences = "ownerReferences"
-	MonitorMetricFieldRemoved         = "removed"
-	MonitorMetricFieldStep            = "step"
-	MonitorMetricFieldUUID            = "uuid"
+	MonitorMetricType                     = "monitorMetric"
+	MonitorMetricFieldAnnotations         = "annotations"
+	MonitorMetricFieldCreated             = "created"
+	MonitorMetricFieldCreatorID           = "creatorId"
+	MonitorMetricFieldDescription         = "description"
+	MonitorMetricFieldDetailsGroupBy      = "detailsGroupBy"
+	MonitorMetricFieldDetailsLegendFormat = "detailsLegendFormat"
+	MonitorMetricFieldExpression          = "expression"
+	MonitorMetricFieldExtraAddedTags      = "extraAddedTags"
+	MonitorMetricFieldGroupBy             = "groupBy"
+	MonitorMetricFieldLabels              = "labels"
+	MonitorMetricFieldLegendFormat        = "legendFormat"
+	MonitorMetricFieldName                = "name"
+	MonitorMetricFieldNamespaceId         = "namespaceId"
+	MonitorMetricFieldOwnerReferences     = "ownerReferences"
+	MonitorMetricFieldRemoved             = "removed"
+	MonitorMetricFieldStep                = "step"
+	MonitorMetricFieldUUID                = "uuid"
 )
 
 type MonitorMetric struct {
 	types.Resource
-	Annotations     map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
-	Created         string            `json:"created,omitempty" yaml:"created,omitempty"`
-	CreatorID       string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	Description     string            `json:"description,omitempty" yaml:"description,omitempty"`
-	DetailsGroupBy  string            `json:"detailsGroupBy,omitempty" yaml:"detailsGroupBy,omitempty"`
-	Expression      string            `json:"expression,omitempty" yaml:"expression,omitempty"`
-	ExtraAddedTags  map[string]string `json:"extraAddedTags,omitempty" yaml:"extraAddedTags,omitempty"`
-	Labels          map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
-	LegendFormat    string            `json:"legendFormat,omitempty" yaml:"legendFormat,omitempty"`
-	Name            string            `json:"name,omitempty" yaml:"name,omitempty"`
-	NamespaceId     string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
-	OwnerReferences []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
-	Removed         string            `json:"removed,omitempty" yaml:"removed,omitempty"`
-	Step            int64             `json:"step,omitempty" yaml:"step,omitempty"`
-	UUID            string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	Annotations         map[string]string `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	Created             string            `json:"created,omitempty" yaml:"created,omitempty"`
+	CreatorID           string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
+	Description         string            `json:"description,omitempty" yaml:"description,omitempty"`
+	DetailsGroupBy      string            `json:"detailsGroupBy,omitempty" yaml:"detailsGroupBy,omitempty"`
+	DetailsLegendFormat string            `json:"detailsLegendFormat,omitempty" yaml:"detailsLegendFormat,omitempty"`
+	Expression          string            `json:"expression,omitempty" yaml:"expression,omitempty"`
+	ExtraAddedTags      map[string]string `json:"extraAddedTags,omitempty" yaml:"extraAddedTags,omitempty"`
+	GroupBy             string            `json:"groupBy,omitempty" yaml:"groupBy,omitempty"`
+	Labels              map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
+	LegendFormat        string            `json:"legendFormat,omitempty" yaml:"legendFormat,omitempty"`
+	Name                string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId         string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
+	OwnerReferences     []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	Removed             string            `json:"removed,omitempty" yaml:"removed,omitempty"`
+	Step                int64             `json:"step,omitempty" yaml:"step,omitempty"`
+	UUID                string            `json:"uuid,omitempty" yaml:"uuid,omitempty"`
 }
 
 type MonitorMetricCollection struct {
