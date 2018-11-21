@@ -5,6 +5,7 @@ const (
 	MonitorGraphSpecFieldDescription            = "description"
 	MonitorGraphSpecFieldDetailsMetricsSelector = "detailsMetricsSelector"
 	MonitorGraphSpecFieldEnable                 = "enable"
+	MonitorGraphSpecFieldIsSingleStats          = "isSingleStats"
 	MonitorGraphSpecFieldMetricsSelector        = "metricsSelector"
 	MonitorGraphSpecFieldPriority               = "priority"
 	MonitorGraphSpecFieldThresholds             = "thresholds"
@@ -17,6 +18,7 @@ type MonitorGraphSpec struct {
 	Description            string            `json:"description,omitempty" yaml:"description,omitempty"`
 	DetailsMetricsSelector map[string]string `json:"detailsMetricsSelector,omitempty" yaml:"detailsMetricsSelector,omitempty"`
 	Enable                 bool              `json:"enable,omitempty" yaml:"enable,omitempty"`
+	IsSingleStats          bool              `json:"isSingleStats,omitempty" yaml:"isSingleStats,omitempty"`
 	MetricsSelector        map[string]string `json:"metricsSelector,omitempty" yaml:"metricsSelector,omitempty"`
 	Priority               int64             `json:"priority,omitempty" yaml:"priority,omitempty"`
 	Thresholds             *float64          `json:"thresholds,omitempty" yaml:"thresholds,omitempty"`
