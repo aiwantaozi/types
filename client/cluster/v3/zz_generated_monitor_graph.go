@@ -12,6 +12,7 @@ const (
 	MonitorGraphFieldDescription            = "description"
 	MonitorGraphFieldDetailsMetricsSelector = "detailsMetricsSelector"
 	MonitorGraphFieldEnable                 = "enable"
+	MonitorGraphFieldIsSingleStats          = "isSingleStats"
 	MonitorGraphFieldLabels                 = "labels"
 	MonitorGraphFieldMetricsSelector        = "metricsSelector"
 	MonitorGraphFieldName                   = "name"
@@ -38,6 +39,7 @@ type MonitorGraph struct {
 	Description            string              `json:"description,omitempty" yaml:"description,omitempty"`
 	DetailsMetricsSelector map[string]string   `json:"detailsMetricsSelector,omitempty" yaml:"detailsMetricsSelector,omitempty"`
 	Enable                 bool                `json:"enable,omitempty" yaml:"enable,omitempty"`
+	IsSingleStats          bool                `json:"isSingleStats,omitempty" yaml:"isSingleStats,omitempty"`
 	Labels                 map[string]string   `json:"labels,omitempty" yaml:"labels,omitempty"`
 	MetricsSelector        map[string]string   `json:"metricsSelector,omitempty" yaml:"metricsSelector,omitempty"`
 	Name                   string              `json:"name,omitempty" yaml:"name,omitempty"`
