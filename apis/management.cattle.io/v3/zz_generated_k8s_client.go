@@ -54,10 +54,10 @@ type Interface interface {
 	ListenConfigsGetter
 	SettingsGetter
 	NotifiersGetter
-	ClusterAlertRulesGetter
 	ClusterAlertGroupsGetter
-	ProjectAlertRulesGetter
 	ProjectAlertGroupsGetter
+	ClusterAlertRulesGetter
+	ProjectAlertRulesGetter
 	ComposeConfigsGetter
 	ProjectCatalogsGetter
 	ClusterCatalogsGetter
@@ -144,10 +144,10 @@ type Client struct {
 	listenConfigControllers                            map[string]ListenConfigController
 	settingControllers                                 map[string]SettingController
 	notifierControllers                                map[string]NotifierController
-	clusterAlertRuleControllers                        map[string]ClusterAlertRuleController
 	clusterAlertGroupControllers                       map[string]ClusterAlertGroupController
-	projectAlertRuleControllers                        map[string]ProjectAlertRuleController
 	projectAlertGroupControllers                       map[string]ProjectAlertGroupController
+	clusterAlertRuleControllers                        map[string]ClusterAlertRuleController
+	projectAlertRuleControllers                        map[string]ProjectAlertRuleController
 	composeConfigControllers                           map[string]ComposeConfigController
 	projectCatalogControllers                          map[string]ProjectCatalogController
 	clusterCatalogControllers                          map[string]ClusterCatalogController
@@ -352,10 +352,10 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		listenConfigControllers:                            map[string]ListenConfigController{},
 		settingControllers:                                 map[string]SettingController{},
 		notifierControllers:                                map[string]NotifierController{},
-		clusterAlertRuleControllers:                        map[string]ClusterAlertRuleController{},
 		clusterAlertGroupControllers:                       map[string]ClusterAlertGroupController{},
-		projectAlertRuleControllers:                        map[string]ProjectAlertRuleController{},
 		projectAlertGroupControllers:                       map[string]ProjectAlertGroupController{},
+		clusterAlertRuleControllers:                        map[string]ClusterAlertRuleController{},
+		projectAlertRuleControllers:                        map[string]ProjectAlertRuleController{},
 		composeConfigControllers:                           map[string]ComposeConfigController{},
 		projectCatalogControllers:                          map[string]ProjectCatalogController{},
 		clusterCatalogControllers:                          map[string]ClusterCatalogController{},
@@ -816,19 +816,6 @@ func (c *Client) Notifiers(namespace string) NotifierInterface {
 	}
 }
 
-type ClusterAlertRulesGetter interface {
-	ClusterAlertRules(namespace string) ClusterAlertRuleInterface
-}
-
-func (c *Client) ClusterAlertRules(namespace string) ClusterAlertRuleInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterAlertRuleResource, ClusterAlertRuleGroupVersionKind, clusterAlertRuleFactory{})
-	return &clusterAlertRuleClient{
-		ns:           namespace,
-		client:       c,
-		objectClient: objectClient,
-	}
-}
-
 type ClusterAlertGroupsGetter interface {
 	ClusterAlertGroups(namespace string) ClusterAlertGroupInterface
 }
@@ -842,19 +829,6 @@ func (c *Client) ClusterAlertGroups(namespace string) ClusterAlertGroupInterface
 	}
 }
 
-type ProjectAlertRulesGetter interface {
-	ProjectAlertRules(namespace string) ProjectAlertRuleInterface
-}
-
-func (c *Client) ProjectAlertRules(namespace string) ProjectAlertRuleInterface {
-	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ProjectAlertRuleResource, ProjectAlertRuleGroupVersionKind, projectAlertRuleFactory{})
-	return &projectAlertRuleClient{
-		ns:           namespace,
-		client:       c,
-		objectClient: objectClient,
-	}
-}
-
 type ProjectAlertGroupsGetter interface {
 	ProjectAlertGroups(namespace string) ProjectAlertGroupInterface
 }
@@ -862,6 +836,32 @@ type ProjectAlertGroupsGetter interface {
 func (c *Client) ProjectAlertGroups(namespace string) ProjectAlertGroupInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ProjectAlertGroupResource, ProjectAlertGroupGroupVersionKind, projectAlertGroupFactory{})
 	return &projectAlertGroupClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ClusterAlertRulesGetter interface {
+	ClusterAlertRules(namespace string) ClusterAlertRuleInterface
+}
+
+func (c *Client) ClusterAlertRules(namespace string) ClusterAlertRuleInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterAlertRuleResource, ClusterAlertRuleGroupVersionKind, clusterAlertRuleFactory{})
+	return &clusterAlertRuleClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ProjectAlertRulesGetter interface {
+	ProjectAlertRules(namespace string) ProjectAlertRuleInterface
+}
+
+func (c *Client) ProjectAlertRules(namespace string) ProjectAlertRuleInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ProjectAlertRuleResource, ProjectAlertRuleGroupVersionKind, projectAlertRuleFactory{})
+	return &projectAlertRuleClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,

@@ -31,6 +31,7 @@ type MonitorGraphSpec struct {
 	XAxis                  XAxis             `json:"xAxis,omitempty"`
 	YAxis                  YAxis             `json:"yAxis,omitemoty"`
 	Priority               int               `json:"priority,omitemoty"`
+	IsSingleStats          bool              `json:"isSingleStats"`
 }
 
 type MonitorGraphStatus struct {
