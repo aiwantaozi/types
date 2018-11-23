@@ -114,6 +114,12 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 		&ProjectCatalogList{},
 		&ClusterCatalog{},
 		&ClusterCatalogList{},
+		&ClusterMonitorGraph{},
+		&ClusterMonitorGraphList{},
+		&ProjectMonitorGraph{},
+		&ProjectMonitorGraphList{},
+		&MonitorMetric{},
+		&MonitorMetricList{},
 	)
 	return nil
 }

@@ -58,6 +58,9 @@ type Interface interface {
 	ComposeConfigsGetter
 	ProjectCatalogsGetter
 	ClusterCatalogsGetter
+	ClusterMonitorGraphsGetter
+	ProjectMonitorGraphsGetter
+	MonitorMetricsGetter
 }
 
 type Client struct {
@@ -106,6 +109,9 @@ type Client struct {
 	composeConfigControllers                           map[string]ComposeConfigController
 	projectCatalogControllers                          map[string]ProjectCatalogController
 	clusterCatalogControllers                          map[string]ClusterCatalogController
+	clusterMonitorGraphControllers                     map[string]ClusterMonitorGraphController
+	projectMonitorGraphControllers                     map[string]ProjectMonitorGraphController
+	monitorMetricControllers                           map[string]MonitorMetricController
 }
 
 func Factory(ctx context.Context, config rest.Config) (context.Context, controller.Starter, error) {
@@ -175,6 +181,9 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		composeConfigControllers:                           map[string]ComposeConfigController{},
 		projectCatalogControllers:                          map[string]ProjectCatalogController{},
 		clusterCatalogControllers:                          map[string]ClusterCatalogController{},
+		clusterMonitorGraphControllers:                     map[string]ClusterMonitorGraphController{},
+		projectMonitorGraphControllers:                     map[string]ProjectMonitorGraphController{},
+		monitorMetricControllers:                           map[string]MonitorMetricController{},
 	}, nil
 }
 
@@ -717,6 +726,45 @@ type ClusterCatalogsGetter interface {
 func (c *Client) ClusterCatalogs(namespace string) ClusterCatalogInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterCatalogResource, ClusterCatalogGroupVersionKind, clusterCatalogFactory{})
 	return &clusterCatalogClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ClusterMonitorGraphsGetter interface {
+	ClusterMonitorGraphs(namespace string) ClusterMonitorGraphInterface
+}
+
+func (c *Client) ClusterMonitorGraphs(namespace string) ClusterMonitorGraphInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ClusterMonitorGraphResource, ClusterMonitorGraphGroupVersionKind, clusterMonitorGraphFactory{})
+	return &clusterMonitorGraphClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ProjectMonitorGraphsGetter interface {
+	ProjectMonitorGraphs(namespace string) ProjectMonitorGraphInterface
+}
+
+func (c *Client) ProjectMonitorGraphs(namespace string) ProjectMonitorGraphInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ProjectMonitorGraphResource, ProjectMonitorGraphGroupVersionKind, projectMonitorGraphFactory{})
+	return &projectMonitorGraphClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type MonitorMetricsGetter interface {
+	MonitorMetrics(namespace string) MonitorMetricInterface
+}
+
+func (c *Client) MonitorMetrics(namespace string) MonitorMetricInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &MonitorMetricResource, MonitorMetricGroupVersionKind, monitorMetricFactory{})
+	return &monitorMetricClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,
