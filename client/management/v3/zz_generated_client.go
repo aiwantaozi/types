@@ -47,6 +47,9 @@ type Client struct {
 	ComposeConfig                           ComposeConfigOperations
 	ProjectCatalog                          ProjectCatalogOperations
 	ClusterCatalog                          ClusterCatalogOperations
+	ClusterMonitorGraph                     ClusterMonitorGraphOperations
+	ProjectMonitorGraph                     ProjectMonitorGraphOperations
+	MonitorMetric                           MonitorMetricOperations
 }
 
 func NewClient(opts *clientbase.ClientOpts) (*Client, error) {
@@ -99,6 +102,9 @@ func NewClient(opts *clientbase.ClientOpts) (*Client, error) {
 	client.ComposeConfig = newComposeConfigClient(client)
 	client.ProjectCatalog = newProjectCatalogClient(client)
 	client.ClusterCatalog = newClusterCatalogClient(client)
+	client.ClusterMonitorGraph = newClusterMonitorGraphClient(client)
+	client.ProjectMonitorGraph = newProjectMonitorGraphClient(client)
+	client.MonitorMetric = newMonitorMetricClient(client)
 
 	return client, nil
 }
