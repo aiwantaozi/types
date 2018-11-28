@@ -203,7 +203,7 @@ type MetricRule struct {
 	LegendFormat   string  `json:"legendFormat,omitempty"`
 	Step           int64   `json:"step,omitempty"`
 	Description    string  `json:"description,omitempty"`
-	Duration       string  `json:"duration",omitempty`
+	Duration       string  `json:"duration,omitempty"`
 	Comparison     string  `json:"comparison,omitempty" norman:"type=enum,options=equal|not-equal|greater-than|less-than|greater-or-equal|less-or-equal"`
 	ThresholdValue float64 `json:"thresholdValue,omitempty" norman:"type=float"`
 }
