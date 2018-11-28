@@ -38,6 +38,7 @@ const (
 	ClusterConditionAgentDeployed            condition.Cond = "AgentDeployed"
 	ClusterConditionGlobalAdminsSynced       condition.Cond = "GlobalAdminsSynced"
 	ClusterConditionInitialRolesPopulated    condition.Cond = "InitialRolesPopulated"
+	ClusterConditionAlertingEnabled          condition.Cond = "AlertingEnabled"
 
 	ClusterDriverImported = "imported"
 	ClusterDriverLocal    = "local"
@@ -74,6 +75,7 @@ type ClusterSpec struct {
 	DefaultClusterRoleForProjectMembers  string                               `json:"defaultClusterRoleForProjectMembers,omitempty" norman:"type=reference[roleTemplate]"`
 	DockerRootDir                        string                               `json:"dockerRootDir,omitempty" norman:"default=/var/lib/docker"`
 	EnableNetworkPolicy                  *bool                                `json:"enableNetworkPolicy" norman:"default=false"`
+	EnableClusterAlerting                bool                                 `json:"enableClusterAlerting" norman:"default=false"`
 }
 
 type ImportedConfig struct {
