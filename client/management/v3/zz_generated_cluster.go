@@ -28,7 +28,6 @@ const (
 	ClusterFieldDesiredAgentImage                    = "desiredAgentImage"
 	ClusterFieldDockerRootDir                        = "dockerRootDir"
 	ClusterFieldDriver                               = "driver"
-	ClusterFieldEnableClusterMonitoring              = "enableClusterMonitoring"
 	ClusterFieldEnableNetworkPolicy                  = "enableNetworkPolicy"
 	ClusterFieldFailedSpec                           = "failedSpec"
 	ClusterFieldGoogleKubernetesEngineConfig         = "googleKubernetesEngineConfig"
@@ -73,7 +72,6 @@ type Cluster struct {
 	DesiredAgentImage                    string                               `json:"desiredAgentImage,omitempty" yaml:"desiredAgentImage,omitempty"`
 	DockerRootDir                        string                               `json:"dockerRootDir,omitempty" yaml:"dockerRootDir,omitempty"`
 	Driver                               string                               `json:"driver,omitempty" yaml:"driver,omitempty"`
-	EnableClusterMonitoring              *bool                                `json:"enableClusterMonitoring,omitempty" yaml:"enableClusterMonitoring,omitempty"`
 	EnableNetworkPolicy                  *bool                                `json:"enableNetworkPolicy,omitempty" yaml:"enableNetworkPolicy,omitempty"`
 	FailedSpec                           *ClusterSpec                         `json:"failedSpec,omitempty" yaml:"failedSpec,omitempty"`
 	GoogleKubernetesEngineConfig         *GoogleKubernetesEngineConfig        `json:"googleKubernetesEngineConfig,omitempty" yaml:"googleKubernetesEngineConfig,omitempty"`
@@ -111,6 +109,10 @@ type ClusterOperations interface {
 	Replace(existing *Cluster) (*Cluster, error)
 	ByID(id string) (*Cluster, error)
 	Delete(container *Cluster) error
+
+	ActionDisableMonitoring(resource *Cluster) error
+
+	ActionEnableMonitoring(resource *Cluster, input *MonitoringInput) error
 
 	ActionExportYaml(resource *Cluster) (*ExportOutput, error)
 
@@ -168,6 +170,16 @@ func (c *ClusterClient) ByID(id string) (*Cluster, error) {
 
 func (c *ClusterClient) Delete(container *Cluster) error {
 	return c.apiClient.Ops.DoResourceDelete(ClusterType, &container.Resource)
+}
+
+func (c *ClusterClient) ActionDisableMonitoring(resource *Cluster) error {
+	err := c.apiClient.Ops.DoAction(ClusterType, "disableMonitoring", &resource.Resource, nil, nil)
+	return err
+}
+
+func (c *ClusterClient) ActionEnableMonitoring(resource *Cluster, input *MonitoringInput) error {
+	err := c.apiClient.Ops.DoAction(ClusterType, "enableMonitoring", &resource.Resource, input, nil)
+	return err
 }
 
 func (c *ClusterClient) ActionExportYaml(resource *Cluster) (*ExportOutput, error) {
