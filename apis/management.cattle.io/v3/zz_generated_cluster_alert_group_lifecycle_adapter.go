@@ -15,6 +15,16 @@ type clusterAlertGroupLifecycleAdapter struct {
 	lifecycle ClusterAlertGroupLifecycle
 }
 
+func (w *clusterAlertGroupLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *clusterAlertGroupLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *clusterAlertGroupLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*ClusterAlertGroup))
 	if o == nil {

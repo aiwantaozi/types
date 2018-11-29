@@ -16,6 +16,16 @@ type serviceMonitorLifecycleAdapter struct {
 	lifecycle ServiceMonitorLifecycle
 }
 
+func (w *serviceMonitorLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *serviceMonitorLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *serviceMonitorLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*v1.ServiceMonitor))
 	if o == nil {

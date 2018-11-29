@@ -15,6 +15,16 @@ type projectAlertGroupLifecycleAdapter struct {
 	lifecycle ProjectAlertGroupLifecycle
 }
 
+func (w *projectAlertGroupLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *projectAlertGroupLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *projectAlertGroupLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*ProjectAlertGroup))
 	if o == nil {

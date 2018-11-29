@@ -15,6 +15,16 @@ type clusterMonitorGraphLifecycleAdapter struct {
 	lifecycle ClusterMonitorGraphLifecycle
 }
 
+func (w *clusterMonitorGraphLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *clusterMonitorGraphLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *clusterMonitorGraphLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*ClusterMonitorGraph))
 	if o == nil {

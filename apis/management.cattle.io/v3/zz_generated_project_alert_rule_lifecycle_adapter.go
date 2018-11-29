@@ -15,6 +15,16 @@ type projectAlertRuleLifecycleAdapter struct {
 	lifecycle ProjectAlertRuleLifecycle
 }
 
+func (w *projectAlertRuleLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *projectAlertRuleLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *projectAlertRuleLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*ProjectAlertRule))
 	if o == nil {

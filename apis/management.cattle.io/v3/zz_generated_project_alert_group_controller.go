@@ -37,6 +37,8 @@ type ProjectAlertGroupList struct {
 
 type ProjectAlertGroupHandlerFunc func(key string, obj *ProjectAlertGroup) (runtime.Object, error)
 
+type ProjectAlertGroupChangeHandlerFunc func(obj *ProjectAlertGroup) (runtime.Object, error)
+
 type ProjectAlertGroupLister interface {
 	List(namespace string, selector labels.Selector) (ret []*ProjectAlertGroup, err error)
 	Get(namespace, name string) (*ProjectAlertGroup, error)
@@ -247,4 +249,179 @@ func (s *projectAlertGroupClient) AddClusterScopedHandler(ctx context.Context, n
 func (s *projectAlertGroupClient) AddClusterScopedLifecycle(ctx context.Context, name, clusterName string, lifecycle ProjectAlertGroupLifecycle) {
 	sync := NewProjectAlertGroupLifecycleAdapter(name+"_"+clusterName, true, s, lifecycle)
 	s.Controller().AddClusterScopedHandler(ctx, name, clusterName, sync)
+}
+
+type ProjectAlertGroupIndexer func(obj *ProjectAlertGroup) ([]string, error)
+
+type ProjectAlertGroupClientCache interface {
+	Get(namespace, name string) (*ProjectAlertGroup, error)
+	List(namespace string, selector labels.Selector) ([]*ProjectAlertGroup, error)
+
+	Index(name string, indexer ProjectAlertGroupIndexer)
+	GetIndexed(name, key string) ([]*ProjectAlertGroup, error)
+}
+
+type ProjectAlertGroupClient interface {
+	Create(*ProjectAlertGroup) (*ProjectAlertGroup, error)
+	Get(namespace, name string, opts metav1.GetOptions) (*ProjectAlertGroup, error)
+	Update(*ProjectAlertGroup) (*ProjectAlertGroup, error)
+	Delete(namespace, name string, options *metav1.DeleteOptions) error
+	List(namespace string, opts metav1.ListOptions) (*ProjectAlertGroupList, error)
+	Watch(opts metav1.ListOptions) (watch.Interface, error)
+
+	Cache() ProjectAlertGroupClientCache
+
+	OnCreate(ctx context.Context, name string, sync ProjectAlertGroupChangeHandlerFunc)
+	OnChange(ctx context.Context, name string, sync ProjectAlertGroupChangeHandlerFunc)
+	OnRemove(ctx context.Context, name string, sync ProjectAlertGroupChangeHandlerFunc)
+	Enqueue(namespace, name string)
+
+	Generic() controller.GenericController
+	Interface() ProjectAlertGroupInterface
+}
+
+type projectAlertGroupClientCache struct {
+	client *projectAlertGroupClient2
+}
+
+type projectAlertGroupClient2 struct {
+	iface      ProjectAlertGroupInterface
+	controller ProjectAlertGroupController
+}
+
+func (n *projectAlertGroupClient2) Interface() ProjectAlertGroupInterface {
+	return n.iface
+}
+
+func (n *projectAlertGroupClient2) Generic() controller.GenericController {
+	return n.iface.Controller().Generic()
+}
+
+func (n *projectAlertGroupClient2) Enqueue(namespace, name string) {
+	n.iface.Controller().Enqueue(namespace, name)
+}
+
+func (n *projectAlertGroupClient2) Create(obj *ProjectAlertGroup) (*ProjectAlertGroup, error) {
+	return n.iface.Create(obj)
+}
+
+func (n *projectAlertGroupClient2) Get(namespace, name string, opts metav1.GetOptions) (*ProjectAlertGroup, error) {
+	return n.iface.GetNamespaced(namespace, name, opts)
+}
+
+func (n *projectAlertGroupClient2) Update(obj *ProjectAlertGroup) (*ProjectAlertGroup, error) {
+	return n.iface.Update(obj)
+}
+
+func (n *projectAlertGroupClient2) Delete(namespace, name string, options *metav1.DeleteOptions) error {
+	return n.iface.DeleteNamespaced(namespace, name, options)
+}
+
+func (n *projectAlertGroupClient2) List(namespace string, opts metav1.ListOptions) (*ProjectAlertGroupList, error) {
+	return n.iface.List(opts)
+}
+
+func (n *projectAlertGroupClient2) Watch(opts metav1.ListOptions) (watch.Interface, error) {
+	return n.iface.Watch(opts)
+}
+
+func (n *projectAlertGroupClientCache) Get(namespace, name string) (*ProjectAlertGroup, error) {
+	return n.client.controller.Lister().Get(namespace, name)
+}
+
+func (n *projectAlertGroupClientCache) List(namespace string, selector labels.Selector) ([]*ProjectAlertGroup, error) {
+	return n.client.controller.Lister().List(namespace, selector)
+}
+
+func (n *projectAlertGroupClient2) Cache() ProjectAlertGroupClientCache {
+	n.loadController()
+	return &projectAlertGroupClientCache{
+		client: n,
+	}
+}
+
+func (n *projectAlertGroupClient2) OnCreate(ctx context.Context, name string, sync ProjectAlertGroupChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name+"-create", &projectAlertGroupLifecycleDelegate{create: sync})
+}
+
+func (n *projectAlertGroupClient2) OnChange(ctx context.Context, name string, sync ProjectAlertGroupChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name+"-change", &projectAlertGroupLifecycleDelegate{update: sync})
+}
+
+func (n *projectAlertGroupClient2) OnRemove(ctx context.Context, name string, sync ProjectAlertGroupChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name, &projectAlertGroupLifecycleDelegate{remove: sync})
+}
+
+func (n *projectAlertGroupClientCache) Index(name string, indexer ProjectAlertGroupIndexer) {
+	err := n.client.controller.Informer().GetIndexer().AddIndexers(map[string]cache.IndexFunc{
+		name: func(obj interface{}) ([]string, error) {
+			if v, ok := obj.(*ProjectAlertGroup); ok {
+				return indexer(v)
+			}
+			return nil, nil
+		},
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (n *projectAlertGroupClientCache) GetIndexed(name, key string) ([]*ProjectAlertGroup, error) {
+	var result []*ProjectAlertGroup
+	objs, err := n.client.controller.Informer().GetIndexer().ByIndex(name, key)
+	if err != nil {
+		return nil, err
+	}
+	for _, obj := range objs {
+		if v, ok := obj.(*ProjectAlertGroup); ok {
+			result = append(result, v)
+		}
+	}
+
+	return result, nil
+}
+
+func (n *projectAlertGroupClient2) loadController() {
+	if n.controller == nil {
+		n.controller = n.iface.Controller()
+	}
+}
+
+type projectAlertGroupLifecycleDelegate struct {
+	create ProjectAlertGroupChangeHandlerFunc
+	update ProjectAlertGroupChangeHandlerFunc
+	remove ProjectAlertGroupChangeHandlerFunc
+}
+
+func (n *projectAlertGroupLifecycleDelegate) HasCreate() bool {
+	return n.create != nil
+}
+
+func (n *projectAlertGroupLifecycleDelegate) Create(obj *ProjectAlertGroup) (runtime.Object, error) {
+	if n.create == nil {
+		return obj, nil
+	}
+	return n.create(obj)
+}
+
+func (n *projectAlertGroupLifecycleDelegate) HasFinalize() bool {
+	return n.remove != nil
+}
+
+func (n *projectAlertGroupLifecycleDelegate) Remove(obj *ProjectAlertGroup) (runtime.Object, error) {
+	if n.remove == nil {
+		return obj, nil
+	}
+	return n.remove(obj)
+}
+
+func (n *projectAlertGroupLifecycleDelegate) Updated(obj *ProjectAlertGroup) (runtime.Object, error) {
+	if n.update == nil {
+		return obj, nil
+	}
+	return n.update(obj)
 }

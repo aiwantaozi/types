@@ -38,6 +38,8 @@ type PrometheusRuleList struct {
 
 type PrometheusRuleHandlerFunc func(key string, obj *v1.PrometheusRule) (runtime.Object, error)
 
+type PrometheusRuleChangeHandlerFunc func(obj *v1.PrometheusRule) (runtime.Object, error)
+
 type PrometheusRuleLister interface {
 	List(namespace string, selector labels.Selector) (ret []*v1.PrometheusRule, err error)
 	Get(namespace, name string) (*v1.PrometheusRule, error)
@@ -248,4 +250,179 @@ func (s *prometheusRuleClient) AddClusterScopedHandler(ctx context.Context, name
 func (s *prometheusRuleClient) AddClusterScopedLifecycle(ctx context.Context, name, clusterName string, lifecycle PrometheusRuleLifecycle) {
 	sync := NewPrometheusRuleLifecycleAdapter(name+"_"+clusterName, true, s, lifecycle)
 	s.Controller().AddClusterScopedHandler(ctx, name, clusterName, sync)
+}
+
+type PrometheusRuleIndexer func(obj *v1.PrometheusRule) ([]string, error)
+
+type PrometheusRuleClientCache interface {
+	Get(namespace, name string) (*v1.PrometheusRule, error)
+	List(namespace string, selector labels.Selector) ([]*v1.PrometheusRule, error)
+
+	Index(name string, indexer PrometheusRuleIndexer)
+	GetIndexed(name, key string) ([]*v1.PrometheusRule, error)
+}
+
+type PrometheusRuleClient interface {
+	Create(*v1.PrometheusRule) (*v1.PrometheusRule, error)
+	Get(namespace, name string, opts metav1.GetOptions) (*v1.PrometheusRule, error)
+	Update(*v1.PrometheusRule) (*v1.PrometheusRule, error)
+	Delete(namespace, name string, options *metav1.DeleteOptions) error
+	List(namespace string, opts metav1.ListOptions) (*PrometheusRuleList, error)
+	Watch(opts metav1.ListOptions) (watch.Interface, error)
+
+	Cache() PrometheusRuleClientCache
+
+	OnCreate(ctx context.Context, name string, sync PrometheusRuleChangeHandlerFunc)
+	OnChange(ctx context.Context, name string, sync PrometheusRuleChangeHandlerFunc)
+	OnRemove(ctx context.Context, name string, sync PrometheusRuleChangeHandlerFunc)
+	Enqueue(namespace, name string)
+
+	Generic() controller.GenericController
+	Interface() PrometheusRuleInterface
+}
+
+type prometheusRuleClientCache struct {
+	client *prometheusRuleClient2
+}
+
+type prometheusRuleClient2 struct {
+	iface      PrometheusRuleInterface
+	controller PrometheusRuleController
+}
+
+func (n *prometheusRuleClient2) Interface() PrometheusRuleInterface {
+	return n.iface
+}
+
+func (n *prometheusRuleClient2) Generic() controller.GenericController {
+	return n.iface.Controller().Generic()
+}
+
+func (n *prometheusRuleClient2) Enqueue(namespace, name string) {
+	n.iface.Controller().Enqueue(namespace, name)
+}
+
+func (n *prometheusRuleClient2) Create(obj *v1.PrometheusRule) (*v1.PrometheusRule, error) {
+	return n.iface.Create(obj)
+}
+
+func (n *prometheusRuleClient2) Get(namespace, name string, opts metav1.GetOptions) (*v1.PrometheusRule, error) {
+	return n.iface.GetNamespaced(namespace, name, opts)
+}
+
+func (n *prometheusRuleClient2) Update(obj *v1.PrometheusRule) (*v1.PrometheusRule, error) {
+	return n.iface.Update(obj)
+}
+
+func (n *prometheusRuleClient2) Delete(namespace, name string, options *metav1.DeleteOptions) error {
+	return n.iface.DeleteNamespaced(namespace, name, options)
+}
+
+func (n *prometheusRuleClient2) List(namespace string, opts metav1.ListOptions) (*PrometheusRuleList, error) {
+	return n.iface.List(opts)
+}
+
+func (n *prometheusRuleClient2) Watch(opts metav1.ListOptions) (watch.Interface, error) {
+	return n.iface.Watch(opts)
+}
+
+func (n *prometheusRuleClientCache) Get(namespace, name string) (*v1.PrometheusRule, error) {
+	return n.client.controller.Lister().Get(namespace, name)
+}
+
+func (n *prometheusRuleClientCache) List(namespace string, selector labels.Selector) ([]*v1.PrometheusRule, error) {
+	return n.client.controller.Lister().List(namespace, selector)
+}
+
+func (n *prometheusRuleClient2) Cache() PrometheusRuleClientCache {
+	n.loadController()
+	return &prometheusRuleClientCache{
+		client: n,
+	}
+}
+
+func (n *prometheusRuleClient2) OnCreate(ctx context.Context, name string, sync PrometheusRuleChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name+"-create", &prometheusRuleLifecycleDelegate{create: sync})
+}
+
+func (n *prometheusRuleClient2) OnChange(ctx context.Context, name string, sync PrometheusRuleChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name+"-change", &prometheusRuleLifecycleDelegate{update: sync})
+}
+
+func (n *prometheusRuleClient2) OnRemove(ctx context.Context, name string, sync PrometheusRuleChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name, &prometheusRuleLifecycleDelegate{remove: sync})
+}
+
+func (n *prometheusRuleClientCache) Index(name string, indexer PrometheusRuleIndexer) {
+	err := n.client.controller.Informer().GetIndexer().AddIndexers(map[string]cache.IndexFunc{
+		name: func(obj interface{}) ([]string, error) {
+			if v, ok := obj.(*v1.PrometheusRule); ok {
+				return indexer(v)
+			}
+			return nil, nil
+		},
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (n *prometheusRuleClientCache) GetIndexed(name, key string) ([]*v1.PrometheusRule, error) {
+	var result []*v1.PrometheusRule
+	objs, err := n.client.controller.Informer().GetIndexer().ByIndex(name, key)
+	if err != nil {
+		return nil, err
+	}
+	for _, obj := range objs {
+		if v, ok := obj.(*v1.PrometheusRule); ok {
+			result = append(result, v)
+		}
+	}
+
+	return result, nil
+}
+
+func (n *prometheusRuleClient2) loadController() {
+	if n.controller == nil {
+		n.controller = n.iface.Controller()
+	}
+}
+
+type prometheusRuleLifecycleDelegate struct {
+	create PrometheusRuleChangeHandlerFunc
+	update PrometheusRuleChangeHandlerFunc
+	remove PrometheusRuleChangeHandlerFunc
+}
+
+func (n *prometheusRuleLifecycleDelegate) HasCreate() bool {
+	return n.create != nil
+}
+
+func (n *prometheusRuleLifecycleDelegate) Create(obj *v1.PrometheusRule) (runtime.Object, error) {
+	if n.create == nil {
+		return obj, nil
+	}
+	return n.create(obj)
+}
+
+func (n *prometheusRuleLifecycleDelegate) HasFinalize() bool {
+	return n.remove != nil
+}
+
+func (n *prometheusRuleLifecycleDelegate) Remove(obj *v1.PrometheusRule) (runtime.Object, error) {
+	if n.remove == nil {
+		return obj, nil
+	}
+	return n.remove(obj)
+}
+
+func (n *prometheusRuleLifecycleDelegate) Updated(obj *v1.PrometheusRule) (runtime.Object, error) {
+	if n.update == nil {
+		return obj, nil
+	}
+	return n.update(obj)
 }

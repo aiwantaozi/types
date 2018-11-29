@@ -103,11 +103,18 @@ type Clients struct {
 	ListenConfig                            ListenConfigClient
 	Setting                                 SettingClient
 	Notifier                                NotifierClient
+	ClusterAlertGroup                       ClusterAlertGroupClient
+	ProjectAlertGroup                       ProjectAlertGroupClient
+	ClusterAlertRule                        ClusterAlertRuleClient
+	ProjectAlertRule                        ProjectAlertRuleClient
 	ClusterAlert                            ClusterAlertClient
 	ProjectAlert                            ProjectAlertClient
 	ComposeConfig                           ComposeConfigClient
 	ProjectCatalog                          ProjectCatalogClient
 	ClusterCatalog                          ClusterCatalogClient
+	ClusterMonitorGraph                     ClusterMonitorGraphClient
+	ProjectMonitorGraph                     ProjectMonitorGraphClient
+	MonitorMetric                           MonitorMetricClient
 }
 
 type Client struct {
@@ -297,6 +304,18 @@ func NewClientsFromInterface(iface Interface) *Clients {
 		Notifier: &notifierClient2{
 			iface: iface.Notifiers(""),
 		},
+		ClusterAlertGroup: &clusterAlertGroupClient2{
+			iface: iface.ClusterAlertGroups(""),
+		},
+		ProjectAlertGroup: &projectAlertGroupClient2{
+			iface: iface.ProjectAlertGroups(""),
+		},
+		ClusterAlertRule: &clusterAlertRuleClient2{
+			iface: iface.ClusterAlertRules(""),
+		},
+		ProjectAlertRule: &projectAlertRuleClient2{
+			iface: iface.ProjectAlertRules(""),
+		},
 		ClusterAlert: &clusterAlertClient2{
 			iface: iface.ClusterAlerts(""),
 		},
@@ -311,6 +330,15 @@ func NewClientsFromInterface(iface Interface) *Clients {
 		},
 		ClusterCatalog: &clusterCatalogClient2{
 			iface: iface.ClusterCatalogs(""),
+		},
+		ClusterMonitorGraph: &clusterMonitorGraphClient2{
+			iface: iface.ClusterMonitorGraphs(""),
+		},
+		ProjectMonitorGraph: &projectMonitorGraphClient2{
+			iface: iface.ProjectMonitorGraphs(""),
+		},
+		MonitorMetric: &monitorMetricClient2{
+			iface: iface.MonitorMetrics(""),
 		},
 	}
 }

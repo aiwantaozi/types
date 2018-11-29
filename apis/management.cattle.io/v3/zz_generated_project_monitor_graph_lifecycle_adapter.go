@@ -15,6 +15,16 @@ type projectMonitorGraphLifecycleAdapter struct {
 	lifecycle ProjectMonitorGraphLifecycle
 }
 
+func (w *projectMonitorGraphLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *projectMonitorGraphLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *projectMonitorGraphLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*ProjectMonitorGraph))
 	if o == nil {

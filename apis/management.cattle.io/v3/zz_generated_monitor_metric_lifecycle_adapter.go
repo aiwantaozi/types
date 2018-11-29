@@ -15,6 +15,16 @@ type monitorMetricLifecycleAdapter struct {
 	lifecycle MonitorMetricLifecycle
 }
 
+func (w *monitorMetricLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *monitorMetricLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *monitorMetricLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*MonitorMetric))
 	if o == nil {

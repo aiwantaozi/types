@@ -16,6 +16,16 @@ type alertmanagerLifecycleAdapter struct {
 	lifecycle AlertmanagerLifecycle
 }
 
+func (w *alertmanagerLifecycleAdapter) HasCreate() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasCreate()
+}
+
+func (w *alertmanagerLifecycleAdapter) HasFinalize() bool {
+	o, ok := w.lifecycle.(lifecycle.ObjectLifecycleCondition)
+	return !ok || o.HasFinalize()
+}
+
 func (w *alertmanagerLifecycleAdapter) Create(obj runtime.Object) (runtime.Object, error) {
 	o, err := w.lifecycle.Create(obj.(*v1.Alertmanager))
 	if o == nil {

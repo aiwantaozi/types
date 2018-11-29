@@ -38,6 +38,8 @@ type ServiceMonitorList struct {
 
 type ServiceMonitorHandlerFunc func(key string, obj *v1.ServiceMonitor) (runtime.Object, error)
 
+type ServiceMonitorChangeHandlerFunc func(obj *v1.ServiceMonitor) (runtime.Object, error)
+
 type ServiceMonitorLister interface {
 	List(namespace string, selector labels.Selector) (ret []*v1.ServiceMonitor, err error)
 	Get(namespace, name string) (*v1.ServiceMonitor, error)
@@ -248,4 +250,179 @@ func (s *serviceMonitorClient) AddClusterScopedHandler(ctx context.Context, name
 func (s *serviceMonitorClient) AddClusterScopedLifecycle(ctx context.Context, name, clusterName string, lifecycle ServiceMonitorLifecycle) {
 	sync := NewServiceMonitorLifecycleAdapter(name+"_"+clusterName, true, s, lifecycle)
 	s.Controller().AddClusterScopedHandler(ctx, name, clusterName, sync)
+}
+
+type ServiceMonitorIndexer func(obj *v1.ServiceMonitor) ([]string, error)
+
+type ServiceMonitorClientCache interface {
+	Get(namespace, name string) (*v1.ServiceMonitor, error)
+	List(namespace string, selector labels.Selector) ([]*v1.ServiceMonitor, error)
+
+	Index(name string, indexer ServiceMonitorIndexer)
+	GetIndexed(name, key string) ([]*v1.ServiceMonitor, error)
+}
+
+type ServiceMonitorClient interface {
+	Create(*v1.ServiceMonitor) (*v1.ServiceMonitor, error)
+	Get(namespace, name string, opts metav1.GetOptions) (*v1.ServiceMonitor, error)
+	Update(*v1.ServiceMonitor) (*v1.ServiceMonitor, error)
+	Delete(namespace, name string, options *metav1.DeleteOptions) error
+	List(namespace string, opts metav1.ListOptions) (*ServiceMonitorList, error)
+	Watch(opts metav1.ListOptions) (watch.Interface, error)
+
+	Cache() ServiceMonitorClientCache
+
+	OnCreate(ctx context.Context, name string, sync ServiceMonitorChangeHandlerFunc)
+	OnChange(ctx context.Context, name string, sync ServiceMonitorChangeHandlerFunc)
+	OnRemove(ctx context.Context, name string, sync ServiceMonitorChangeHandlerFunc)
+	Enqueue(namespace, name string)
+
+	Generic() controller.GenericController
+	Interface() ServiceMonitorInterface
+}
+
+type serviceMonitorClientCache struct {
+	client *serviceMonitorClient2
+}
+
+type serviceMonitorClient2 struct {
+	iface      ServiceMonitorInterface
+	controller ServiceMonitorController
+}
+
+func (n *serviceMonitorClient2) Interface() ServiceMonitorInterface {
+	return n.iface
+}
+
+func (n *serviceMonitorClient2) Generic() controller.GenericController {
+	return n.iface.Controller().Generic()
+}
+
+func (n *serviceMonitorClient2) Enqueue(namespace, name string) {
+	n.iface.Controller().Enqueue(namespace, name)
+}
+
+func (n *serviceMonitorClient2) Create(obj *v1.ServiceMonitor) (*v1.ServiceMonitor, error) {
+	return n.iface.Create(obj)
+}
+
+func (n *serviceMonitorClient2) Get(namespace, name string, opts metav1.GetOptions) (*v1.ServiceMonitor, error) {
+	return n.iface.GetNamespaced(namespace, name, opts)
+}
+
+func (n *serviceMonitorClient2) Update(obj *v1.ServiceMonitor) (*v1.ServiceMonitor, error) {
+	return n.iface.Update(obj)
+}
+
+func (n *serviceMonitorClient2) Delete(namespace, name string, options *metav1.DeleteOptions) error {
+	return n.iface.DeleteNamespaced(namespace, name, options)
+}
+
+func (n *serviceMonitorClient2) List(namespace string, opts metav1.ListOptions) (*ServiceMonitorList, error) {
+	return n.iface.List(opts)
+}
+
+func (n *serviceMonitorClient2) Watch(opts metav1.ListOptions) (watch.Interface, error) {
+	return n.iface.Watch(opts)
+}
+
+func (n *serviceMonitorClientCache) Get(namespace, name string) (*v1.ServiceMonitor, error) {
+	return n.client.controller.Lister().Get(namespace, name)
+}
+
+func (n *serviceMonitorClientCache) List(namespace string, selector labels.Selector) ([]*v1.ServiceMonitor, error) {
+	return n.client.controller.Lister().List(namespace, selector)
+}
+
+func (n *serviceMonitorClient2) Cache() ServiceMonitorClientCache {
+	n.loadController()
+	return &serviceMonitorClientCache{
+		client: n,
+	}
+}
+
+func (n *serviceMonitorClient2) OnCreate(ctx context.Context, name string, sync ServiceMonitorChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name+"-create", &serviceMonitorLifecycleDelegate{create: sync})
+}
+
+func (n *serviceMonitorClient2) OnChange(ctx context.Context, name string, sync ServiceMonitorChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name+"-change", &serviceMonitorLifecycleDelegate{update: sync})
+}
+
+func (n *serviceMonitorClient2) OnRemove(ctx context.Context, name string, sync ServiceMonitorChangeHandlerFunc) {
+	n.loadController()
+	n.iface.AddLifecycle(ctx, name, &serviceMonitorLifecycleDelegate{remove: sync})
+}
+
+func (n *serviceMonitorClientCache) Index(name string, indexer ServiceMonitorIndexer) {
+	err := n.client.controller.Informer().GetIndexer().AddIndexers(map[string]cache.IndexFunc{
+		name: func(obj interface{}) ([]string, error) {
+			if v, ok := obj.(*v1.ServiceMonitor); ok {
+				return indexer(v)
+			}
+			return nil, nil
+		},
+	})
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func (n *serviceMonitorClientCache) GetIndexed(name, key string) ([]*v1.ServiceMonitor, error) {
+	var result []*v1.ServiceMonitor
+	objs, err := n.client.controller.Informer().GetIndexer().ByIndex(name, key)
+	if err != nil {
+		return nil, err
+	}
+	for _, obj := range objs {
+		if v, ok := obj.(*v1.ServiceMonitor); ok {
+			result = append(result, v)
+		}
+	}
+
+	return result, nil
+}
+
+func (n *serviceMonitorClient2) loadController() {
+	if n.controller == nil {
+		n.controller = n.iface.Controller()
+	}
+}
+
+type serviceMonitorLifecycleDelegate struct {
+	create ServiceMonitorChangeHandlerFunc
+	update ServiceMonitorChangeHandlerFunc
+	remove ServiceMonitorChangeHandlerFunc
+}
+
+func (n *serviceMonitorLifecycleDelegate) HasCreate() bool {
+	return n.create != nil
+}
+
+func (n *serviceMonitorLifecycleDelegate) Create(obj *v1.ServiceMonitor) (runtime.Object, error) {
+	if n.create == nil {
+		return obj, nil
+	}
+	return n.create(obj)
+}
+
+func (n *serviceMonitorLifecycleDelegate) HasFinalize() bool {
+	return n.remove != nil
+}
+
+func (n *serviceMonitorLifecycleDelegate) Remove(obj *v1.ServiceMonitor) (runtime.Object, error) {
+	if n.remove == nil {
+		return obj, nil
+	}
+	return n.remove(obj)
+}
+
+func (n *serviceMonitorLifecycleDelegate) Updated(obj *v1.ServiceMonitor) (runtime.Object, error) {
+	if n.update == nil {
+		return obj, nil
+	}
+	return n.update(obj)
 }
