@@ -10,6 +10,8 @@ const (
 	ClusterSpecFieldDesiredAgentImage                   = "desiredAgentImage"
 	ClusterSpecFieldDisplayName                         = "displayName"
 	ClusterSpecFieldDockerRootDir                       = "dockerRootDir"
+	ClusterSpecFieldEnableClusterAlerting               = "enableClusterAlerting"
+	ClusterSpecFieldEnableClusterMonitoring             = "enableClusterMonitoring"
 	ClusterSpecFieldEnableNetworkPolicy                 = "enableNetworkPolicy"
 	ClusterSpecFieldGoogleKubernetesEngineConfig        = "googleKubernetesEngineConfig"
 	ClusterSpecFieldImportedConfig                      = "importedConfig"
@@ -26,6 +28,8 @@ type ClusterSpec struct {
 	DesiredAgentImage                   string                               `json:"desiredAgentImage,omitempty" yaml:"desiredAgentImage,omitempty"`
 	DisplayName                         string                               `json:"displayName,omitempty" yaml:"displayName,omitempty"`
 	DockerRootDir                       string                               `json:"dockerRootDir,omitempty" yaml:"dockerRootDir,omitempty"`
+	EnableClusterAlerting               bool                                 `json:"enableClusterAlerting,omitempty" yaml:"enableClusterAlerting,omitempty"`
+	EnableClusterMonitoring             bool                                 `json:"enableClusterMonitoring,omitempty" yaml:"enableClusterMonitoring,omitempty"`
 	EnableNetworkPolicy                 *bool                                `json:"enableNetworkPolicy,omitempty" yaml:"enableNetworkPolicy,omitempty"`
 	GoogleKubernetesEngineConfig        *GoogleKubernetesEngineConfig        `json:"googleKubernetesEngineConfig,omitempty" yaml:"googleKubernetesEngineConfig,omitempty"`
 	ImportedConfig                      *ImportedConfig                      `json:"importedConfig,omitempty" yaml:"importedConfig,omitempty"`
