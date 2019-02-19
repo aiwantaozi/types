@@ -288,24 +288,28 @@ type SMTPConfig struct {
 }
 
 type SlackConfig struct {
-	DefaultRecipient string `json:"defaultRecipient,omitempty" norman:"required"`
-	URL              string `json:"url,omitempty" norman:"required"`
+	HTTPConfig       *HTTPConfig `json:"httpConfig,omitempty"`
+	DefaultRecipient string      `json:"defaultRecipient,omitempty" norman:"required"`
+	URL              string      `json:"url,omitempty" norman:"required"`
 }
 
 type PagerdutyConfig struct {
-	ServiceKey string `json:"serviceKey,omitempty" norman:"required"`
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	ServiceKey string      `json:"serviceKey,omitempty" norman:"required"`
 }
 
 type WebhookConfig struct {
-	URL string `json:"url,omitempty" norman:"required"`
+	HTTPConfig *HTTPConfig `json:"httpConfig,omitempty"`
+	URL        string      `json:"url,omitempty" norman:"required"`
 }
 
 type WechatConfig struct {
-	DefaultRecipient string `json:"defaultRecipient,omitempty" norman:"required"`
-	Secret           string `json:"secret,omitempty" norman:"type=password,required"`
-	Agent            string `json:"agent,omitempty" norman:"required"`
-	Corp             string `json:"corp,omitempty" norman:"required"`
-	RecipientType    string `json:"recipientType,omitempty" norman:"required,options=tag|party|user,default=party"`
+	HTTPConfig       *HTTPConfig `json:"httpConfig,omitempty"`
+	DefaultRecipient string      `json:"defaultRecipient,omitempty" norman:"required"`
+	Secret           string      `json:"secret,omitempty" norman:"type=password,required"`
+	Agent            string      `json:"agent,omitempty" norman:"required"`
+	Corp             string      `json:"corp,omitempty" norman:"required"`
+	RecipientType    string      `json:"recipientType,omitempty" norman:"required,options=tag|party|user,default=party"`
 }
 
 type NotifierStatus struct {
@@ -314,4 +318,24 @@ type NotifierStatus struct {
 type AlertSystemImages struct {
 	AlertManager       string `json:"alertManager,omitempty"`
 	AlertManagerHelper string `json:"alertManagerHelper,omitempty"`
+}
+
+type HTTPConfig struct {
+	BasicAuth   *BasicAuth `json:"basicAuth,omitempty"`
+	BearerToken string     `json:"bearerToken,omitempty" norman:"type=password"`
+	ProxyURL    string     `json:"proxyURL,omitempty"`
+	TLSConfig   *TLSConfig `json:"tlsConfig,omitempty"`
+}
+
+type BasicAuth struct {
+	Username string `json:"username,omitempty"`
+	Password string `json:"password,omitempty" norman:"type=password"`
+}
+
+type TLSConfig struct {
+	CA         string `json:"ca,omitempty"`
+	Cert       string `json:"cert,omitempty"`
+	Key        string `json:"key,omitempty"`
+	ServerName string `json:"serverName,omitempty"`
+	SSLVerify  bool   `json:"sslVerify,omitempty"`
 }
