@@ -15,7 +15,7 @@ const (
 )
 
 type ProjectLoggingSpec struct {
-	CustomTargetConfig    *CustomTargetConfig    `json:"customTargetConfig,omitempty" yaml:"customTargetConfig,omitempty"`
+	CustomTargetConfig    string                 `json:"customTargetConfig,omitempty" yaml:"customTargetConfig,omitempty"`
 	DisplayName           string                 `json:"displayName,omitempty" yaml:"displayName,omitempty"`
 	ElasticsearchConfig   *ElasticsearchConfig   `json:"elasticsearchConfig,omitempty" yaml:"elasticsearchConfig,omitempty"`
 	FluentForwarderConfig *FluentForwarderConfig `json:"fluentForwarderConfig,omitempty" yaml:"fluentForwarderConfig,omitempty"`

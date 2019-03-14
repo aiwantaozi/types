@@ -35,7 +35,7 @@ type ProjectLogging struct {
 	Annotations           map[string]string      `json:"annotations,omitempty" yaml:"annotations,omitempty"`
 	Created               string                 `json:"created,omitempty" yaml:"created,omitempty"`
 	CreatorID             string                 `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
-	CustomTargetConfig    *CustomTargetConfig    `json:"customTargetConfig,omitempty" yaml:"customTargetConfig,omitempty"`
+	CustomTargetConfig    string                 `json:"customTargetConfig,omitempty" yaml:"customTargetConfig,omitempty"`
 	ElasticsearchConfig   *ElasticsearchConfig   `json:"elasticsearchConfig,omitempty" yaml:"elasticsearchConfig,omitempty"`
 	FluentForwarderConfig *FluentForwarderConfig `json:"fluentForwarderConfig,omitempty" yaml:"fluentForwarderConfig,omitempty"`
 	KafkaConfig           *KafkaConfig           `json:"kafkaConfig,omitempty" yaml:"kafkaConfig,omitempty"`

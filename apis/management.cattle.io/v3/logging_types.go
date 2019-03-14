@@ -49,7 +49,7 @@ type LoggingTargets struct {
 	KafkaConfig           *KafkaConfig           `json:"kafkaConfig,omitempty"`
 	SyslogConfig          *SyslogConfig          `json:"syslogConfig,omitempty"`
 	FluentForwarderConfig *FluentForwarderConfig `json:"fluentForwarderConfig,omitempty"`
-	CustomTargetConfig    *CustomTargetConfig    `json:"customTargetConfig,omitempty"`
+	CustomTargetConfig    *CustomTargetConfig    `json:"customTargetConfig,omitempty" norman:"invalidChars,options=<source|<parser|<filter|<match|<buffer"`
 }
 
 type ClusterLoggingSpec struct {
