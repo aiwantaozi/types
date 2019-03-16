@@ -19,6 +19,7 @@ import (
 	managementv3 "github.com/rancher/types/apis/management.cattle.io/v3"
 	managementSchema "github.com/rancher/types/apis/management.cattle.io/v3/schema"
 	monitoringv1 "github.com/rancher/types/apis/monitoring.coreos.com/v1"
+	inetworkingv1alpha3 "github.com/rancher/types/apis/networking.istio.io/v1alpha3"
 	knetworkingv1 "github.com/rancher/types/apis/networking.k8s.io/v1"
 	projectv3 "github.com/rancher/types/apis/project.cattle.io/v3"
 	projectSchema "github.com/rancher/types/apis/project.cattle.io/v3/schema"
@@ -175,16 +176,17 @@ type UserContext struct {
 	APIExtClient      clientset.Interface
 	K8sClient         kubernetes.Interface
 
-	Apps         appsv1beta2.Interface
-	Project      projectv3.Interface
-	Core         corev1.Interface
-	RBAC         rbacv1.Interface
-	Extensions   extv1beta1.Interface
-	BatchV1      batchv1.Interface
-	BatchV1Beta1 batchv1beta1.Interface
-	Networking   knetworkingv1.Interface
-	Monitoring   monitoringv1.Interface
-	Cluster      clusterv3.Interface
+	Apps            appsv1beta2.Interface
+	Project         projectv3.Interface
+	Core            corev1.Interface
+	RBAC            rbacv1.Interface
+	Extensions      extv1beta1.Interface
+	BatchV1         batchv1.Interface
+	BatchV1Beta1    batchv1beta1.Interface
+	Networking      knetworkingv1.Interface
+	Monitoring      monitoringv1.Interface
+	IstioNetworking inetworkingv1alpha3.Interface
+	Cluster         clusterv3.Interface
 }
 
 func (w *UserContext) controllers() []controller.Starter {
@@ -229,15 +231,16 @@ type UserOnlyContext struct {
 	UnversionedClient rest.Interface
 	K8sClient         kubernetes.Interface
 
-	Apps         appsv1beta2.Interface
-	Project      projectv3.Interface
-	Core         corev1.Interface
-	RBAC         rbacv1.Interface
-	Extensions   extv1beta1.Interface
-	BatchV1      batchv1.Interface
-	BatchV1Beta1 batchv1beta1.Interface
-	Monitoring   monitoringv1.Interface
-	Cluster      clusterv3.Interface
+	Apps            appsv1beta2.Interface
+	Project         projectv3.Interface
+	Core            corev1.Interface
+	RBAC            rbacv1.Interface
+	Extensions      extv1beta1.Interface
+	BatchV1         batchv1.Interface
+	BatchV1Beta1    batchv1beta1.Interface
+	Monitoring      monitoringv1.Interface
+	IstioNetworking inetworkingv1alpha3.Interface
+	Cluster         clusterv3.Interface
 }
 
 func (w *UserOnlyContext) controllers() []controller.Starter {
@@ -387,6 +390,15 @@ func NewUserContext(scaledContext *ScaledContext, config rest.Config, clusterNam
 	}
 
 	context.Monitoring, err = monitoringv1.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	context.IstioNetworking, err = inetworkingv1alpha3.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
 	context.Cluster, err = clusterv3.NewForConfig(config)
 	if err != nil {
 		return nil, err
@@ -471,6 +483,15 @@ func NewUserOnlyContext(config rest.Config) (*UserOnlyContext, error) {
 	}
 
 	context.Monitoring, err = monitoringv1.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
+	context.IstioNetworking, err = inetworkingv1alpha3.NewForConfig(config)
+	if err != nil {
+		return nil, err
+	}
+
 	context.Cluster, err = clusterv3.NewForConfig(config)
 	if err != nil {
 		return nil, err

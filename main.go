@@ -8,6 +8,7 @@ import (
 	clusterSchema "github.com/rancher/types/apis/cluster.cattle.io/v3/schema"
 	managementSchema "github.com/rancher/types/apis/management.cattle.io/v3/schema"
 	publicSchema "github.com/rancher/types/apis/management.cattle.io/v3public/schema"
+	inetworkingSchema "github.com/rancher/types/apis/networking.istio.io/v1alpha3/schema"
 	projectSchema "github.com/rancher/types/apis/project.cattle.io/v3/schema"
 	"github.com/rancher/types/generator"
 	"k8s.io/api/apps/v1beta2"
@@ -32,6 +33,7 @@ func main() {
 		"clusterAuthToken":     true,
 	})
 	generator.Generate(projectSchema.Schemas, nil)
+	generator.Generate(inetworkingSchema.Schemas, nil)
 	generator.GenerateNativeTypes(v1.SchemeGroupVersion, []interface{}{
 		v1.Endpoints{},
 		v1.PersistentVolumeClaim{},
@@ -89,4 +91,5 @@ func main() {
 		},
 		[]interface{}{},
 	)
+
 }
