@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	monitoringv1 "github.com/coreos/prometheus-operator/pkg/client/monitoring/v1"
+	inetworkingv1alpha3 "github.com/istio/api/networking/v1alpha3"
 	"github.com/rancher/norman/types"
 	m "github.com/rancher/norman/types/mapper"
 	"github.com/rancher/types/apis/project.cattle.io/v3"
@@ -44,7 +45,8 @@ var (
 		Init(workloadTypes).
 		Init(appTypes).
 		Init(pipelineTypes).
-		Init(monitoringTypes)
+		Init(monitoringTypes).
+		Init(istioNetworkingTypes)
 )
 
 func configMapTypes(schemas *types.Schemas) *types.Schemas {
@@ -1019,4 +1021,13 @@ func monitoringTypes(schemas *types.Schemas) *types.Schemas {
 			&m.Drop{Field: "status"},
 		).
 		MustImport(&Version, monitoringv1.Alertmanager{}, projectOverride{})
+}
+
+func istioNetworkingTypes(schemas *types.Schemas) *types.Schemas {
+	return schemas.
+		MustImport(&Version, inetworkingv1alpha3.Gateway{}).
+		MustImport(&Version, inetworkingv1alpha3.VirtualService{}).
+		MustImport(&Version, inetworkingv1alpha3.DestinationRule{}).
+		MustImport(&Version, inetworkingv1alpha3.ServiceEntry{}).
+		MustImport(&Version, inetworkingv1alpha3.EnvoyFilter{})
 }
