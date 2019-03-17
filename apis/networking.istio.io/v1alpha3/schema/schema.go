@@ -15,10 +15,10 @@ var (
 	}
 
 	Schemas = factory.Schemas(&Version).
-		Init(istioNetworkingTypes)
+		Init(IstioNetworkingTypes)
 )
 
-func istioNetworkingTypes(schemas *types.Schemas) *types.Schemas {
+func IstioNetworkingTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.MustImport(&Version, inetworkingv1alpha3.Gateway{}).
 		MustImport(&Version, inetworkingv1alpha3.VirtualService{}).
 		MustImport(&Version, inetworkingv1alpha3.DestinationRule{}).
