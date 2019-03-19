@@ -1025,7 +1025,7 @@ func monitoringTypes(schemas *types.Schemas) *types.Schemas {
 
 func istioTypes(schemas *types.Schemas) *types.Schemas {
 	return schemas.
-		MustImport(&Version, inetworkingv1alpha3.Gateway{}).
-		MustImport(&Version, inetworkingv1alpha3.VirtualService{}).
-		MustImport(&Version, inetworkingv1alpha3.DestinationRule{})
+		MustImport(&Version, inetworkingv1alpha3.Gateway{}, projectOverride{}).
+		MustImport(&Version, inetworkingv1alpha3.VirtualService{}, projectOverride{}).
+		MustImport(&Version, inetworkingv1alpha3.DestinationRule{}, projectOverride{})
 }
