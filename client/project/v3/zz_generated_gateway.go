@@ -11,7 +11,9 @@ const (
 	GatewayFieldCreatorID       = "creatorId"
 	GatewayFieldLabels          = "labels"
 	GatewayFieldName            = "name"
+	GatewayFieldNamespaceId     = "namespaceId"
 	GatewayFieldOwnerReferences = "ownerReferences"
+	GatewayFieldProjectID       = "projectId"
 	GatewayFieldRemoved         = "removed"
 	GatewayFieldSelector        = "selector"
 	GatewayFieldServers         = "servers"
@@ -25,7 +27,9 @@ type Gateway struct {
 	CreatorID       string            `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
 	Labels          map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
 	Name            string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId     string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	ProjectID       string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
 	Removed         string            `json:"removed,omitempty" yaml:"removed,omitempty"`
 	Selector        map[string]string `json:"selector,omitempty" yaml:"selector,omitempty"`
 	Servers         []Server          `json:"servers,omitempty" yaml:"servers,omitempty"`

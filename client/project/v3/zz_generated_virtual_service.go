@@ -14,7 +14,9 @@ const (
 	VirtualServiceFieldHttp            = "http"
 	VirtualServiceFieldLabels          = "labels"
 	VirtualServiceFieldName            = "name"
+	VirtualServiceFieldNamespaceId     = "namespaceId"
 	VirtualServiceFieldOwnerReferences = "ownerReferences"
+	VirtualServiceFieldProjectID       = "projectId"
 	VirtualServiceFieldRemoved         = "removed"
 	VirtualServiceFieldTcp             = "tcp"
 	VirtualServiceFieldTls             = "tls"
@@ -31,7 +33,9 @@ type VirtualService struct {
 	Http            []HTTPRoute       `json:"http,omitempty" yaml:"http,omitempty"`
 	Labels          map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
 	Name            string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId     string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	ProjectID       string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
 	Removed         string            `json:"removed,omitempty" yaml:"removed,omitempty"`
 	Tcp             []TCPRoute        `json:"tcp,omitempty" yaml:"tcp,omitempty"`
 	Tls             []TLSRoute        `json:"tls,omitempty" yaml:"tls,omitempty"`

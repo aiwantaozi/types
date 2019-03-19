@@ -12,7 +12,9 @@ const (
 	DestinationRuleFieldHost            = "host"
 	DestinationRuleFieldLabels          = "labels"
 	DestinationRuleFieldName            = "name"
+	DestinationRuleFieldNamespaceId     = "namespaceId"
 	DestinationRuleFieldOwnerReferences = "ownerReferences"
+	DestinationRuleFieldProjectID       = "projectId"
 	DestinationRuleFieldRemoved         = "removed"
 	DestinationRuleFieldSubsets         = "subsets"
 	DestinationRuleFieldTrafficPolicy   = "trafficPolicy"
@@ -27,7 +29,9 @@ type DestinationRule struct {
 	Host            string            `json:"host,omitempty" yaml:"host,omitempty"`
 	Labels          map[string]string `json:"labels,omitempty" yaml:"labels,omitempty"`
 	Name            string            `json:"name,omitempty" yaml:"name,omitempty"`
+	NamespaceId     string            `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`
 	OwnerReferences []OwnerReference  `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
+	ProjectID       string            `json:"projectId,omitempty" yaml:"projectId,omitempty"`
 	Removed         string            `json:"removed,omitempty" yaml:"removed,omitempty"`
 	Subsets         []Subset          `json:"subsets,omitempty" yaml:"subsets,omitempty"`
 	TrafficPolicy   *TrafficPolicy    `json:"trafficPolicy,omitempty" yaml:"trafficPolicy,omitempty"`
