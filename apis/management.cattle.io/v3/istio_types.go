@@ -8,18 +8,24 @@ import (
 
 const (
 	IstioConditionCertManagerDeployed            condition.Cond = "CertManagerDeployed"
-	IstioConditionSecurityDeployed               condition.Cond = "SecurityDeployed"
-	IstioConditionSidecarInjectorWebhookDeployed condition.Cond = "SidecarInjectorWebhookDeployed"
-	IstioConditionTelemetryGatewayDeployed       condition.Cond = "TelemetryGatewayDeployed"
-	IstioConditionTracingDeployed                condition.Cond = "TracingDeployed"
-	IstioConditionPrometheusDeployedDeployed     condition.Cond = "PrometheusDeployed"
-	IstioConditionPilotDeployedDeployed          condition.Cond = "PilotDeployed"
-	IstioConditionMixerDeployedDeployed          condition.Cond = "MixerDeployed"
-	IstioConditionKialiDeployedDeployed          condition.Cond = "KialiDeployed"
-	IstioConditionIngressDeployedDeployed        condition.Cond = "IngressDeployed"
-	IstioConditionGrafanaDeployedDeployed        condition.Cond = "GrafanaDeployed"
-	IstioConditionGatewaysDeployedDeployed       condition.Cond = "GatewaysDeployed"
 	IstioConditionGalleyDeployedDeployed         condition.Cond = "GalleyDeployed"
+	IstioConditionGatewaysDeployedDeployed       condition.Cond = "GatewaysDeployed"
+	IstioConditionGrafanaDeployedDeployed        condition.Cond = "GrafanaDeployed"
+	IstioConditionKialiDeployedDeployed          condition.Cond = "KialiDeployed"
+	IstioConditionMixerDeployedDeployed          condition.Cond = "MixerDeployed"
+	IstioConditionPilotDeployedDeployed          condition.Cond = "PilotDeployed"
+	IstioConditionPrometheusDeployedDeployed     condition.Cond = "PrometheusDeployed"
+	IstioConditionSecurityDeployed               condition.Cond = "SecurityDeployed"
+	IstioConditionServiceGraphDeployed           condition.Cond = "ServiceGraphDeployed"
+	IstioConditionSidecarInjectorWebhookDeployed condition.Cond = "SidecarInjectorWebhookDeployed"
+	IstioConditionTracingDeployed                condition.Cond = "TracingDeployed"
+
+	// istio 1.1 added
+	IstioConditionCoreDNSDeployed   condition.Cond = "CoreDNSDeployed"
+	IstioConditionNodeAgentDeployed condition.Cond = "NodeAgentDeployed"
+	// istio 1.1 removed
+	IstioConditionIngressDeployedDeployed  condition.Cond = "IngressDeployed" //todo: istio 1.1 remote it
+	IstioConditionTelemetryGatewayDeployed condition.Cond = "TelemetryGatewayDeployed"
 )
 
 type IstioConfig struct {
