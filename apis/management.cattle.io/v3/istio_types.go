@@ -23,8 +23,8 @@ const (
 	// istio 1.1 added
 	IstioConditionCoreDNSDeployed   condition.Cond = "CoreDNSDeployed"
 	IstioConditionNodeAgentDeployed condition.Cond = "NodeAgentDeployed"
-	// istio 1.1 removed
-	IstioConditionIngressDeployedDeployed  condition.Cond = "IngressDeployed" //todo: istio 1.1 remote it
+	// todo: istio 1.1 removed
+	IstioConditionIngressDeployedDeployed  condition.Cond = "IngressDeployed"
 	IstioConditionTelemetryGatewayDeployed condition.Cond = "TelemetryGatewayDeployed"
 )
 
@@ -42,8 +42,9 @@ type IstioConfig struct {
 }
 
 type IstioConfigSpec struct {
-	ClusterName string `json:"clusterName" norman:"type=reference[cluster]"`
-	Enable      bool   `json:"enable,omitempty" norman:"required,default=false"`
+	ClusterName string            `json:"clusterName" norman:"type=reference[cluster]"`
+	Enable      bool              `json:"enable,omitempty" norman:"required,default=false"`
+	AppAnswers  map[string]string `json:"answers,omitempty"`
 }
 
 type IstioConfigStatus struct {
