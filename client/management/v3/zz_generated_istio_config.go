@@ -7,6 +7,7 @@ import (
 const (
 	IstioConfigType                      = "istioConfig"
 	IstioConfigFieldAnnotations          = "annotations"
+	IstioConfigFieldAppAnswers           = "answers"
 	IstioConfigFieldClusterID            = "clusterId"
 	IstioConfigFieldCreated              = "created"
 	IstioConfigFieldCreatorID            = "creatorId"
@@ -26,6 +27,7 @@ const (
 type IstioConfig struct {
 	types.Resource
 	Annotations          map[string]string  `json:"annotations,omitempty" yaml:"annotations,omitempty"`
+	AppAnswers           map[string]string  `json:"answers,omitempty" yaml:"answers,omitempty"`
 	ClusterID            string             `json:"clusterId,omitempty" yaml:"clusterId,omitempty"`
 	Created              string             `json:"created,omitempty" yaml:"created,omitempty"`
 	CreatorID            string             `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
