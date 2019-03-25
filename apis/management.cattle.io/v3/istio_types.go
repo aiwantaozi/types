@@ -7,6 +7,7 @@ import (
 )
 
 const (
+	IstioConditionAppInstalled                   condition.Cond = "AppInstalled"
 	IstioConditionCertManagerDeployed            condition.Cond = "CertManagerDeployed"
 	IstioConditionGalleyDeployedDeployed         condition.Cond = "GalleyDeployed"
 	IstioConditionGatewaysDeployedDeployed       condition.Cond = "GatewaysDeployed"
