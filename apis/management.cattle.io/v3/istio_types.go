@@ -7,19 +7,19 @@ import (
 )
 
 const (
-	IstioConditionAppInstalled                   condition.Cond = "AppInstalled"
-	IstioConditionCertManagerDeployed            condition.Cond = "CertManagerDeployed"
-	IstioConditionGalleyDeployedDeployed         condition.Cond = "GalleyDeployed"
-	IstioConditionGatewaysDeployedDeployed       condition.Cond = "GatewaysDeployed"
-	IstioConditionGrafanaDeployedDeployed        condition.Cond = "GrafanaDeployed"
-	IstioConditionKialiDeployedDeployed          condition.Cond = "KialiDeployed"
-	IstioConditionMixerDeployedDeployed          condition.Cond = "MixerDeployed"
-	IstioConditionPilotDeployedDeployed          condition.Cond = "PilotDeployed"
-	IstioConditionPrometheusDeployedDeployed     condition.Cond = "PrometheusDeployed"
-	IstioConditionSecurityDeployed               condition.Cond = "SecurityDeployed"
-	IstioConditionServiceGraphDeployed           condition.Cond = "ServiceGraphDeployed"
-	IstioConditionSidecarInjectorWebhookDeployed condition.Cond = "SidecarInjectorWebhookDeployed"
-	IstioConditionTracingDeployed                condition.Cond = "TracingDeployed"
+	IstioConditionAppInstalled                   condition.Cond = "IstioAppInstalled"
+	IstioConditionCertManagerDeployed            condition.Cond = "IstioCertManagerDeployed"
+	IstioConditionGalleyDeployedDeployed         condition.Cond = "IstioGalleyDeployed"
+	IstioConditionGatewaysDeployedDeployed       condition.Cond = "IstioGatewaysDeployed"
+	IstioConditionGrafanaDeployedDeployed        condition.Cond = "IstioGrafanaDeployed"
+	IstioConditionKialiDeployedDeployed          condition.Cond = "IstioKialiDeployed"
+	IstioConditionMixerDeployedDeployed          condition.Cond = "IstioMixerDeployed"
+	IstioConditionPilotDeployedDeployed          condition.Cond = "IstioPilotDeployed"
+	IstioConditionPrometheusDeployedDeployed     condition.Cond = "IstioPrometheusDeployed"
+	IstioConditionSecurityDeployed               condition.Cond = "IstioSecurityDeployed"
+	IstioConditionServiceGraphDeployed           condition.Cond = "IstioServiceGraphDeployed"
+	IstioConditionSidecarInjectorWebhookDeployed condition.Cond = "IstioSidecarInjectorWebhookDeployed"
+	IstioConditionTracingDeployed                condition.Cond = "IstioTracingDeployed"
 
 	// istio 1.1 added
 	IstioConditionCoreDNSDeployed   condition.Cond = "CoreDNSDeployed"
