@@ -49,5 +49,6 @@ type IstioConfigSpec struct {
 }
 
 type IstioConfigStatus struct {
-	Conditions []Condition `json:"conditions"`
+	Conditions  []Condition     `json:"conditions"`
+	AppliedSpec IstioConfigSpec `json:"appliedSpec,omitempty"`
 }
