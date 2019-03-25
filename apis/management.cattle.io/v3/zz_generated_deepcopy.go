@@ -3546,6 +3546,7 @@ func (in *IstioConfigStatus) DeepCopyInto(out *IstioConfigStatus) {
 		*out = make([]Condition, len(*in))
 		copy(*out, *in)
 	}
+	in.AppliedSpec.DeepCopyInto(&out.AppliedSpec)
 	return
 }
 

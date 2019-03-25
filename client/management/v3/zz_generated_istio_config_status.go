@@ -1,10 +1,12 @@
 package client
 
 const (
-	IstioConfigStatusType            = "istioConfigStatus"
-	IstioConfigStatusFieldConditions = "conditions"
+	IstioConfigStatusType             = "istioConfigStatus"
+	IstioConfigStatusFieldAppliedSpec = "appliedSpec"
+	IstioConfigStatusFieldConditions  = "conditions"
 )
 
 type IstioConfigStatus struct {
-	Conditions []Condition `json:"conditions,omitempty" yaml:"conditions,omitempty"`
+	AppliedSpec *IstioConfigSpec `json:"appliedSpec,omitempty" yaml:"appliedSpec,omitempty"`
+	Conditions  []Condition      `json:"conditions,omitempty" yaml:"conditions,omitempty"`
 }
